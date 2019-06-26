@@ -11,6 +11,12 @@ cc_binary(
 )
 
 cc_binary(
+    name = "compass",
+    srcs = ["compass.cpp"],
+    deps = [],
+)
+
+cc_binary(
     name = "arrow",
     srcs = ["arrow.cpp"],
     deps = [],
