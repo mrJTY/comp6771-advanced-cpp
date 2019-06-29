@@ -4,8 +4,11 @@
 class Point {
   public:
     Point(int x, int y) : x_{x}, y_{y} {};
+
     const int& x() const { return this->x_; };
     const int& y() const { return this->y_; };
+
+
     static Point add(const Point& p1, const Point& p2);
   private:
     int x_;
@@ -23,6 +26,12 @@ Point Point::add(const Point& p1, const Point& p2) {
 int main() {
   Point p1{1, 2};
   Point p2{2, 3};
+
+  /**
+   * Ugly .add method
+   *
+   **/
+
   print(std::cout, Point::add(p1, p2));
-  std::cout << "\n";	
+  std::cout << "\n";
 }
