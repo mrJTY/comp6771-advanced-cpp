@@ -5,7 +5,6 @@ class Point {
   public:
     Point(int x, int y) : x_{x}, y_{y} {};
 
-    // This is ugly and clumsy
     const int& x() const { return this->x_; };
     const int& y() const { return this->y_; };
 
