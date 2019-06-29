@@ -11,29 +11,37 @@
 #include "assignments/ev/euclidean_vector.h"
 #include "catch.h"
 
-TEST_CASE("Constructor with int"){
+TEST_CASE("Constructor with int") {
   EuclideanVector a(2);
   REQUIRE(a.GetNumDimensions() == 2);
 }
 
-TEST_CASE("Constructor with num dimensions and float"){
+TEST_CASE("Constructor with num dimensions and float") {
   EuclideanVector a{2, 4.0};
   REQUIRE(a.GetNumDimensions() == 2);
 
-  int x {3};
-  double y {3.24};
+  int x{3};
+  double y{3.24};
   EuclideanVector b{x, y};
   REQUIRE(b.GetNumDimensions() == 3);
 }
 
-TEST_CASE("Iter") {
-  // EuclideanVector a{1};      // a Euclidean Vector in 1 dimension, with default magnitude 0.0.
-  // EuclideanVector b{2, 4.0};    // a Euclidean Vector in 2 dimensions with magnitude 4.0 in both dimensions
-
+TEST_CASE("Iterator constructor") {
   std::vector<double> l;
   l.push_back(5.0);
   l.push_back(6.5);
   l.push_back(7.0);
-  EuclideanVector c{l.begin(), l.end()}; // a Euclidean Vector in 3 dimensions constructed from a vector of magnitudes
+  // a Euclidean Vector in 3 dimensions constructed from a vector of magnitudes
+  EuclideanVector c{
+      l.begin(),
+      l.end()};
   REQUIRE(c.GetNumDimensions() == 3);
+}
+
+TEST_CASE("Copy constructor") {
+  EuclideanVector a{2, 4.0};
+  EuclideanVector b{a};
+
+  REQUIRE(b.GetNumDimensions() == 2);
+
 }

@@ -1,6 +1,6 @@
 #include <iostream>
-#include <vector>
 #include <utility>
+#include <vector>
 
 #include "assignments/ev/euclidean_vector.h"
 
@@ -8,8 +8,6 @@ int main() {
   EuclideanVector a(2);
 
   std::cout << a;
-
-
 
   /**
   std::vector<double> l{1, 2, 3};
