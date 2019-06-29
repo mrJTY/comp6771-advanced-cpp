@@ -11,4 +11,6 @@
 #include "assignments/ev/euclidean_vector.h"
 #include "catch.h"
 
-// TODO(students): Fill this in.
+TEST_CASE("Test constructors"){
+  //REQUIRE();
+}

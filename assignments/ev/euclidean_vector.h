@@ -4,6 +4,7 @@
 #include <string>
 #include <memory>
 
+/**
 class EuclideanVectorError : public std::exception {
  public:
   explicit EuclideanVectorError(const std::string& what) : what_(what) {}
@@ -11,13 +12,14 @@ class EuclideanVectorError : public std::exception {
  private:
   std::string what_;
 };
+**/
 
 class EuclideanVector {
  public:
-  explicit EuclideanVector(int i);
+  explicit EuclideanVector(int i) : i_{i} {};
   friend std::ostream& operator<<(std::ostream& os, const EuclideanVector& v);
-  // TODO(you): add more
- private:
-  std::unique_ptr<double[]> magnitudes_;
-  // TODO(you): add more
+
+  private:
+    int i_;
+  //  std::unique_ptr<double[]> magnitudes_;
 };

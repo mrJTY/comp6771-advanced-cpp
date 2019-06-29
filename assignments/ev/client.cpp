@@ -7,6 +7,11 @@
 int main() {
   EuclideanVector a(2);
 
+  std::cout << a;
+
+
+
+  /**
   std::vector<double> l{1, 2, 3};
   EuclideanVector b{l.begin(), l.end()};
 
@@ -65,4 +70,6 @@ int main() {
   for (auto d : lj) {
     std::cout << d << '\n';
   }
+  **/
+  return 0;
 }
