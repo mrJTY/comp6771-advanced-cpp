@@ -20,9 +20,10 @@ TEST_CASE("Constructor with num dimensions and float"){
   EuclideanVector a{2, 4.0};
   REQUIRE(a.GetNumDimensions() == 2);
 
-  //int x {3};
-  //double y {3.24};
-  //EuclideanVector b{x, y};
+  int x {3};
+  double y {3.24};
+  EuclideanVector b{x, y};
+  REQUIRE(b.GetNumDimensions() == 3);
 }
 
 /**
