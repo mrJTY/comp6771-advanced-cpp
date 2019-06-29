@@ -17,6 +17,10 @@ class EuclideanVectorError : public std::exception {
 
 class EuclideanVector {
  public:
+  /**
+   * Constructors
+   **/
+
   // Constructor with number of dimensions
   explicit EuclideanVector(int numDimensions) : numDimensions_{numDimensions} {};
 
@@ -28,10 +32,21 @@ class EuclideanVector {
     }
   };
 
+  // Iterator constructor
+  EuclideanVector(std::vector<double>::const_iterator begin, std::vector<double>::const_iterator end){
+    for(auto iter = begin; iter != end; ++iter){
+      vector_.push_back(*iter);
+    }
+
+    numDimensions_ = vector_.size();
+  }
+
+
+
 
   /**
    * Getters
-   **/
+    **/
   const int& GetNumDimensions(){ return this->numDimensions_; }
   // TODO: const double& at(int index){ return static_cast<double> this->vector_.at(index); }
 
