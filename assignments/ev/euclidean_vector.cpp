@@ -4,7 +4,8 @@
 
 
 std::ostream& operator<<(std::ostream& os, const EuclideanVector& v){
-  os << std::to_string(v.i_);
+  //int numDimensions = v.GetNumDimensions();
+  os << std::to_string(v.numDimensions_);
   return os;
 }
 

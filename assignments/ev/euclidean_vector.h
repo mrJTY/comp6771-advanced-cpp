@@ -16,10 +16,22 @@ class EuclideanVectorError : public std::exception {
 
 class EuclideanVector {
  public:
-  explicit EuclideanVector(int i) : i_{i} {};
+  // Constructor with number of dimensions
+  explicit EuclideanVector(int numDimensions) : numDimensions_{numDimensions} {};
+
+  // A constructor that takes the number of dimensions (as a int) and initialises the magnitude in each dimension as the second argument (a double).
+  // You can assume the integer input will always be non-negative.
+  EuclideanVector(int numDimensions, float magnitude) : numDimensions_{numDimensions}, magnitude_{magnitude} {};
+
+
+  int GetNumDimensions(){
+    return numDimensions_;
+  }
+
   friend std::ostream& operator<<(std::ostream& os, const EuclideanVector& v);
 
   private:
-    int i_;
+    int numDimensions_;
+    float magnitude_;
   //  std::unique_ptr<double[]> magnitudes_;
 };
