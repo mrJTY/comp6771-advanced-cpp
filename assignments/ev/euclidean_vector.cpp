@@ -6,3 +6,11 @@ std::ostream& operator<<(std::ostream& os, const EuclideanVector& v) {
   os << std::to_string(v.numDimensions_);
   return os;
 }
+
+const int& EuclideanVector::GetNumDimensions() {
+  return numDimensions_;
+}
+
+const std::vector<double>& EuclideanVector::GetVector(){
+  return vector_;
+}
