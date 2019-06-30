@@ -1,12 +1,15 @@
 #include <iostream>
-#include <vector>
 #include <utility>
+#include <vector>
 
 #include "assignments/ev/euclidean_vector.h"
 
 int main() {
   EuclideanVector a(2);
 
+  std::cout << a;
+
+  /**
   std::vector<double> l{1, 2, 3};
   EuclideanVector b{l.begin(), l.end()};
 
@@ -60,9 +63,11 @@ int main() {
   std::cout << j << '\n';
 
   // type cast from EuclideanVector to a std::vector
-  std::vector<double> lj = j;
+  auto lj = std::vector<double>{j};
 
   for (auto d : lj) {
     std::cout << d << '\n';
   }
+  **/
+  return 0;
 }
