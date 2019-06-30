@@ -14,3 +14,17 @@ const int& EuclideanVector::GetNumDimensions() {
 const std::vector<double>& EuclideanVector::GetVector(){
   return vector_;
 }
+
+EuclideanVector& EuclideanVector::operator+=(EuclideanVector& v) {
+  // TODO: assert that the two vectors are the same
+
+  auto thisIter = this->vector_.begin();
+  auto otherIter = v.vector_.cbegin();
+  while(thisIter != this->vector_.end()){
+    thisIter += *otherIter;
+
+    thisIter++;
+    otherIter++;
+  }
+  return *this;
+}

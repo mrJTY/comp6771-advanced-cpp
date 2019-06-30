@@ -39,7 +39,9 @@ class EuclideanVector {
   const int& GetNumDimensions();
   const std::vector<double>& GetVector();
 
+  // Operators
   friend std::ostream& operator<<(std::ostream& os, const EuclideanVector& v);
+  EuclideanVector& operator+=(EuclideanVector& v);
 
  private:
   int numDimensions_;
