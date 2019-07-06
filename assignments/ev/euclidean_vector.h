@@ -17,24 +17,14 @@ class EuclideanVectorError : public std::exception {
 
 class EuclideanVector {
  public:
-  /**
-   * Constructors
-   **/
-
-  // Constructor with number of dimensions
-  explicit EuclideanVector(int numDimensions) : numDimensions_{numDimensions} {};
-
-  // A constructor that takes the number of dimensions (as a int) and initialises the magnitude in
-  // each dimension as the second argument (a double). You can assume the integer input will always
-  // be non-negative.
+  // Constructors
+  explicit EuclideanVector(int numDimensions) : numDimensions_{numDimensions} {}
   EuclideanVector(int numDimensions, double magnitude)
     : numDimensions_{numDimensions}, magnitude_{magnitude} {
     for (int i = 0; i < numDimensions_; i++) {
       vector_.push_back(magnitude_);
     }
   };
-
-  // Iterator constructor
   EuclideanVector(std::vector<double>::const_iterator begin,
                   std::vector<double>::const_iterator end) {
     for (auto iter = begin; iter != end; ++iter) {
@@ -43,21 +33,15 @@ class EuclideanVector {
 
     numDimensions_ = vector_.size();
   }
+  EuclideanVector(EuclideanVector& v) : EuclideanVector(v.GetVector().cbegin(), v.GetVector().cend()){}
 
-  // Copy constructor using the iterator constructor
-  // TODO: this disqualifies const
- EuclideanVector(EuclideanVector& v) : EuclideanVector(v.GetVector().cbegin(), v.GetVector().cend()){}
+  // Getters
+  const int& GetNumDimensions();
+  const std::vector<double>& GetVector();
 
-  /**
-   * Getters
-   **/
-  const int& GetNumDimensions() { return this->numDimensions_; }
-  const std::vector<double> GetVector() { return this->vector_;}
-  //const std::vector<double>::const_iterator& cbegin() { return vector_.cbegin();}
-  //const std::vector<double>::const_iterator& cend() { return vector_.cend();}
-  // TODO: const double& at(int index){ return static_cast<double> this->vector_.at(index); }
-
+  // Operators
   friend std::ostream& operator<<(std::ostream& os, const EuclideanVector& v);
+  EuclideanVector& operator+=(EuclideanVector& v);
 
  private:
   int numDimensions_;
