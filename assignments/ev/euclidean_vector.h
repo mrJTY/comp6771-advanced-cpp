@@ -21,19 +21,25 @@ class EuclideanVector {
   explicit EuclideanVector(int numDimensions) : numDimensions_{numDimensions} {}
   EuclideanVector(int numDimensions, double magnitude)
     : numDimensions_{numDimensions}, magnitude_{magnitude} {
+
+      double[numDimensions] magnitudes_array;
     for (int i = 0; i < numDimensions_; i++) {
-      vector_.push_back(magnitude_);
-    }
-  };
-  EuclideanVector(std::vector<double>::const_iterator begin,
-                  std::vector<double>::const_iterator end) {
-    for (auto iter = begin; iter != end; ++iter) {
-      vector_.push_back(*iter);
+//      vector_.push_back(magnitude_);
+        magnitudes_array[i] = magnitude;
     }
 
-    numDimensions_ = vector_.size();
-  }
-  EuclideanVector(EuclideanVector& v) : EuclideanVector(v.GetVector().cbegin(), v.GetVector().cend()){}
+  };
+
+  // TODO:
+//  EuclideanVector(std::vector<double>::const_iterator begin,
+//                  std::vector<double>::const_iterator end) {
+//    for (auto iter = begin; iter != end; ++iter) {
+//      vector_.push_back(*iter);
+//    }
+//
+//    numDimensions_ = vector_.size();
+//  }
+//  EuclideanVector(EuclideanVector& v) : EuclideanVector(v.GetVector().cbegin(), v.GetVector().cend()){}
 
   // Getters
   const int& GetNumDimensions();
@@ -48,6 +54,5 @@ class EuclideanVector {
  private:
   int numDimensions_;
   double magnitude_;
-  std::vector<double> vector_;
-  //  std::unique_ptr<double[]> magnitudes_;
+  std::unique_ptr<double[]> magnitudes_;
 };
