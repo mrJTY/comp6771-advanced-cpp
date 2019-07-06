@@ -45,3 +45,8 @@ TEST_CASE("Copy constructor") {
   REQUIRE(b.GetNumDimensions() == 2);
 
 }
+
+TEST_CASE("Compound constructor") {
+  EuclideanVector a{2, 4.0};
+
+}

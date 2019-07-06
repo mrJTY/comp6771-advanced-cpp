@@ -1,4 +1,5 @@
 #include "assignments/ev/euclidean_vector.h"
+#include <cassert>
 
 #include <algorithm>  // Look at these - they are helpful https://en.cppreference.com/w/cpp/algorithm
 
@@ -28,3 +29,13 @@ EuclideanVector& EuclideanVector::operator+=(EuclideanVector& v) {
   }
   return *this;
 }
+
+// Setter
+double& EuclideanVector::operator[](int i) {
+  assert(i <= this->GetNumDimensions());
+  return this->vector_.at(i);
+};
+double EuclideanVector::operator[](int i) const {
+  assert(i <= this->GetNumDimensions());
+  return this->vector_.at(i);
+};
