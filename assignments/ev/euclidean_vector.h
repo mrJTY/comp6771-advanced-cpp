@@ -52,9 +52,12 @@ class EuclideanVector {
   }
 
   // Copy constructor
-  // EuclideanVector(EuclideanVector& v) : EuclideanVector(
-  //     v.GetVector().cbegin(), v.GetVector().cend()) {
-  // }
+  EuclideanVector(const EuclideanVector& v) : numDimensions_{v.numDimensions_} {
+    magnitudes_ = std::make_unique<double[]>(v.numDimensions_);
+    for(int i = 0; i < v.numDimensions_; ++i){
+      magnitudes_[i] = v.magnitudes_[i];
+    }
+  }
 
   // Move constructor
   EuclideanVector(EuclideanVector&& sourceVector) noexcept :
