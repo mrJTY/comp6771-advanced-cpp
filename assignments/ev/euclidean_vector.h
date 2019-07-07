@@ -1,15 +1,16 @@
 // TODO(you): Include header guards
 
 #include <exception>
+#include <list>
 #include <memory>
 #include <string>
 #include <vector>
-#include <list>
 
 class EuclideanVectorError : public std::exception {
  public:
   explicit EuclideanVectorError(const std::string& what) : what_(what) {}
-  const char* what() const noexcept{ return what_.c_str(); }
+  const char* what() const noexcept { return what_.c_str(); }
+
  private:
   std::string what_;
 };
@@ -23,11 +24,10 @@ class EuclideanVector {
 
   // Construct by providing number of dimensions
   // and default magnitude value
-  EuclideanVector(int numDimensions, double magnitudeForAll)
-    : numDimensions_{numDimensions} {
+  EuclideanVector(int numDimensions, double magnitudeForAll) : numDimensions_{numDimensions} {
     magnitudes_ = std::make_unique<double[]>(numDimensions_);
     for (int i = 0; i < numDimensions_; i++) {
-        magnitudes_[i] = magnitudeForAll;
+      magnitudes_[i] = magnitudeForAll;
     }
   };
 
@@ -53,7 +53,7 @@ class EuclideanVector {
   // Copy constructor
   EuclideanVector(const EuclideanVector& v) : numDimensions_{v.numDimensions_} {
     magnitudes_ = std::make_unique<double[]>(v.numDimensions_);
-    for(int i = 0; i < v.numDimensions_; ++i){
+    for (int i = 0; i < v.numDimensions_; ++i) {
       magnitudes_[i] = v.magnitudes_[i];
     }
   }
@@ -62,17 +62,15 @@ class EuclideanVector {
   EuclideanVector& operator=(const EuclideanVector& rhs);
 
   // Move constructor
-  EuclideanVector(EuclideanVector&& sourceVector) noexcept :
-    numDimensions_{sourceVector.numDimensions_},
-    magnitudes_{std::move(sourceVector.magnitudes_)} {
-     // Clear out the the other source vector
-     sourceVector.numDimensions_ = 0;
+  EuclideanVector(EuclideanVector&& sourceVector) noexcept
+    : numDimensions_{sourceVector.numDimensions_}, magnitudes_{
+                                                       std::move(sourceVector.magnitudes_)} {
+    // Clear out the the other source vector
+    sourceVector.numDimensions_ = 0;
   }
 
   // Destructor
-  ~EuclideanVector(){
-    magnitudes_.release();
-  }
+  ~EuclideanVector() { magnitudes_.release(); }
 
   // Methods
   const int& GetNumDimensions();
@@ -85,8 +83,8 @@ class EuclideanVector {
   EuclideanVector& operator*=(const double d);
   EuclideanVector& operator/=(const int d);
   EuclideanVector& operator/=(const double d);
-  double& operator[](int i); // Setting via []
-  double operator[](int i) const; // getting via []
+  double& operator[](int i);       // Setting via []
+  double operator[](int i) const;  // getting via []
 
   // Vector converters
   explicit operator std::vector<double>();
@@ -105,7 +103,6 @@ class EuclideanVector {
   friend EuclideanVector operator/(const EuclideanVector& lhs, const int d);
   friend bool operator==(const EuclideanVector& lhs, const EuclideanVector& rhs);
   friend bool operator!=(const EuclideanVector& lhs, const EuclideanVector& rhs);
-
 
  private:
   int numDimensions_;

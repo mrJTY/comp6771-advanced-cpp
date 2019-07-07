@@ -5,4 +5,4 @@ submit:
 format:
 	clang-format -i *.cpp && \
 	clang-format -i *.h && \
-	../../cpplint.py *.cpp
+	python2 ../../cpplint.py *.cpp
