@@ -19,25 +19,34 @@ class EuclideanVector {
  public:
   // Constructors
   explicit EuclideanVector(int numDimensions) : numDimensions_{numDimensions} {}
-  EuclideanVector(int numDimensions, double magnitude)
+  EuclideanVector(int numDimensions, double magnitudeForAll)
     : numDimensions_{numDimensions} {
 
     magnitudes_ = std::make_unique<double[]>(numDimensions_);
     for (int i = 0; i < numDimensions_; i++) {
-        magnitudes_[i] = magnitude;
+        magnitudes_[i] = magnitudeForAll;
     }
 
   };
 
-  // TODO:
-//  EuclideanVector(std::vector<double>::const_iterator begin,
-//                  std::vector<double>::const_iterator end) {
-//    for (auto iter = begin; iter != end; ++iter) {
-//      vector_.push_back(*iter);
-//    }
-//
-//    numDimensions_ = vector_.size();
-//  }
+  EuclideanVector(std::vector<double>::const_iterator begin,
+                  std::vector<double>::const_iterator end) {
+    // Check how any dimensions
+    int i = 0;
+    for (auto iter = begin; iter != end; ++iter) {
+      ++i;
+    }
+    numDimensions_ = i;
+
+
+    // Copy over
+    magnitudes_ = std::make_unique<double[]>(numDimensions_);
+    i = 0;
+    for (auto iter = begin; iter != end; ++iter) {
+      magnitudes_[i] = *iter;
+      ++i;
+    }
+  }
 //  EuclideanVector(EuclideanVector& v) : EuclideanVector(v.GetVector().cbegin(), v.GetVector().cend()){}
 
   // Getters

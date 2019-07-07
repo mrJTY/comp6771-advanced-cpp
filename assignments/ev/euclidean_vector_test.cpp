@@ -26,7 +26,6 @@ TEST_CASE("Constructor with num dimensions and float") {
   REQUIRE(b.GetNumDimensions() == 3);
 }
 
-/**
 TEST_CASE("Iterator constructor") {
   std::vector<double> l;
   l.push_back(5.0);
@@ -39,6 +38,7 @@ TEST_CASE("Iterator constructor") {
   REQUIRE(c.GetNumDimensions() == 3);
 }
 
+/**
 TEST_CASE("Copy constructor") {
   EuclideanVector a{2, 4.0};
   EuclideanVector b{a};
