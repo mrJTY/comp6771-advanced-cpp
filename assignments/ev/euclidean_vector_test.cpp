@@ -93,10 +93,10 @@ TEST_CASE("Multiplication operator"){
   REQUIRE(c[0] == 10.0);
   REQUIRE(c[1] == 10.0);
 
-  // auto d = 2.0 * a;
-  // REQUIRE(d.GetNumDimensions() == 2);
-  // REQUIRE(d[0] == 10.0);
-  // REQUIRE(d[1] == 10.0);
+  auto d = 2.0 * a;
+  REQUIRE(d.GetNumDimensions() == 2);
+  REQUIRE(d[0] == 10.0);
+  REQUIRE(d[1] == 10.0);
 
 
   // Compound assignment

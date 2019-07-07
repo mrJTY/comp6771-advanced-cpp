@@ -100,6 +100,14 @@ EuclideanVector operator*(const EuclideanVector& lhs, const int d){
   return v;
 }
 
+EuclideanVector operator*(const double d, const EuclideanVector& rhs){
+  EuclideanVector v = EuclideanVector{rhs.numDimensions_};
+  for(int i = 0; i < rhs.numDimensions_; ++i){
+    v.magnitudes_[i] = rhs.magnitudes_[i] * d;
+  }
+  return v;
+}
+
 EuclideanVector operator*(const int d, const EuclideanVector& rhs){
   EuclideanVector v = EuclideanVector{rhs.numDimensions_};
   for(int i = 0; i < rhs.numDimensions_; ++i){
