@@ -44,6 +44,17 @@ TEST_CASE("Iterator constructor") {
   REQUIRE(c.GetNumDimensions() == 3);
 }
 
+TEST_CASE("Plus equals operator"){
+  EuclideanVector a{2, 5.0};
+  EuclideanVector b{2, 5.0};
+
+  a += b;
+
+  REQUIRE(a.GetNumDimensions() == 2);
+  REQUIRE(a[0] == 10.0);
+  REQUIRE(a[1] == 10.0);
+}
+
 
 /**
 TEST_CASE("Copy constructor") {

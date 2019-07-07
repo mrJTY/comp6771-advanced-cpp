@@ -21,12 +21,10 @@ class EuclideanVector {
   explicit EuclideanVector(int numDimensions) : numDimensions_{numDimensions} {}
   EuclideanVector(int numDimensions, double magnitudeForAll)
     : numDimensions_{numDimensions} {
-
     magnitudes_ = std::make_unique<double[]>(numDimensions_);
     for (int i = 0; i < numDimensions_; i++) {
         magnitudes_[i] = magnitudeForAll;
     }
-
   };
 
   EuclideanVector(std::vector<double>::const_iterator begin,
@@ -38,7 +36,6 @@ class EuclideanVector {
     }
     numDimensions_ = i;
 
-
     // Copy over
     magnitudes_ = std::make_unique<double[]>(numDimensions_);
     i = 0;
@@ -49,12 +46,11 @@ class EuclideanVector {
   }
 //  EuclideanVector(EuclideanVector& v) : EuclideanVector(v.GetVector().cbegin(), v.GetVector().cend()){}
 
-  // Getters
   const int& GetNumDimensions();
 
   // Operators
   friend std::ostream& operator<<(std::ostream& os, const EuclideanVector& v);
-  //EuclideanVector& operator+=(EuclideanVector& v);
+  EuclideanVector& operator+=(EuclideanVector& v);
   double& operator[](int i); // Setting via []
   double operator[](int i) const; // getting via []
 

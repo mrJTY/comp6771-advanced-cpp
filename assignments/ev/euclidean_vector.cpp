@@ -12,33 +12,21 @@ const int& EuclideanVector::GetNumDimensions() {
   return numDimensions_;
 }
 
-
-/**
-const std::vector<double>& EuclideanVector::GetVector(){
-  return vector_;
-}
-
-EuclideanVector& EuclideanVector::operator+=(EuclideanVector& v) {
-  // TODO: assert that the two vectors are the same
-
-  auto thisIter = this->vector_.begin();
-  auto otherIter = v.vector_.cbegin();
-  while(thisIter != this->vector_.end()){
-    thisIter += *otherIter;
-
-    thisIter++;
-    otherIter++;
-  }
-  return *this;
-}
-**/
-
-// Setter
 double& EuclideanVector::operator[](int i) {
   assert(i <= this->numDimensions_);
   return this->magnitudes_[i];
 };
+
 double EuclideanVector::operator[](int i) const {
   assert(i <= this->numDimensions_);
   return this->magnitudes_[i];
 };
+
+EuclideanVector& EuclideanVector::operator+=(EuclideanVector& v) {
+  assert(this->numDimensions_ == v.numDimensions_);
+  for(int i = 0; i < this->numDimensions_; ++i){
+    this->magnitudes_[i] += v.magnitudes_[i];
+  }
+  return *this;
+}
+
