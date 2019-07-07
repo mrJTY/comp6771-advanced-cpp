@@ -216,6 +216,25 @@ TEST_CASE("Division operator"){
 }
 
 /**
+ * Test equality
+ * by comparing values in magnitudes
+ **/
+TEST_CASE("Equality operator"){
+  EuclideanVector a{2, 25.0};
+  EuclideanVector b{2, 25.0};
+
+  REQUIRE(a == b);
+}
+TEST_CASE("Inequality operator"){
+  EuclideanVector a{3, 25.0};
+  EuclideanVector b{2, 25.0};
+  EuclideanVector c{2, 5.0};
+
+  REQUIRE(a != b);
+  REQUIRE(b != c);
+}
+
+/**
  * Cast a EV to a std::vector
  **/
 TEST_CASE("Vector type conversion") {

@@ -190,6 +190,31 @@ EuclideanVector operator/(const EuclideanVector& lhs, const int d){
   return v;
 }
 
+// Equal comparisons
+bool operator==(const EuclideanVector& lhs, const EuclideanVector& rhs){
+  if(lhs.numDimensions_ != rhs.numDimensions_){
+    return false;
+  }
+  for(auto i = 0; i < lhs.numDimensions_; ++i){
+    if(lhs[i] != rhs[i]){
+      return false;
+    }
+  }
+  return true;
+}
+
+bool operator!=(const EuclideanVector& lhs, const EuclideanVector& rhs){
+  if(lhs.numDimensions_ != rhs.numDimensions_){
+    return true;
+  }
+  for(auto i = 0; i < lhs.numDimensions_; ++i){
+    if(lhs[i] != rhs[i]){
+      return true;
+    }
+  }
+  return false;
+}
+
 // Vector conversion
 EuclideanVector::operator std::vector<double>(){
   std::vector<double> v;
