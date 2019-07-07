@@ -66,8 +66,14 @@ TEST_CASE("Minus operator"){
   EuclideanVector a{2, 5.0};
   EuclideanVector b{2, 5.0};
 
-  a -= b;
+  // Operator
+  auto c = a - b;
+  REQUIRE(c.GetNumDimensions() == 2);
+  REQUIRE(c[0] == 0.0);
+  REQUIRE(c[1] == 0.0);
 
+  // Compund assignment
+  a -= b;
   REQUIRE(a.GetNumDimensions() == 2);
   REQUIRE(a[0] == 0.0);
   REQUIRE(a[1] == 0.0);
@@ -80,6 +86,9 @@ TEST_CASE("Multiplication operator"){
   REQUIRE(a.GetNumDimensions() == 2);
   REQUIRE(a[0] == 10.0);
   REQUIRE(a[1] == 10.0);
+}
+
+TEST_CASE("Dot product"){
 }
 
 TEST_CASE("Division operator"){

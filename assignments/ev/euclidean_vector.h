@@ -51,7 +51,6 @@ class EuclideanVector {
 
   const int& GetNumDimensions();
 
-  // Operators
   EuclideanVector& operator+=(const EuclideanVector& v);
   EuclideanVector& operator-=(const EuclideanVector& v);
   EuclideanVector& operator*=(const int d);
@@ -61,9 +60,10 @@ class EuclideanVector {
   double& operator[](int i); // Setting via []
   double operator[](int i) const; // getting via []
 
-  // Friends
   friend std::ostream& operator<<(std::ostream& os, const EuclideanVector& v);
   friend EuclideanVector operator+(const EuclideanVector& lhs, const EuclideanVector& rhs);
+  friend EuclideanVector operator-(const EuclideanVector& lhs, const EuclideanVector& rhs);
+  friend double operator*(const EuclideanVector& lhs, const EuclideanVector& rhs);
 
  private:
   int numDimensions_;
