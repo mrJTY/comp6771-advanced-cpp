@@ -58,6 +58,42 @@ TEST_CASE("Iterator constructor") {
 }
 
 /**
+ * Test copy constructor
+ * by passing an existing EV to a new EV.
+ * The old OV should still retain the
+ * existing magnitudes.
+ **/
+TEST_CASE("Copy constructor") {
+  EuclideanVector oldEV{2, 4.0};
+  EuclideanVector newEV{oldEV};
+
+  REQUIRE(newEV[0] == 4.0);
+  REQUIRE(newEV[1] == 4.0);
+
+  REQUIRE(oldEV[0] == 4.0);
+  REQUIRE(oldEV[1] == 4.0);
+
+  REQUIRE(newEV.GetNumDimensions() == oldEV.GetNumDimensions());
+}
+
+/**
+ * Test move constructor
+ * by passing an existing EV to a new EV.
+ * The old OV should NOT retain the
+ * it's magnitudes.
+ **/
+TEST_CASE("Move constructor") {
+  EuclideanVector oldEV{2, 4.0};
+  EuclideanVector newEV = std::move(oldEV);
+
+  REQUIRE(newEV[0] == 4.0);
+  REQUIRE(newEV[1] == 4.0);
+
+  REQUIRE(newEV.GetNumDimensions() == 2);
+  REQUIRE(oldEV.GetNumDimensions() == 0);
+}
+
+/**
  * Test the at method which should
  * return a double from the EV.
  **/
@@ -179,3 +215,13 @@ TEST_CASE("Compound constructor") {
 }
 **/
 
+/**
+ * Cast a EV to a std::vector
+ **/
+TEST_CASE("Vector type conversion") {
+  EuclideanVector a{1, 100.0};
+  std::vector<double> vf = std::vector<double>{a};
+  REQUIRE(vf.at(0) == 100.0);
+  // TODO: require this to fail
+  //REQUIRE(vf.at(1));
+}

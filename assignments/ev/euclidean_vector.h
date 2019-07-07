@@ -17,10 +17,13 @@ class EuclideanVectorError : public std::exception {
 
 class EuclideanVector {
  public:
+  // Construct by providing number of dimensions
   explicit EuclideanVector(int numDimensions) : numDimensions_{numDimensions} {
     magnitudes_ = std::make_unique<double[]>(numDimensions_);
   }
 
+  // Construct by providing number of dimensions
+  // and default magnitude value
   EuclideanVector(int numDimensions, double magnitudeForAll)
     : numDimensions_{numDimensions} {
     magnitudes_ = std::make_unique<double[]>(numDimensions_);
@@ -29,6 +32,7 @@ class EuclideanVector {
     }
   };
 
+  // Construct by passing iterators
   EuclideanVector(std::vector<double>::const_iterator begin,
                   std::vector<double>::const_iterator end) {
     // Check how any dimensions
@@ -46,12 +50,26 @@ class EuclideanVector {
       ++i;
     }
   }
-//  EuclideanVector(EuclideanVector& v) : EuclideanVector(v.GetVector().cbegin(), v.GetVector().cend()){}
+
+  // Copy constructor
+  EuclideanVector(const EuclideanVector& v) : numDimensions_{v.numDimensions_} {
+    magnitudes_ = std::make_unique<double[]>(v.numDimensions_);
+    for(int i = 0; i < v.numDimensions_; ++i){
+      magnitudes_[i] = v.magnitudes_[i];
+    }
+  }
+
+  // Move constructor
+  EuclideanVector(EuclideanVector&& sourceVector) noexcept :
+    numDimensions_{sourceVector.numDimensions_},
+    magnitudes_{std::move(sourceVector.magnitudes_)} {
+     // Clear out the the other source vector
+     sourceVector.numDimensions_ = 0;
+  }
 
   // Methods
   const int& GetNumDimensions();
   double at(int);
-
 
   // Operators
   EuclideanVector& operator+=(const EuclideanVector& v);
@@ -63,6 +81,10 @@ class EuclideanVector {
   double& operator[](int i); // Setting via []
   double operator[](int i) const; // getting via []
 
+  // Vector converters
+  explicit operator std::vector<double>();
+
+  // Friends
   friend std::ostream& operator<<(std::ostream& os, const EuclideanVector& v);
   friend EuclideanVector operator+(const EuclideanVector& lhs, const EuclideanVector& rhs);
   friend EuclideanVector operator-(const EuclideanVector& lhs, const EuclideanVector& rhs);
