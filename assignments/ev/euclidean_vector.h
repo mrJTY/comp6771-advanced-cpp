@@ -5,7 +5,6 @@
 #include <string>
 #include <vector>
 
-/**
 class EuclideanVectorError : public std::exception {
  public:
   explicit EuclideanVectorError(const std::string& what) : what_(what) {}
@@ -13,7 +12,6 @@ class EuclideanVectorError : public std::exception {
  private:
   std::string what_;
 };
-**/
 
 class EuclideanVector {
  public:

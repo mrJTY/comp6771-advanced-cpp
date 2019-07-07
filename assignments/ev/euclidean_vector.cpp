@@ -32,15 +32,13 @@ const int& EuclideanVector::GetNumDimensions() {
 
 // Setter subscript
 double& EuclideanVector::operator[](int i) {
-  // TODO: add exception
-  assert(i <= this->numDimensions_);
+  assert(i < this->numDimensions_);
   return this->magnitudes_[i];
 }
 
 // Getter subscript
 double EuclideanVector::operator[](int i) const {
-  // TODO: add exception
-  assert(i <= this->numDimensions_);
+  assert(i < this->numDimensions_);
   return this->magnitudes_[i];
 }
 
@@ -50,7 +48,7 @@ EuclideanVector& EuclideanVector::operator+=(const EuclideanVector& v) {
     throw "Dimensions of LHS(X) and RHS(Y) do not match";
   }
 
-  assert(this->numDimensions_ == v.numDimensions_);
+  // assert(this->numDimensions_ == v.numDimensions_);
   for(int i = 0; i < this->numDimensions_; ++i){
     this->magnitudes_[i] += v.magnitudes_[i];
   }
@@ -58,7 +56,9 @@ EuclideanVector& EuclideanVector::operator+=(const EuclideanVector& v) {
 }
 
 EuclideanVector operator+(const EuclideanVector& lhs, const EuclideanVector& rhs){
-  assert(lhs.numDimensions_ == rhs.numDimensions_);
+  if(lhs.numDimensions_ != rhs.numDimensions_){
+    throw EuclideanVectorError("Dimensions of LHS(X) and RHS(Y) do not match");
+  }
   EuclideanVector v = EuclideanVector{lhs.numDimensions_};
   for(int i = 0; i < lhs.numDimensions_; ++i){
     v.magnitudes_[i] = lhs.magnitudes_[i] + rhs.magnitudes_[i];

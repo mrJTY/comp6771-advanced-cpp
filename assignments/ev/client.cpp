@@ -13,11 +13,16 @@ int main() {
   EuclideanVector b{l.begin(), l.end()};
   std::cout << b << "\n";
 
-  /**
+  auto b2 = b + b;
+  std::cout << b2 << "\n";
+
 
   std::vector<double> v2{4, 5, 6, 7};
   EuclideanVector c{v2.begin(), v2.end()};
 
+  auto c2 = b+c;
+
+  /**
   std::vector<double> a1{5, 4, 3, 2, 1};
   EuclideanVector d{a1.begin(), a1.end()};
 
