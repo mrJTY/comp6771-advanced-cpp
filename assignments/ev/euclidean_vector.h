@@ -64,6 +64,10 @@ class EuclideanVector {
   friend EuclideanVector operator+(const EuclideanVector& lhs, const EuclideanVector& rhs);
   friend EuclideanVector operator-(const EuclideanVector& lhs, const EuclideanVector& rhs);
   friend double operator*(const EuclideanVector& lhs, const EuclideanVector& rhs);
+  friend EuclideanVector operator*(const EuclideanVector& lhs, const double d);
+  friend EuclideanVector operator*(const EuclideanVector& lhs, const int d);
+  friend EuclideanVector operator*(const double d, const EuclideanVector& rhs);
+  friend EuclideanVector operator*(const int d, const EuclideanVector& rhs);
 
  private:
   int numDimensions_;

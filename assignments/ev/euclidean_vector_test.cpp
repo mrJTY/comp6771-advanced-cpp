@@ -82,6 +82,24 @@ TEST_CASE("Minus operator"){
 TEST_CASE("Multiplication operator"){
   EuclideanVector a{2, 5.0};
 
+  // Dot product
+  double b = a * a;
+  REQUIRE(b == 50.0);
+  REQUIRE(b == 50.0);
+
+  // Scalar
+  auto c = a * 2.0;
+  REQUIRE(c.GetNumDimensions() == 2);
+  REQUIRE(c[0] == 10.0);
+  REQUIRE(c[1] == 10.0);
+
+  // auto d = 2.0 * a;
+  // REQUIRE(d.GetNumDimensions() == 2);
+  // REQUIRE(d[0] == 10.0);
+  // REQUIRE(d[1] == 10.0);
+
+
+  // Compound assignment
   a *= 2;
   REQUIRE(a.GetNumDimensions() == 2);
   REQUIRE(a[0] == 10.0);
@@ -89,6 +107,12 @@ TEST_CASE("Multiplication operator"){
 }
 
 TEST_CASE("Dot product"){
+  EuclideanVector a{2, 5.0};
+  EuclideanVector b{2, 5.0};
+
+  auto c = a * b;
+
+  REQUIRE(c == 50.0);
 }
 
 TEST_CASE("Division operator"){

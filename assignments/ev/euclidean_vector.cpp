@@ -22,6 +22,7 @@ double EuclideanVector::operator[](int i) const {
   return this->magnitudes_[i];
 };
 
+// Additions
 EuclideanVector& EuclideanVector::operator+=(const EuclideanVector& v) {
   assert(this->numDimensions_ == v.numDimensions_);
   for(int i = 0; i < this->numDimensions_; ++i){
@@ -39,6 +40,7 @@ EuclideanVector operator+(const EuclideanVector& lhs, const EuclideanVector& rhs
   return v;
 }
 
+// Subtractions
 EuclideanVector& EuclideanVector::operator-=(const EuclideanVector& v) {
   assert(this->numDimensions_ == v.numDimensions_);
   for(int i = 0; i < this->numDimensions_; ++i){
@@ -56,6 +58,7 @@ EuclideanVector operator-(const EuclideanVector& lhs, const EuclideanVector& rhs
   return v;
 }
 
+// Multiplications
 EuclideanVector& EuclideanVector::operator*=(const int d) {
   for(int i = 0; i < this->numDimensions_; ++i){
     this->magnitudes_[i] = this->magnitudes_[i] * d;
@@ -81,6 +84,31 @@ double operator*(const EuclideanVector& lhs, const EuclideanVector& rhs){
   return dotProduct;
 }
 
+EuclideanVector operator*(const EuclideanVector& lhs, const double d){
+  EuclideanVector v = EuclideanVector{lhs.numDimensions_};
+  for(int i = 0; i < lhs.numDimensions_; ++i){
+    v.magnitudes_[i] = lhs.magnitudes_[i] * d;
+  }
+  return v;
+}
+
+EuclideanVector operator*(const EuclideanVector& lhs, const int d){
+  EuclideanVector v = EuclideanVector{lhs.numDimensions_};
+  for(int i = 0; i < lhs.numDimensions_; ++i){
+    v.magnitudes_[i] = lhs.magnitudes_[i] * d;
+  }
+  return v;
+}
+
+EuclideanVector operator*(const int d, const EuclideanVector& rhs){
+  EuclideanVector v = EuclideanVector{rhs.numDimensions_};
+  for(int i = 0; i < rhs.numDimensions_; ++i){
+    v.magnitudes_[i] = rhs.magnitudes_[i] * d;
+  }
+  return v;
+}
+
+// Divisions
 EuclideanVector& EuclideanVector::operator/=(const int d) {
   for(int i = 0; i < this->numDimensions_; ++i){
     this->magnitudes_[i] = this->magnitudes_[i] / d;
