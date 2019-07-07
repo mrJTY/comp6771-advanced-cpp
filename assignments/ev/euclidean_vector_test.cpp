@@ -14,16 +14,22 @@
 TEST_CASE("Constructor with int") {
   EuclideanVector a(2);
   REQUIRE(a.GetNumDimensions() == 2);
+
 }
 
 TEST_CASE("Constructor with num dimensions and float") {
   EuclideanVector a{2, 4.0};
   REQUIRE(a.GetNumDimensions() == 2);
+  REQUIRE(a[0] == 4.0);
+  REQUIRE(a[1] == 4.0);
 
   int x{3};
   double y{3.24};
   EuclideanVector b{x, y};
   REQUIRE(b.GetNumDimensions() == 3);
+  REQUIRE(b[0] == y);
+  REQUIRE(b[1] == y);
+  REQUIRE(b[2] == y);
 }
 
 TEST_CASE("Iterator constructor") {
@@ -37,6 +43,7 @@ TEST_CASE("Iterator constructor") {
       l.end()};
   REQUIRE(c.GetNumDimensions() == 3);
 }
+
 
 /**
 TEST_CASE("Copy constructor") {

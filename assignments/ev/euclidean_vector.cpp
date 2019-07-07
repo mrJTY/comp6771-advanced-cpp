@@ -31,14 +31,14 @@ EuclideanVector& EuclideanVector::operator+=(EuclideanVector& v) {
   }
   return *this;
 }
+**/
 
 // Setter
 double& EuclideanVector::operator[](int i) {
-  assert(i <= this->GetNumDimensions());
-  return this->vector_.at(i);
+  assert(i <= this->numDimensions_);
+  return this->magnitudes_[i];
 };
 double EuclideanVector::operator[](int i) const {
-  assert(i <= this->GetNumDimensions());
-  return this->vector_.at(i);
+  assert(i <= this->numDimensions_);
+  return this->magnitudes_[i];
 };
-**/
