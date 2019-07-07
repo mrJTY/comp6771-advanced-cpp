@@ -77,6 +77,23 @@ TEST_CASE("Copy constructor") {
 }
 
 /**
+ * Test move constructor
+ * by passing an existing EV to a new EV.
+ * The old OV should NOT retain the
+ * it's magnitudes.
+ **/
+TEST_CASE("Move constructor") {
+  EuclideanVector oldEV{2, 4.0};
+  EuclideanVector newEV = std::move(oldEV);
+
+  REQUIRE(newEV[0] == 4.0);
+  REQUIRE(newEV[1] == 4.0);
+
+  REQUIRE(newEV.GetNumDimensions() == 2);
+  REQUIRE(oldEV.GetNumDimensions() == 0);
+}
+
+/**
  * Test the at method which should
  * return a double from the EV.
  **/
