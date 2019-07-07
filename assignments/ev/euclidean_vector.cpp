@@ -12,6 +12,8 @@ const int& EuclideanVector::GetNumDimensions() {
   return numDimensions_;
 }
 
+
+/**
 const std::vector<double>& EuclideanVector::GetVector(){
   return vector_;
 }
@@ -39,3 +41,4 @@ double EuclideanVector::operator[](int i) const {
   assert(i <= this->GetNumDimensions());
   return this->vector_.at(i);
 };
+**/
