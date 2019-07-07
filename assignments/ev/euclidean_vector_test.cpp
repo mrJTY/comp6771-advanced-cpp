@@ -14,16 +14,22 @@
 TEST_CASE("Constructor with int") {
   EuclideanVector a(2);
   REQUIRE(a.GetNumDimensions() == 2);
+
 }
 
 TEST_CASE("Constructor with num dimensions and float") {
   EuclideanVector a{2, 4.0};
   REQUIRE(a.GetNumDimensions() == 2);
+  REQUIRE(a[0] == 4.0);
+  REQUIRE(a[1] == 4.0);
 
   int x{3};
   double y{3.24};
   EuclideanVector b{x, y};
   REQUIRE(b.GetNumDimensions() == 3);
+  REQUIRE(b[0] == y);
+  REQUIRE(b[1] == y);
+  REQUIRE(b[2] == y);
 }
 
 TEST_CASE("Iterator constructor") {
@@ -38,6 +44,55 @@ TEST_CASE("Iterator constructor") {
   REQUIRE(c.GetNumDimensions() == 3);
 }
 
+TEST_CASE("Plus operator"){
+  EuclideanVector a{2, 5.0};
+  EuclideanVector b{2, 5.0};
+
+  // Operator
+  auto c = a + b;
+  REQUIRE(c.GetNumDimensions() == 2);
+  REQUIRE(c[0] == 10.0);
+  REQUIRE(c[1] == 10.0);
+
+  // Compound assignment
+  a += b;
+  REQUIRE(a.GetNumDimensions() == 2);
+  REQUIRE(a[0] == 10.0);
+  REQUIRE(a[1] == 10.0);
+
+}
+
+TEST_CASE("Minus operator"){
+  EuclideanVector a{2, 5.0};
+  EuclideanVector b{2, 5.0};
+
+  a -= b;
+
+  REQUIRE(a.GetNumDimensions() == 2);
+  REQUIRE(a[0] == 0.0);
+  REQUIRE(a[1] == 0.0);
+}
+
+TEST_CASE("Multiplication operator"){
+  EuclideanVector a{2, 5.0};
+
+  a *= 2;
+  REQUIRE(a.GetNumDimensions() == 2);
+  REQUIRE(a[0] == 10.0);
+  REQUIRE(a[1] == 10.0);
+}
+
+TEST_CASE("Division operator"){
+  EuclideanVector a{2, 5.0};
+
+  a /= 2;
+  REQUIRE(a.GetNumDimensions() == 2);
+  REQUIRE(a[0] == 2.5);
+  REQUIRE(a[1] == 2.5);
+}
+
+
+/**
 TEST_CASE("Copy constructor") {
   EuclideanVector a{2, 4.0};
   EuclideanVector b{a};
@@ -45,3 +100,9 @@ TEST_CASE("Copy constructor") {
   REQUIRE(b.GetNumDimensions() == 2);
 
 }
+
+TEST_CASE("Compound constructor") {
+  EuclideanVector a{2, 4.0};
+
+}
+**/

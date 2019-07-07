@@ -18,34 +18,54 @@ class EuclideanVectorError : public std::exception {
 class EuclideanVector {
  public:
   // Constructors
-  explicit EuclideanVector(int numDimensions) : numDimensions_{numDimensions} {}
-  EuclideanVector(int numDimensions, double magnitude)
-    : numDimensions_{numDimensions}, magnitude_{magnitude} {
+  explicit EuclideanVector(int numDimensions) : numDimensions_{numDimensions} {
+    magnitudes_ = std::make_unique<double[]>(numDimensions_);
+  }
+
+  EuclideanVector(int numDimensions, double magnitudeForAll)
+    : numDimensions_{numDimensions} {
+    magnitudes_ = std::make_unique<double[]>(numDimensions_);
     for (int i = 0; i < numDimensions_; i++) {
-      vector_.push_back(magnitude_);
+        magnitudes_[i] = magnitudeForAll;
     }
   };
+
   EuclideanVector(std::vector<double>::const_iterator begin,
                   std::vector<double>::const_iterator end) {
+    // Check how any dimensions
+    int i = 0;
     for (auto iter = begin; iter != end; ++iter) {
-      vector_.push_back(*iter);
+      ++i;
     }
+    numDimensions_ = i;
 
-    numDimensions_ = vector_.size();
+    // Copy over
+    magnitudes_ = std::make_unique<double[]>(numDimensions_);
+    i = 0;
+    for (auto iter = begin; iter != end; ++iter) {
+      magnitudes_[i] = *iter;
+      ++i;
+    }
   }
-  EuclideanVector(EuclideanVector& v) : EuclideanVector(v.GetVector().cbegin(), v.GetVector().cend()){}
+//  EuclideanVector(EuclideanVector& v) : EuclideanVector(v.GetVector().cbegin(), v.GetVector().cend()){}
 
-  // Getters
   const int& GetNumDimensions();
-  const std::vector<double>& GetVector();
 
   // Operators
+  EuclideanVector& operator+=(const EuclideanVector& v);
+  EuclideanVector& operator-=(const EuclideanVector& v);
+  EuclideanVector& operator*=(const int d);
+  EuclideanVector& operator*=(const double d);
+  EuclideanVector& operator/=(const int d);
+  EuclideanVector& operator/=(const double d);
+  double& operator[](int i); // Setting via []
+  double operator[](int i) const; // getting via []
+
+  // Friends
   friend std::ostream& operator<<(std::ostream& os, const EuclideanVector& v);
-  EuclideanVector& operator+=(EuclideanVector& v);
+  friend EuclideanVector operator+(const EuclideanVector& lhs, const EuclideanVector& rhs);
 
  private:
   int numDimensions_;
-  double magnitude_;
-  std::vector<double> vector_;
-  //  std::unique_ptr<double[]> magnitudes_;
+  std::unique_ptr<double[]> magnitudes_;
 };
