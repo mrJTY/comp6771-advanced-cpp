@@ -66,6 +66,15 @@ TEST_CASE("Minus operator"){
   REQUIRE(a[1] == 0.0);
 }
 
+TEST_CASE("Multiplication operator"){
+  EuclideanVector a{2, 5.0};
+
+  a *= 2;
+  REQUIRE(a.GetNumDimensions() == 2);
+  REQUIRE(a[0] == 10.0);
+  REQUIRE(a[1] == 10.0);
+}
+
 
 /**
 TEST_CASE("Copy constructor") {

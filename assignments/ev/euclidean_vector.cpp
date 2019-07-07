@@ -22,7 +22,7 @@ double EuclideanVector::operator[](int i) const {
   return this->magnitudes_[i];
 };
 
-EuclideanVector& EuclideanVector::operator+=(EuclideanVector& v) {
+EuclideanVector& EuclideanVector::operator+=(const EuclideanVector& v) {
   assert(this->numDimensions_ == v.numDimensions_);
   for(int i = 0; i < this->numDimensions_; ++i){
     this->magnitudes_[i] += v.magnitudes_[i];
@@ -30,11 +30,26 @@ EuclideanVector& EuclideanVector::operator+=(EuclideanVector& v) {
   return *this;
 }
 
-EuclideanVector& EuclideanVector::operator-=(EuclideanVector& v) {
+EuclideanVector& EuclideanVector::operator-=(const EuclideanVector& v) {
   assert(this->numDimensions_ == v.numDimensions_);
   for(int i = 0; i < this->numDimensions_; ++i){
     this->magnitudes_[i] -= v.magnitudes_[i];
   }
   return *this;
 }
+
+EuclideanVector& EuclideanVector::operator*=(const int d) {
+  for(int i = 0; i < this->numDimensions_; ++i){
+    this->magnitudes_[i] = this->magnitudes_[i] * d;
+  }
+  return *this;
+}
+
+EuclideanVector& EuclideanVector::operator*=(const double d) {
+  for(int i = 0; i < this->numDimensions_; ++i){
+    this->magnitudes_[i] = this->magnitudes_[i] * d;
+  }
+  return *this;
+}
+
 
