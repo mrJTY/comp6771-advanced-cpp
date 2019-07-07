@@ -19,7 +19,6 @@
 TEST_CASE("Constructor with int") {
   EuclideanVector a(2);
   REQUIRE(a.GetNumDimensions() == 2);
-
 }
 
 /**
@@ -181,6 +180,9 @@ TEST_CASE("Multiplication operator"){
   REQUIRE(a[1] == 10.0);
 }
 
+/**
+ * Dot product [5, 5] * [5, 5] = 50.00
+ **/
 TEST_CASE("Dot product"){
   EuclideanVector a{2, 5.0};
   EuclideanVector b{2, 5.0};
@@ -190,7 +192,11 @@ TEST_CASE("Dot product"){
   REQUIRE(c == 50.0);
 }
 
-TEST_CASE("Division operator"){
+/**
+ * Division test
+ * [5, 5] / 2 = [2.5, 2.5]
+ **/
+TEST_CASE("Division compound assignment"){
   EuclideanVector a{2, 5.0};
 
   a /= 2;
@@ -199,21 +205,15 @@ TEST_CASE("Division operator"){
   REQUIRE(a[1] == 2.5);
 }
 
+TEST_CASE("Division operator"){
+  EuclideanVector a{2, 5.0};
+  double b {2};
 
-/**
-TEST_CASE("Copy constructor") {
-  EuclideanVector a{2, 4.0};
-  EuclideanVector b{a};
-
-  REQUIRE(b.GetNumDimensions() == 2);
-
+  auto c = a / b;
+  REQUIRE(c.GetNumDimensions() == 2);
+  REQUIRE(c[0] == 2.5);
+  REQUIRE(c[1] == 2.5);
 }
-
-TEST_CASE("Compound constructor") {
-  EuclideanVector a{2, 4.0};
-
-}
-**/
 
 /**
  * Cast a EV to a std::vector

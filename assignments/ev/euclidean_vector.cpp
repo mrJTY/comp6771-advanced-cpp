@@ -68,6 +68,9 @@ EuclideanVector operator+(const EuclideanVector& lhs, const EuclideanVector& rhs
 
 // Subtractions
 EuclideanVector& EuclideanVector::operator-=(const EuclideanVector& v) {
+  if(this->numDimensions_ != v.numDimensions_){
+    throw "Dimensions of LHS(X) and RHS(Y) do not match";
+  }
   assert(this->numDimensions_ == v.numDimensions_);
   for(int i = 0; i < this->numDimensions_; ++i){
     this->magnitudes_[i] -= v.magnitudes_[i];
@@ -76,7 +79,9 @@ EuclideanVector& EuclideanVector::operator-=(const EuclideanVector& v) {
 }
 
 EuclideanVector operator-(const EuclideanVector& lhs, const EuclideanVector& rhs){
-  assert(lhs.numDimensions_ == rhs.numDimensions_);
+  if(lhs.numDimensions_ != rhs.numDimensions_){
+    throw EuclideanVectorError("Dimensions of LHS(X) and RHS(Y) do not match");
+  }
   EuclideanVector v = EuclideanVector{lhs.numDimensions_};
   for(int i = 0; i < lhs.numDimensions_; ++i){
     v.magnitudes_[i] = lhs.magnitudes_[i] - rhs.magnitudes_[i];
@@ -101,8 +106,9 @@ EuclideanVector& EuclideanVector::operator*=(const double d) {
 
 // Dot multiplication
 double operator*(const EuclideanVector& lhs, const EuclideanVector& rhs){
-  // TODO: Exception
-  assert(lhs.numDimensions_ == rhs.numDimensions_);
+  if(lhs.numDimensions_ != rhs.numDimensions_){
+    throw EuclideanVectorError("Dimensions of LHS(X) and RHS(Y) do not match");
+  }
   double dotProduct = 0;
   for(int i = 0; i < lhs.numDimensions_; ++i){
     dotProduct += (lhs.magnitudes_[i] * rhs.magnitudes_[i]);
@@ -144,6 +150,9 @@ EuclideanVector operator*(const int d, const EuclideanVector& rhs){
 
 // Divisions
 EuclideanVector& EuclideanVector::operator/=(const int d) {
+  if(d == 0){
+    throw EuclideanVectorError("Invalid vector division by 0");
+  }
   for(int i = 0; i < this->numDimensions_; ++i){
     this->magnitudes_[i] = this->magnitudes_[i] / d;
   }
@@ -151,10 +160,34 @@ EuclideanVector& EuclideanVector::operator/=(const int d) {
 }
 
 EuclideanVector& EuclideanVector::operator/=(const double d) {
+  if(d == 0.0){
+    throw EuclideanVectorError("Invalid vector division by 0");
+  }
   for(int i = 0; i < this->numDimensions_; ++i){
     this->magnitudes_[i] = this->magnitudes_[i] / d;
   }
   return *this;
+}
+
+EuclideanVector operator/(const EuclideanVector& lhs, const double d){
+  if(d == 0.0){
+    throw EuclideanVectorError("Invalid vector division by 0");
+  }
+  EuclideanVector v = EuclideanVector{lhs.numDimensions_};
+  for(int i = 0; i < lhs.numDimensions_; ++i){
+    v.magnitudes_[i] = lhs.magnitudes_[i] / d;
+  }
+  return v;
+}
+EuclideanVector operator/(const EuclideanVector& lhs, const int d){
+  if(d == 0.0){
+    throw EuclideanVectorError("Invalid vector division by 0");
+  }
+  EuclideanVector v = EuclideanVector{lhs.numDimensions_};
+  for(int i = 0; i < lhs.numDimensions_; ++i){
+    v.magnitudes_[i] = lhs.magnitudes_[i] / d;
+  }
+  return v;
 }
 
 // Vector conversion
