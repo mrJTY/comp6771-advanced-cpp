@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <list>
 
 class EuclideanVectorError : public std::exception {
  public:
@@ -86,6 +87,7 @@ class EuclideanVector {
 
   // Vector converters
   explicit operator std::vector<double>();
+  explicit operator std::list<double>();
 
   // Friends
   friend std::ostream& operator<<(std::ostream& os, const EuclideanVector& v);

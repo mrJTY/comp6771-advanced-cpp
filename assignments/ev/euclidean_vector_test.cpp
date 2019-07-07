@@ -244,3 +244,13 @@ TEST_CASE("Vector type conversion") {
   // TODO: require this to fail
   //REQUIRE(vf.at(1));
 }
+
+/**
+ * Cast a EV to a std::list
+ **/
+TEST_CASE("List type conversion") {
+  EuclideanVector a{1, 100.0};
+  std::list<double> l = std::list<double>{a};
+  REQUIRE(l.front() == 100.0);
+  REQUIRE(l.back() == 100.0);
+}

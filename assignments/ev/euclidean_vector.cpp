@@ -223,3 +223,12 @@ EuclideanVector::operator std::vector<double>(){
   }
   return v;
 }
+
+// List conversion
+EuclideanVector::operator std::list<double>(){
+  std::list<double> l;
+  for(int i = 0; i < numDimensions_; ++i){
+    l.push_back(magnitudes_[i]);
+  }
+  return l;
+}
