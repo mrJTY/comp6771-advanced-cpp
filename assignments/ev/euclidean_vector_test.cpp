@@ -76,6 +76,25 @@ TEST_CASE("Copy constructor") {
 }
 
 /**
+ * Test copy assignment
+ * by passing an existing EV to
+ * another EV
+ **/
+TEST_CASE("Copy assignment"){
+  EuclideanVector oldEV{2, 4.0};
+  EuclideanVector newEV{20, 4.0};
+
+  newEV = oldEV;
+  REQUIRE(newEV[0] == 4.0);
+  REQUIRE(newEV[1] == 4.0);
+
+  REQUIRE(oldEV[0] == 4.0);
+  REQUIRE(oldEV[1] == 4.0);
+
+  REQUIRE(newEV.GetNumDimensions() == oldEV.GetNumDimensions());
+}
+
+/**
  * Test move constructor
  * by passing an existing EV to a new EV.
  * The old OV should NOT retain the

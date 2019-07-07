@@ -42,10 +42,22 @@ double EuclideanVector::operator[](int i) const {
   return this->magnitudes_[i];
 }
 
+// Copy assignment
+EuclideanVector& EuclideanVector::operator=(const EuclideanVector& rhs){
+  this->magnitudes_ = std::make_unique<double[]>(rhs.numDimensions_);
+
+  for(int i = 0; i < rhs.numDimensions_; ++i){
+    this->magnitudes_[i] = rhs.magnitudes_[i];
+  }
+  this->numDimensions_ = rhs.numDimensions_;
+  return *this;
+
+}
+
 // Additions
 EuclideanVector& EuclideanVector::operator+=(const EuclideanVector& v) {
   if(this->numDimensions_ != v.numDimensions_){
-    throw "Dimensions of LHS(X) and RHS(Y) do not match";
+    throw EuclideanVectorError("Dimensions of LHS(X) and RHS(Y) do not match");
   }
 
   // assert(this->numDimensions_ == v.numDimensions_);

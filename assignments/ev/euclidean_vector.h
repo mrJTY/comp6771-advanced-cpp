@@ -58,6 +58,9 @@ class EuclideanVector {
     }
   }
 
+  // Copy assignment
+  EuclideanVector& operator=(const EuclideanVector& rhs);
+
   // Move constructor
   EuclideanVector(EuclideanVector&& sourceVector) noexcept :
     numDimensions_{sourceVector.numDimensions_},
@@ -102,6 +105,7 @@ class EuclideanVector {
   friend EuclideanVector operator/(const EuclideanVector& lhs, const int d);
   friend bool operator==(const EuclideanVector& lhs, const EuclideanVector& rhs);
   friend bool operator!=(const EuclideanVector& lhs, const EuclideanVector& rhs);
+
 
  private:
   int numDimensions_;
