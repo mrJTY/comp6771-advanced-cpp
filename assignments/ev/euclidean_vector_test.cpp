@@ -11,12 +11,21 @@
 #include "assignments/ev/euclidean_vector.h"
 #include "catch.h"
 
+/**
+ * Construct using the int constructor.
+ * This should initialise an empty vector with the given number
+ * of dimensions.
+ **/
 TEST_CASE("Constructor with int") {
   EuclideanVector a(2);
   REQUIRE(a.GetNumDimensions() == 2);
 
 }
 
+/**
+ * Construct by giving a number of dimensions
+ * and a default double magnitude.
+ **/
 TEST_CASE("Constructor with num dimensions and float") {
   EuclideanVector a{2, 4.0};
   REQUIRE(a.GetNumDimensions() == 2);
@@ -32,6 +41,10 @@ TEST_CASE("Constructor with num dimensions and float") {
   REQUIRE(b[2] == y);
 }
 
+/**
+ * Construct by passing an iterator from
+ * a vector.
+ **/
 TEST_CASE("Iterator constructor") {
   std::vector<double> l;
   l.push_back(5.0);
@@ -44,6 +57,32 @@ TEST_CASE("Iterator constructor") {
   REQUIRE(c.GetNumDimensions() == 3);
 }
 
+/**
+ * Test the at method which should
+ * return a double from the EV.
+ **/
+TEST_CASE("At and subscripts"){
+  // Initialise an empty vector with 3 slots
+  EuclideanVector a{3};
+
+  // Set using the [] operator
+  a[0] = 10.0;
+  a[1] = 20.0;
+  a[2] = 30.0;
+
+  // Get using []
+  REQUIRE(a[0] == 10.0);
+  // Get using at
+  REQUIRE(a.at(1) == 20.0);
+  REQUIRE(a.at(2) == 30.0);
+  // TODO: Force an exception
+
+}
+
+/**
+ * Test the addition
+ * operators and compound assignments.
+ **/
 TEST_CASE("Plus operator"){
   EuclideanVector a{2, 5.0};
   EuclideanVector b{2, 5.0};
@@ -139,3 +178,4 @@ TEST_CASE("Compound constructor") {
 
 }
 **/
+

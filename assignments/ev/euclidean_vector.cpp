@@ -3,6 +3,14 @@
 
 #include <algorithm>  // Look at these - they are helpful https://en.cppreference.com/w/cpp/algorithm
 
+// Methods
+
+double EuclideanVector::at(const int i) {
+  // TODO: add exception
+  assert(i <= this->numDimensions_);
+  return this->magnitudes_[i];
+}
+
 std::ostream& operator<<(std::ostream& os, const EuclideanVector& v) {
   os << std::to_string(v.numDimensions_);
   return os;
@@ -12,12 +20,16 @@ const int& EuclideanVector::GetNumDimensions() {
   return numDimensions_;
 }
 
+// Setter subscript
 double& EuclideanVector::operator[](int i) {
+  // TODO: add exception
   assert(i <= this->numDimensions_);
   return this->magnitudes_[i];
 };
 
+// Getter subscript
 double EuclideanVector::operator[](int i) const {
+  // TODO: add exception
   assert(i <= this->numDimensions_);
   return this->magnitudes_[i];
 };
