@@ -7,11 +7,13 @@
 int main() {
   EuclideanVector a(2);
 
-  std::cout << a;
+  std::cout << a << "\n";
 
-  /**
   std::vector<double> l{1, 2, 3};
   EuclideanVector b{l.begin(), l.end()};
+  std::cout << b << "\n";
+
+  /**
 
   std::vector<double> v2{4, 5, 6, 7};
   EuclideanVector c{v2.begin(), v2.end()};

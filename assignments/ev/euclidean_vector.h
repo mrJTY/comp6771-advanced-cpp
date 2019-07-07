@@ -67,6 +67,11 @@ class EuclideanVector {
      sourceVector.numDimensions_ = 0;
   }
 
+  // Destructor
+  ~EuclideanVector(){
+    magnitudes_.release();
+  }
+
   // Methods
   const int& GetNumDimensions();
   double at(int);
