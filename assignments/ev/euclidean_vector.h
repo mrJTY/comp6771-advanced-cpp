@@ -51,6 +51,8 @@ class EuclideanVector {
   // Operators
   friend std::ostream& operator<<(std::ostream& os, const EuclideanVector& v);
   EuclideanVector& operator+=(EuclideanVector& v);
+  EuclideanVector& operator-=(EuclideanVector& v);
+  //EuclideanVector& operator*=(EuclideanVector& v);
   double& operator[](int i); // Setting via []
   double operator[](int i) const; // getting via []
 
