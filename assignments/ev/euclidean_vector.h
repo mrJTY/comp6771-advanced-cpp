@@ -17,7 +17,6 @@ class EuclideanVectorError : public std::exception {
 
 class EuclideanVector {
  public:
-  // Constructors
   explicit EuclideanVector(int numDimensions) : numDimensions_{numDimensions} {
     magnitudes_ = std::make_unique<double[]>(numDimensions_);
   }
@@ -49,7 +48,10 @@ class EuclideanVector {
   }
 //  EuclideanVector(EuclideanVector& v) : EuclideanVector(v.GetVector().cbegin(), v.GetVector().cend()){}
 
+  // Methods
   const int& GetNumDimensions();
+  double at(int);
+
 
   // Operators
   EuclideanVector& operator+=(const EuclideanVector& v);
@@ -61,9 +63,14 @@ class EuclideanVector {
   double& operator[](int i); // Setting via []
   double operator[](int i) const; // getting via []
 
-  // Friends
   friend std::ostream& operator<<(std::ostream& os, const EuclideanVector& v);
   friend EuclideanVector operator+(const EuclideanVector& lhs, const EuclideanVector& rhs);
+  friend EuclideanVector operator-(const EuclideanVector& lhs, const EuclideanVector& rhs);
+  friend double operator*(const EuclideanVector& lhs, const EuclideanVector& rhs);
+  friend EuclideanVector operator*(const EuclideanVector& lhs, const double d);
+  friend EuclideanVector operator*(const EuclideanVector& lhs, const int d);
+  friend EuclideanVector operator*(const double d, const EuclideanVector& rhs);
+  friend EuclideanVector operator*(const int d, const EuclideanVector& rhs);
 
  private:
   int numDimensions_;
