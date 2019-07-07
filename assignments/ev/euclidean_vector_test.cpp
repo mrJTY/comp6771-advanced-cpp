@@ -10,6 +10,7 @@
 
 #include "assignments/ev/euclidean_vector.h"
 #include "catch.h"
+#include "utility"
 
 /**
  * Construct using the int constructor.
@@ -19,7 +20,6 @@
 TEST_CASE("Constructor with int") {
   EuclideanVector a(2);
   REQUIRE(a.GetNumDimensions() == 2);
-
 }
 
 /**
@@ -51,9 +51,7 @@ TEST_CASE("Iterator constructor") {
   l.push_back(6.5);
   l.push_back(7.0);
   // a Euclidean Vector in 3 dimensions constructed from a vector of magnitudes
-  EuclideanVector c{
-      l.begin(),
-      l.end()};
+  EuclideanVector c{l.begin(), l.end()};
   REQUIRE(c.GetNumDimensions() == 3);
 }
 
@@ -67,6 +65,25 @@ TEST_CASE("Copy constructor") {
   EuclideanVector oldEV{2, 4.0};
   EuclideanVector newEV{oldEV};
 
+  REQUIRE(newEV[0] == 4.0);
+  REQUIRE(newEV[1] == 4.0);
+
+  REQUIRE(oldEV[0] == 4.0);
+  REQUIRE(oldEV[1] == 4.0);
+
+  REQUIRE(newEV.GetNumDimensions() == oldEV.GetNumDimensions());
+}
+
+/**
+ * Test copy assignment
+ * by passing an existing EV to
+ * another EV
+ **/
+TEST_CASE("Copy assignment") {
+  EuclideanVector oldEV{2, 4.0};
+  EuclideanVector newEV{20, 4.0};
+
+  newEV = oldEV;
   REQUIRE(newEV[0] == 4.0);
   REQUIRE(newEV[1] == 4.0);
 
@@ -97,7 +114,7 @@ TEST_CASE("Move constructor") {
  * Test the at method which should
  * return a double from the EV.
  **/
-TEST_CASE("At and subscripts"){
+TEST_CASE("At and subscripts") {
   // Initialise an empty vector with 3 slots
   EuclideanVector a{3};
 
@@ -111,15 +128,14 @@ TEST_CASE("At and subscripts"){
   // Get using at
   REQUIRE(a.at(1) == 20.0);
   REQUIRE(a.at(2) == 30.0);
-  // TODO: Force an exception
-
+  // TODO(jt): Force an exception
 }
 
 /**
  * Test the addition
  * operators and compound assignments.
  **/
-TEST_CASE("Plus operator"){
+TEST_CASE("Plus operator") {
   EuclideanVector a{2, 5.0};
   EuclideanVector b{2, 5.0};
 
@@ -134,10 +150,9 @@ TEST_CASE("Plus operator"){
   REQUIRE(a.GetNumDimensions() == 2);
   REQUIRE(a[0] == 10.0);
   REQUIRE(a[1] == 10.0);
-
 }
 
-TEST_CASE("Minus operator"){
+TEST_CASE("Minus operator") {
   EuclideanVector a{2, 5.0};
   EuclideanVector b{2, 5.0};
 
@@ -154,7 +169,7 @@ TEST_CASE("Minus operator"){
   REQUIRE(a[1] == 0.0);
 }
 
-TEST_CASE("Multiplication operator"){
+TEST_CASE("Multiplication operator") {
   EuclideanVector a{2, 5.0};
 
   // Dot product
@@ -173,7 +188,6 @@ TEST_CASE("Multiplication operator"){
   REQUIRE(d[0] == 10.0);
   REQUIRE(d[1] == 10.0);
 
-
   // Compound assignment
   a *= 2;
   REQUIRE(a.GetNumDimensions() == 2);
@@ -181,7 +195,10 @@ TEST_CASE("Multiplication operator"){
   REQUIRE(a[1] == 10.0);
 }
 
-TEST_CASE("Dot product"){
+/**
+ * Dot product [5, 5] * [5, 5] = 50.00
+ **/
+TEST_CASE("Dot product") {
   EuclideanVector a{2, 5.0};
   EuclideanVector b{2, 5.0};
 
@@ -190,7 +207,11 @@ TEST_CASE("Dot product"){
   REQUIRE(c == 50.0);
 }
 
-TEST_CASE("Division operator"){
+/**
+ * Division test
+ * [5, 5] / 2 = [2.5, 2.5]
+ **/
+TEST_CASE("Division compound assignment") {
   EuclideanVector a{2, 5.0};
 
   a /= 2;
@@ -199,21 +220,34 @@ TEST_CASE("Division operator"){
   REQUIRE(a[1] == 2.5);
 }
 
+TEST_CASE("Division operator") {
+  EuclideanVector a{2, 5.0};
+  double b{2};
+
+  auto c = a / b;
+  REQUIRE(c.GetNumDimensions() == 2);
+  REQUIRE(c[0] == 2.5);
+  REQUIRE(c[1] == 2.5);
+}
 
 /**
-TEST_CASE("Copy constructor") {
-  EuclideanVector a{2, 4.0};
-  EuclideanVector b{a};
+ * Test equality
+ * by comparing values in magnitudes
+ **/
+TEST_CASE("Equality operator") {
+  EuclideanVector a{2, 25.0};
+  EuclideanVector b{2, 25.0};
 
-  REQUIRE(b.GetNumDimensions() == 2);
-
+  REQUIRE(a == b);
 }
+TEST_CASE("Inequality operator") {
+  EuclideanVector a{3, 25.0};
+  EuclideanVector b{2, 25.0};
+  EuclideanVector c{2, 5.0};
 
-TEST_CASE("Compound constructor") {
-  EuclideanVector a{2, 4.0};
-
+  REQUIRE(a != b);
+  REQUIRE(b != c);
 }
-**/
 
 /**
  * Cast a EV to a std::vector
@@ -222,6 +256,16 @@ TEST_CASE("Vector type conversion") {
   EuclideanVector a{1, 100.0};
   std::vector<double> vf = std::vector<double>{a};
   REQUIRE(vf.at(0) == 100.0);
-  // TODO: require this to fail
-  //REQUIRE(vf.at(1));
+  // TODO(jt): require this to fail
+  // REQUIRE(vf.at(1));
+}
+
+/**
+ * Cast a EV to a std::list
+ **/
+TEST_CASE("List type conversion") {
+  EuclideanVector a{1, 100.0};
+  std::list<double> l = std::list<double>{a};
+  REQUIRE(l.front() == 100.0);
+  REQUIRE(l.back() == 100.0);
 }
