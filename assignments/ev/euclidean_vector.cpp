@@ -143,4 +143,11 @@ EuclideanVector& EuclideanVector::operator/=(const double d) {
   return *this;
 }
 
-
+// Vector conversion
+EuclideanVector::operator std::vector<double>(){
+  std::vector<double> v;
+  for(int i = 0; i < numDimensions_; ++i){
+    v.push_back(magnitudes_[i]);
+  }
+  return v;
+}

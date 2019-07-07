@@ -179,3 +179,10 @@ TEST_CASE("Compound constructor") {
 }
 **/
 
+TEST_CASE("Vector type conversion") {
+  EuclideanVector a{1, 100.0};
+  std::vector<double> vf = std::vector<double>{a};
+  REQUIRE(vf.at(0) == 100.0);
+  // TODO: require this to fail
+  //REQUIRE(vf.at(1));
+}
