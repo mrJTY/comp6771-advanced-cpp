@@ -48,11 +48,18 @@ TEST_CASE("Plus operator"){
   EuclideanVector a{2, 5.0};
   EuclideanVector b{2, 5.0};
 
-  a += b;
+  // Operator
+  auto c = a + b;
+  REQUIRE(c.GetNumDimensions() == 2);
+  REQUIRE(c[0] == 10.0);
+  REQUIRE(c[1] == 10.0);
 
+  // Compound assignment
+  a += b;
   REQUIRE(a.GetNumDimensions() == 2);
   REQUIRE(a[0] == 10.0);
   REQUIRE(a[1] == 10.0);
+
 }
 
 TEST_CASE("Minus operator"){
@@ -73,6 +80,15 @@ TEST_CASE("Multiplication operator"){
   REQUIRE(a.GetNumDimensions() == 2);
   REQUIRE(a[0] == 10.0);
   REQUIRE(a[1] == 10.0);
+}
+
+TEST_CASE("Division operator"){
+  EuclideanVector a{2, 5.0};
+
+  a /= 2;
+  REQUIRE(a.GetNumDimensions() == 2);
+  REQUIRE(a[0] == 2.5);
+  REQUIRE(a[1] == 2.5);
 }
 
 
