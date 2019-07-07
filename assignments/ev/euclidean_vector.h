@@ -17,10 +17,13 @@ class EuclideanVectorError : public std::exception {
 
 class EuclideanVector {
  public:
+  // Construct by providing number of dimensions
   explicit EuclideanVector(int numDimensions) : numDimensions_{numDimensions} {
     magnitudes_ = std::make_unique<double[]>(numDimensions_);
   }
 
+  // Construct by providing number of dimensions
+  // and default magnitude value
   EuclideanVector(int numDimensions, double magnitudeForAll)
     : numDimensions_{numDimensions} {
     magnitudes_ = std::make_unique<double[]>(numDimensions_);
@@ -29,6 +32,7 @@ class EuclideanVector {
     }
   };
 
+  // Construct by passing iterators
   EuclideanVector(std::vector<double>::const_iterator begin,
                   std::vector<double>::const_iterator end) {
     // Check how any dimensions
@@ -46,7 +50,19 @@ class EuclideanVector {
       ++i;
     }
   }
-//  EuclideanVector(EuclideanVector& v) : EuclideanVector(v.GetVector().cbegin(), v.GetVector().cend()){}
+
+  // Copy constructor
+  // EuclideanVector(EuclideanVector& v) : EuclideanVector(
+  //     v.GetVector().cbegin(), v.GetVector().cend()) {
+  // }
+
+  // Move constructor
+  EuclideanVector(EuclideanVector&& sourceVector) noexcept :
+    numDimensions_{sourceVector.numDimensions_},
+    magnitudes_{std::move(sourceVector.magnitudes_)} {
+     // Clear out the the other source vector
+     sourceVector.numDimensions_ = 0;
+  }
 
   // Methods
   const int& GetNumDimensions();
