@@ -8,6 +8,7 @@ int main() {
   EuclideanVector a(2);
 
   std::cout << a << "\n";
+  /**
 
   std::vector<double> l{1, 2, 3};
   EuclideanVector b{l.begin(), l.end()};
@@ -21,7 +22,6 @@ int main() {
 
   auto c2 = b + c;
 
-  /**
   std::vector<double> a1{5, 4, 3, 2, 1};
   EuclideanVector d{a1.begin(), a1.end()};
 

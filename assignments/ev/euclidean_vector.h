@@ -1,10 +1,17 @@
-// TODO(you): Include header guards
-
+#ifndef ASSIGNMENTS_EV_EUCLIDEAN_VECTOR_H_
+#define ASSIGNMENTS_EV_EUCLIDEAN_VECTOR_H_
+#include <algorithm>
+#include <cassert>
+#include <cmath>
 #include <exception>
 #include <list>
 #include <memory>
+#include <ostream>
+#include <stdexcept>
 #include <string>
 #include <vector>
+
+
 
 class EuclideanVectorError : public std::exception {
  public:
@@ -70,12 +77,15 @@ class EuclideanVector {
   }
 
   // Destructor
-  ~EuclideanVector() { magnitudes_.release(); }
+  ~EuclideanVector() {
+    magnitudes_.reset();
+  }
 
   // Methods
   int GetNumDimensions();
   double at(int);
   double GetEuclideanNorm();
+  EuclideanVector CreateUnitVector();
 
   // Operators
   EuclideanVector& operator+=(const EuclideanVector& v);
@@ -110,3 +120,5 @@ class EuclideanVector {
   int numDimensions_;
   std::unique_ptr<double[]> magnitudes_;
 };
+
+#endif // ASSIGNMENTS_EV_EUCLIDEAN_VECTOR_H_

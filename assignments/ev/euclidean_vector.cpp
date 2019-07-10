@@ -1,9 +1,12 @@
 #include "assignments/ev/euclidean_vector.h"
-#include <algorithm>  // Look at these - they are helpful https://en.cppreference.com/w/cpp/algorithm
+
+#include <algorithm>
 #include <cassert>
 #include <stdexcept>
 #include <string>
 #include <cmath>
+#include <ostream>
+
 
 // Methods
 double EuclideanVector::at(const int i) {
@@ -62,7 +65,6 @@ EuclideanVector& EuclideanVector::operator+=(const EuclideanVector& v) {
     throw EuclideanVectorError("Dimensions of LHS(" + x + ") and RHS(" + y + ") do not match");
   }
 
-  // assert(this->numDimensions_ == v.numDimensions_);
   for (int i = 0; i < this->numDimensions_; ++i) {
     this->magnitudes_[i] += v.magnitudes_[i];
   }
@@ -89,7 +91,6 @@ EuclideanVector& EuclideanVector::operator-=(const EuclideanVector& v) {
     std::string y = std::to_string(v.numDimensions_);
     throw EuclideanVectorError("Dimensions of LHS(" + x + ") and RHS(" + y + ") do not match");
   }
-  assert(this->numDimensions_ == v.numDimensions_);
   for (int i = 0; i < this->numDimensions_; ++i) {
     this->magnitudes_[i] -= v.magnitudes_[i];
   }
@@ -255,7 +256,6 @@ EuclideanVector::operator std::list<double>() {
   return l;
 }
 
-//
 double EuclideanVector::GetEuclideanNorm(){
   if(this->GetNumDimensions() == 0){
     throw EuclideanVectorError("EuclideanVector with no dimensions does not have a norm");
@@ -267,4 +267,11 @@ double EuclideanVector::GetEuclideanNorm(){
     sum_squares += square;
   }
   return sqrt(sum_squares);
+}
+
+EuclideanVector EuclideanVector::CreateUnitVector(){
+  if(this->GetNumDimensions() == 0){
+    throw EuclideanVectorError("EuclideanVector with no dimensions does not have a norm");
+  }
+  return *this;
 }
