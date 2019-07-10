@@ -313,9 +313,9 @@ TEST_CASE("List type conversion") {
 }
 
 TEST_CASE("Eucliean norm"){
-  std::vector v = std::vector{1,2,3};
+  std::vector<double> v = std::vector{1.0,2.0,3.0};
   EuclideanVector a{v.begin(), v.end()};
-  auto norm = a.GetEuclideanNorm();
-  REQUIRE(3.74 == norm);
-
+  double norm = a.GetEuclideanNorm();
+  REQUIRE(norm > 3.74);
+  REQUIRE(norm < 3.75);
 }
