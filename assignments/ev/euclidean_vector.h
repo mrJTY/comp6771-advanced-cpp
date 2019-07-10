@@ -75,6 +75,7 @@ class EuclideanVector {
   // Methods
   int GetNumDimensions();
   double at(int);
+  double GetEuclideanNorm();
 
   // Operators
   EuclideanVector& operator+=(const EuclideanVector& v);
@@ -103,6 +104,7 @@ class EuclideanVector {
   friend EuclideanVector operator/(const EuclideanVector& lhs, const int d);
   friend bool operator==(const EuclideanVector& lhs, const EuclideanVector& rhs);
   friend bool operator!=(const EuclideanVector& lhs, const EuclideanVector& rhs);
+
 
  private:
   int numDimensions_;

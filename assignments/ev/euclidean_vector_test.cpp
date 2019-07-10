@@ -311,3 +311,11 @@ TEST_CASE("List type conversion") {
   REQUIRE(l.front() == 100.0);
   REQUIRE(l.back() == 100.0);
 }
+
+TEST_CASE("Eucliean norm"){
+  std::vector v = std::vector{1,2,3};
+  EuclideanVector a{v.begin(), v.end()};
+  auto norm = a.GetEuclideanNorm();
+  REQUIRE(3.74 == norm);
+
+}

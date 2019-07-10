@@ -3,6 +3,7 @@
 #include <cassert>
 #include <stdexcept>
 #include <string>
+#include <cmath>
 
 // Methods
 double EuclideanVector::at(const int i) {
@@ -252,4 +253,18 @@ EuclideanVector::operator std::list<double>() {
     l.push_back(magnitudes_[i]);
   }
   return l;
+}
+
+//
+double EuclideanVector::GetEuclideanNorm(){
+  if(this->GetNumDimensions() == 0){
+    throw EuclideanVectorError("EuclideanVector with no dimensions does not have a norm");
+  }
+
+  double sum_squares = 0.0;
+  for(auto i = 0; i < this->numDimensions_; ++i){
+    auto square = this->magnitudes_[i] * this->magnitudes_[i];
+    sum_squares += square;
+  }
+  return sqrt(sum_squares);
 }
