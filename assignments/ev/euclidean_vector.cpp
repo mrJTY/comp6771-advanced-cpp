@@ -272,9 +272,14 @@ double EuclideanVector::GetEuclideanNorm() {
 }
 
 EuclideanVector EuclideanVector::CreateUnitVector() {
-  // TODO(jt)
   if (this->GetNumDimensions() == 0) {
-    throw EuclideanVectorError("EuclideanVector with no dimensions does not have a norm");
+    throw EuclideanVectorError(
+        "EuclideanVector with euclidean normal of 0 does not have a unit vector");
   }
+  if (this->GetEuclideanNorm() == 0) {
+    throw EuclideanVectorError(
+        "EuclideanVector with euclidean normal of 0 does not have a unit vector");
+  }
+  // TODO(jt)
   return *this;
 }

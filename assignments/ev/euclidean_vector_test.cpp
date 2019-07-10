@@ -334,7 +334,6 @@ TEST_CASE("Eucliean norm catch") {
   } catch (const EuclideanVectorError& e) {
     std::string message = e.what();
     std::cout << message;
-    REQUIRE(message.compare(
-                "EuclideanVector with euclidean normal of 0 does not have a unit vector") == 0);
+    REQUIRE(message.compare("EuclideanVector with no dimensions does not have a norm") == 0);
   }
 }
