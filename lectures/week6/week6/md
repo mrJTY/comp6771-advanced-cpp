@@ -1,0 +1,37 @@
+# What are examples of commonly used C++ exception types? When would we use them?
+
+# What's an example of a case we'd want to rethrow an exception?
+
+# In what cases would we want to have two catch statements for a thrown exception?
+
+When would we use a shared pointer instead of a unique pointer?
+
+What is stack unwinding?
+
+What happens during stuck unwinding?
+
+What issue can this potentially cause? How can we fix this?
+
+What are the 4 exception safety levels and what does each mean?
+
+Consider the following code:
+#include <string>
+#include <stdexcept>
+
+class NamedIntPointer {
+  NamedIntPointer::NamedIntPointer(int value, const std::string& name):
+      ptr_{new int{value}}, name_{name} {
+    if (name.empty()) {
+      throw std::invalid_argument{"The int pointer must be named"};
+    }
+  }
+
+  ~NamedIntPointer() {
+    delete ptr_;
+  }
+
+  int* ptr_;
+  std::string name_;
+}
+
+Find the bug, and discuss what we could do to solve the issue, including the upsides and downsides of each potential solution.

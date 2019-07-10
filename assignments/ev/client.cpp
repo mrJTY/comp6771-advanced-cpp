@@ -21,7 +21,6 @@ int main() {
 
   auto c2 = b + c;
 
-  /**
   std::vector<double> a1{5, 4, 3, 2, 1};
   EuclideanVector d{a1.begin(), a1.end()};
 
@@ -74,6 +73,5 @@ int main() {
   for (auto d : lj) {
     std::cout << d << '\n';
   }
-  **/
   return 0;
 }

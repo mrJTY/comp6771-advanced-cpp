@@ -152,6 +152,27 @@ TEST_CASE("Plus operator") {
   REQUIRE(a[1] == 10.0);
 }
 
+/**
+ * Expect an exception
+ * thrown when addition of two different
+ * sized vectors
+ **/
+TEST_CASE("Plus exception") {
+  EuclideanVector a{2, 5.0};
+  EuclideanVector b{9, 5.0};
+
+  try {
+    // Expect to fail
+    a + b;
+    // Those code should not run
+    // if it does, then the error wasn't thrown
+    REQUIRE(false == true);
+  } catch (const EuclideanVectorError& e) {
+    std::string message = e.what();
+    REQUIRE(message.compare("Dimensions of LHS(2) and RHS(9) do not match") == 0);
+  }
+}
+
 TEST_CASE("Minus operator") {
   EuclideanVector a{2, 5.0};
   EuclideanVector b{2, 5.0};
@@ -167,6 +188,27 @@ TEST_CASE("Minus operator") {
   REQUIRE(a.GetNumDimensions() == 2);
   REQUIRE(a[0] == 0.0);
   REQUIRE(a[1] == 0.0);
+}
+
+/**
+ * Expect an exception
+ * thrown when two different
+ * sized vectors
+ **/
+TEST_CASE("Minus exception") {
+  EuclideanVector a{2, 5.0};
+  EuclideanVector b{9, 5.0};
+
+  try {
+    // Expect to fail
+    a - b;
+    // Those code should not run
+    // if it does, then the error wasn't thrown
+    REQUIRE(false == true);
+  } catch (const EuclideanVectorError& e) {
+    std::string message = e.what();
+    REQUIRE(message.compare("Dimensions of LHS(2) and RHS(9) do not match") == 0);
+  }
 }
 
 TEST_CASE("Multiplication operator") {
@@ -268,4 +310,31 @@ TEST_CASE("List type conversion") {
   std::list<double> l = std::list<double>{a};
   REQUIRE(l.front() == 100.0);
   REQUIRE(l.back() == 100.0);
+}
+
+TEST_CASE("Eucliean norm") {
+  std::vector<double> v = std::vector{1.0, 2.0, 3.0};
+  EuclideanVector a{v.begin(), v.end()};
+  double norm = a.GetEuclideanNorm();
+  REQUIRE(norm > 3.74);
+  REQUIRE(norm < 3.75);
+}
+
+TEST_CASE("Eucliean norm catch") {
+  std::vector<double> v;
+  EuclideanVector a{v.begin(), v.end()};
+  try {
+    // Expect to fail
+    double norm = a.GetEuclideanNorm();
+
+    // Those code should not run
+    // if it does, then the error wasn't thrown
+    // std::cout << norm;
+    REQUIRE(norm == false);
+  } catch (const EuclideanVectorError& e) {
+    std::string message = e.what();
+    std::cout << message;
+    REQUIRE(message.compare(
+                "EuclideanVector with euclidean normal of 0 does not have a unit vector") == 0);
+  }
 }
