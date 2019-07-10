@@ -84,7 +84,9 @@ EuclideanVector operator+(const EuclideanVector& lhs, const EuclideanVector& rhs
 // Subtractions
 EuclideanVector& EuclideanVector::operator-=(const EuclideanVector& v) {
   if (this->numDimensions_ != v.numDimensions_) {
-    throw "Dimensions of LHS(X) and RHS(Y) do not match";
+    std::string x = std::to_string(this->numDimensions_);
+    std::string y = std::to_string(v.numDimensions_);
+    throw EuclideanVectorError("Dimensions of LHS(" + x + ") and RHS(" + y + ") do not match");
   }
   assert(this->numDimensions_ == v.numDimensions_);
   for (int i = 0; i < this->numDimensions_; ++i) {
@@ -95,7 +97,9 @@ EuclideanVector& EuclideanVector::operator-=(const EuclideanVector& v) {
 
 EuclideanVector operator-(const EuclideanVector& lhs, const EuclideanVector& rhs) {
   if (lhs.numDimensions_ != rhs.numDimensions_) {
-    throw EuclideanVectorError("Dimensions of LHS(X) and RHS(Y) do not match");
+    std::string x = std::to_string(lhs.numDimensions_);
+    std::string y = std::to_string(rhs.numDimensions_);
+    throw EuclideanVectorError("Dimensions of LHS(" + x + ") and RHS(" + y + ") do not match");
   }
   EuclideanVector v = EuclideanVector{lhs.numDimensions_};
   for (int i = 0; i < lhs.numDimensions_; ++i) {
@@ -122,7 +126,9 @@ EuclideanVector& EuclideanVector::operator*=(const double d) {
 // Dot multiplication
 double operator*(const EuclideanVector& lhs, const EuclideanVector& rhs) {
   if (lhs.numDimensions_ != rhs.numDimensions_) {
-    throw EuclideanVectorError("Dimensions of LHS(X) and RHS(Y) do not match");
+    std::string x = std::to_string(lhs.numDimensions_);
+    std::string y = std::to_string(rhs.numDimensions_);
+    throw EuclideanVectorError("Dimensions of LHS(" + x + ") and RHS(" + y + ") do not match");
   }
   double dotProduct = 0;
   for (int i = 0; i < lhs.numDimensions_; ++i) {
