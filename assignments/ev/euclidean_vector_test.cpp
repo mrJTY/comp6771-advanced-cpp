@@ -157,7 +157,7 @@ TEST_CASE("Plus operator") {
  * thrown when addition of two different
  * sized vectors
  **/
-TEST_CASE("Plus exception"){
+TEST_CASE("Plus exception") {
   EuclideanVector a{2, 5.0};
   EuclideanVector b{9, 5.0};
 
@@ -195,7 +195,7 @@ TEST_CASE("Minus operator") {
  * thrown when two different
  * sized vectors
  **/
-TEST_CASE("Minus exception"){
+TEST_CASE("Minus exception") {
   EuclideanVector a{2, 5.0};
   EuclideanVector b{9, 5.0};
 
@@ -312,15 +312,15 @@ TEST_CASE("List type conversion") {
   REQUIRE(l.back() == 100.0);
 }
 
-TEST_CASE("Eucliean norm"){
-  std::vector<double> v = std::vector{1.0,2.0,3.0};
+TEST_CASE("Eucliean norm") {
+  std::vector<double> v = std::vector{1.0, 2.0, 3.0};
   EuclideanVector a{v.begin(), v.end()};
   double norm = a.GetEuclideanNorm();
   REQUIRE(norm > 3.74);
   REQUIRE(norm < 3.75);
 }
 
-TEST_CASE("Eucliean norm catch"){
+TEST_CASE("Eucliean norm catch") {
   std::vector<double> v;
   EuclideanVector a{v.begin(), v.end()};
   try {
@@ -329,11 +329,12 @@ TEST_CASE("Eucliean norm catch"){
 
     // Those code should not run
     // if it does, then the error wasn't thrown
-    //std::cout << norm;
+    // std::cout << norm;
     REQUIRE(norm == false);
   } catch (const EuclideanVectorError& e) {
     std::string message = e.what();
     std::cout << message;
-    REQUIRE(message.compare("EuclideanVector with euclidean normal of 0 does not have a unit vector") == 0);
+    REQUIRE(message.compare(
+                "EuclideanVector with euclidean normal of 0 does not have a unit vector") == 0);
   }
 }

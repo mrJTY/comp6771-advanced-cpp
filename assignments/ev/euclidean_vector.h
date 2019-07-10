@@ -11,8 +11,6 @@
 #include <string>
 #include <vector>
 
-
-
 class EuclideanVectorError : public std::exception {
  public:
   explicit EuclideanVectorError(const std::string& what) : what_(what) {}
@@ -77,9 +75,7 @@ class EuclideanVector {
   }
 
   // Destructor
-  ~EuclideanVector() {
-    magnitudes_.reset();
-  }
+  ~EuclideanVector() { magnitudes_.reset(); }
 
   // Methods
   int GetNumDimensions();
@@ -115,10 +111,9 @@ class EuclideanVector {
   friend bool operator==(const EuclideanVector& lhs, const EuclideanVector& rhs);
   friend bool operator!=(const EuclideanVector& lhs, const EuclideanVector& rhs);
 
-
  private:
   int numDimensions_;
   std::unique_ptr<double[]> magnitudes_;
 };
 
-#endif // ASSIGNMENTS_EV_EUCLIDEAN_VECTOR_H_
+#endif  // ASSIGNMENTS_EV_EUCLIDEAN_VECTOR_H_

@@ -1,12 +1,14 @@
 #include "assignments/ev/euclidean_vector.h"
-
 #include <algorithm>
 #include <cassert>
+#include <cmath>
+#include <exception>
+#include <iostream>
+#include <list>
+#include <memory>
 #include <stdexcept>
 #include <string>
-#include <cmath>
-#include <ostream>
-
+#include <vector>
 
 // Methods
 double EuclideanVector::at(const int i) {
@@ -21,7 +23,7 @@ std::ostream& operator<<(std::ostream& os, const EuclideanVector& v) {
 
   os << opening;
   for (int i = 0; i < v.numDimensions_; ++i) {
-    os << std::to_string(v.magnitudes_[i]);
+    os << v.magnitudes_[i];
     if (i <= v.numDimensions_ - 2) {
       os << comma;
     }
@@ -256,21 +258,22 @@ EuclideanVector::operator std::list<double>() {
   return l;
 }
 
-double EuclideanVector::GetEuclideanNorm(){
-  if(this->GetNumDimensions() == 0){
+double EuclideanVector::GetEuclideanNorm() {
+  if (this->GetNumDimensions() == 0) {
     throw EuclideanVectorError("EuclideanVector with no dimensions does not have a norm");
   }
 
   double sum_squares = 0.0;
-  for(auto i = 0; i < this->numDimensions_; ++i){
+  for (auto i = 0; i < this->numDimensions_; ++i) {
     auto square = this->magnitudes_[i] * this->magnitudes_[i];
     sum_squares += square;
   }
   return sqrt(sum_squares);
 }
 
-EuclideanVector EuclideanVector::CreateUnitVector(){
-  if(this->GetNumDimensions() == 0){
+EuclideanVector EuclideanVector::CreateUnitVector() {
+  // TODO(jt)
+  if (this->GetNumDimensions() == 0) {
     throw EuclideanVectorError("EuclideanVector with no dimensions does not have a norm");
   }
   return *this;
