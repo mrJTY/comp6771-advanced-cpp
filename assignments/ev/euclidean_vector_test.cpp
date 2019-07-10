@@ -152,6 +152,27 @@ TEST_CASE("Plus operator") {
   REQUIRE(a[1] == 10.0);
 }
 
+/**
+ * Expect an exception
+ * thrown when addition of two different
+ * sized vectors
+ **/
+TEST_CASE("Plus exception"){
+  EuclideanVector a{2, 5.0};
+  EuclideanVector b{9, 5.0};
+
+  try {
+    // Expect to fail
+    a + b;
+    // Those code should not run
+    // if it does, then the error wasn't thrown
+    REQUIRE(false == true);
+  } catch (const EuclideanVectorError& e) {
+    std::string message = e.what();
+    REQUIRE(message.compare("Dimensions of LHS(2) and RHS(9) do not match") == 0);
+  }
+}
+
 TEST_CASE("Minus operator") {
   EuclideanVector a{2, 5.0};
   EuclideanVector b{2, 5.0};

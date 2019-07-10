@@ -73,7 +73,7 @@ class EuclideanVector {
   ~EuclideanVector() { magnitudes_.release(); }
 
   // Methods
-  const int& GetNumDimensions();
+  int GetNumDimensions();
   double at(int);
 
   // Operators
