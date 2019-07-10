@@ -319,3 +319,20 @@ TEST_CASE("Eucliean norm"){
   REQUIRE(norm > 3.74);
   REQUIRE(norm < 3.75);
 }
+
+TEST_CASE("Eucliean norm catch"){
+  std::vector<double> v;
+  EuclideanVector a{v.begin(), v.end()};
+  try {
+    // Expect to fail
+    double norm = a.GetEuclideanNorm();
+
+    // Those code should not run
+    // if it does, then the error wasn't thrown
+    std::cout << norm;
+    REQUIRE(true == false);
+  } catch (const EuclideanVectorError& e) {
+    std::string message = e.what();
+    REQUIRE(message.compare("EuclideanVector with euclidean normal of 0 does not have a unit vector") == 0);
+  }
+}
