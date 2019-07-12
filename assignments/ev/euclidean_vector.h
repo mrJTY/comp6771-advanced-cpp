@@ -74,6 +74,13 @@ class EuclideanVector {
     sourceVector.numDimensions_ = 0;
   }
 
+  // Move assignment
+  void operator=(EuclideanVector&& o) noexcept {
+    magnitudes_ = std::move(o.magnitudes_);
+    numDimensions_ = o.numDimensions_;
+    o.numDimensions_ = 0;
+  }
+
   // Destructor
   ~EuclideanVector() { magnitudes_.reset(); }
 

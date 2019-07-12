@@ -6,6 +6,11 @@
    to which you're certain you have covered all possibilities,
    and why you think your tests are that thorough.
 
+  The tests go through:
+  * how EuclideanVectors are constructed
+  * the operators
+  * the methods
+
 */
 
 #include "assignments/ev/euclidean_vector.h"
@@ -94,6 +99,23 @@ TEST_CASE("Copy assignment") {
 }
 
 /**
+ * Test move assignment
+ * by passing an existing EV to a new EV.
+ * The old OV should NOT retain the
+ * it's magnitudes.
+ **/
+TEST_CASE("Move assignment") {
+  EuclideanVector oldEV{2, 4.0};
+  EuclideanVector newEV = std::move(oldEV);
+
+  REQUIRE(newEV[0] == 4.0);
+  REQUIRE(newEV[1] == 4.0);
+
+  REQUIRE(newEV.GetNumDimensions() == 2);
+  REQUIRE(oldEV.GetNumDimensions() == 0);
+}
+
+/**
  * Test move constructor
  * by passing an existing EV to a new EV.
  * The old OV should NOT retain the
@@ -101,7 +123,7 @@ TEST_CASE("Copy assignment") {
  **/
 TEST_CASE("Move constructor") {
   EuclideanVector oldEV{2, 4.0};
-  EuclideanVector newEV = std::move(oldEV);
+  EuclideanVector newEV = EuclideanVector{std::move(oldEV)};
 
   REQUIRE(newEV[0] == 4.0);
   REQUIRE(newEV[1] == 4.0);
@@ -128,7 +150,6 @@ TEST_CASE("At and subscripts") {
   // Get using at
   REQUIRE(a.at(1) == 20.0);
   REQUIRE(a.at(2) == 30.0);
-  // TODO(jt): Force an exception
 }
 
 /**
@@ -298,8 +319,6 @@ TEST_CASE("Vector type conversion") {
   EuclideanVector a{1, 100.0};
   std::vector<double> vf = std::vector<double>{a};
   REQUIRE(vf.at(0) == 100.0);
-  // TODO(jt): require this to fail
-  // REQUIRE(vf.at(1));
 }
 
 /**
@@ -336,4 +355,28 @@ TEST_CASE("Eucliean norm catch") {
     std::cout << message;
     REQUIRE(message.compare("EuclideanVector with no dimensions does not have a norm") == 0);
   }
+}
+
+double round(double num){
+  double value = (int)(num * 10000 + 0.5);
+  return (double)value / 10000;
+}
+
+TEST_CASE("Unit vector"){
+  std::vector<double> l;
+  l.push_back(5.0);
+  l.push_back(4.0);
+  l.push_back(3.0);
+  l.push_back(2.0);
+  l.push_back(1.0);
+
+  EuclideanVector v{l.begin(), l.end()};
+
+  auto unitVector = v.CreateUnitVector();
+
+  REQUIRE(round(unitVector[0]) == 0.6742);
+  REQUIRE(round(unitVector[1]) == 0.5394);
+  REQUIRE(round(unitVector[2]) == 0.4045);
+  REQUIRE(round(unitVector[3]) == 0.2697);
+  REQUIRE(round(unitVector[4]) == 0.1348);
 }
