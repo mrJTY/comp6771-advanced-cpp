@@ -23,13 +23,14 @@ class EuclideanVectorError : public std::exception {
 class EuclideanVector {
  public:
   // Construct by providing number of dimensions
-  explicit EuclideanVector(int numDimensions) : numDimensions_{numDimensions} {
+  explicit EuclideanVector(const int numDimensions) : numDimensions_{numDimensions} {
     magnitudes_ = std::make_unique<double[]>(numDimensions_);
   }
 
   // Construct by providing number of dimensions
   // and default magnitude value
-  EuclideanVector(int numDimensions, double magnitudeForAll) : numDimensions_{numDimensions} {
+  EuclideanVector(const int numDimensions, const double magnitudeForAll)
+    : numDimensions_{numDimensions} {
     magnitudes_ = std::make_unique<double[]>(numDimensions_);
     for (int i = 0; i < numDimensions_; i++) {
       magnitudes_[i] = magnitudeForAll;
@@ -37,8 +38,8 @@ class EuclideanVector {
   };
 
   // Construct by passing iterators
-  EuclideanVector(std::vector<double>::const_iterator begin,
-                  std::vector<double>::const_iterator end) {
+  EuclideanVector(const std::vector<double>::const_iterator begin,
+                  const std::vector<double>::const_iterator end) {
     // Check how any dimensions
     int i = 0;
     for (auto iter = begin; iter != end; ++iter) {
@@ -85,8 +86,8 @@ class EuclideanVector {
   ~EuclideanVector() { magnitudes_.reset(); }
 
   // Methods
-  int GetNumDimensions();
-  double at(int);
+  int GetNumDimensions() noexcept;
+  double at(const int);
   double GetEuclideanNorm();
   EuclideanVector CreateUnitVector();
 
@@ -100,7 +101,6 @@ class EuclideanVector {
   double& operator[](int i);       // Setting via []
   double operator[](int i) const;  // getting via []
 
-  // Vector converters
   explicit operator std::vector<double>();
   explicit operator std::list<double>();
 

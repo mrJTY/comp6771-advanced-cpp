@@ -359,7 +359,7 @@ TEST_CASE("Eucliean norm catch") {
 
 double round(double num) {
   double value = static_cast<int>(num * 10000 + 0.5);
-  return static_cast<double> value / 10000;
+  return static_cast<double>(value) / 10000;
 }
 
 TEST_CASE("Unit vector") {

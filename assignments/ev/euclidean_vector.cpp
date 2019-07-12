@@ -32,7 +32,7 @@ std::ostream& operator<<(std::ostream& os, const EuclideanVector& v) {
   return os;
 }
 
-int EuclideanVector::GetNumDimensions() {
+int EuclideanVector::GetNumDimensions() noexcept {
   return numDimensions_;
 }
 
