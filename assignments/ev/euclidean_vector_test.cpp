@@ -6,6 +6,11 @@
    to which you're certain you have covered all possibilities,
    and why you think your tests are that thorough.
 
+  The tests go through:
+  * how EuclideanVectors are constructed
+  * the operators
+  * the methods
+
 */
 
 #include "assignments/ev/euclidean_vector.h"
@@ -145,7 +150,6 @@ TEST_CASE("At and subscripts") {
   // Get using at
   REQUIRE(a.at(1) == 20.0);
   REQUIRE(a.at(2) == 30.0);
-
 }
 
 /**
@@ -351,4 +355,28 @@ TEST_CASE("Eucliean norm catch") {
     std::cout << message;
     REQUIRE(message.compare("EuclideanVector with no dimensions does not have a norm") == 0);
   }
+}
+
+double round(double num){
+  double value = (int)(num * 10000 + 0.5);
+  return (double)value / 10000;
+}
+
+TEST_CASE("Unit vector"){
+  std::vector<double> l;
+  l.push_back(5.0);
+  l.push_back(4.0);
+  l.push_back(3.0);
+  l.push_back(2.0);
+  l.push_back(1.0);
+
+  EuclideanVector v{l.begin(), l.end()};
+
+  auto unitVector = v.CreateUnitVector();
+
+  REQUIRE(round(unitVector[0]) == 0.6742);
+  REQUIRE(round(unitVector[1]) == 0.5394);
+  REQUIRE(round(unitVector[2]) == 0.4045);
+  REQUIRE(round(unitVector[3]) == 0.2697);
+  REQUIRE(round(unitVector[4]) == 0.1348);
 }

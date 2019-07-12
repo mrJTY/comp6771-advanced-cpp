@@ -13,14 +13,6 @@ cc_binary(
     ],
 )
 
-cc_binary(
-    name = "eclient",
-    srcs = ["expected_client.cpp"],
-    deps = [
-        ":euclidean_vector",
-    ],
-)
-
 cc_test(
     name = "euclidean_vector_test",
     srcs = ["euclidean_vector_test.cpp"],

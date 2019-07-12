@@ -280,6 +280,11 @@ EuclideanVector EuclideanVector::CreateUnitVector() {
     throw EuclideanVectorError(
         "EuclideanVector with euclidean normal of 0 does not have a unit vector");
   }
-  // TODO(jt)
-  return *this;
+  auto norm = this->GetEuclideanNorm();
+  auto magnitudes = std::vector<double>{*this};
+  for(auto i=0; i < this->GetNumDimensions(); ++i){
+    magnitudes[i] = magnitudes[i] / norm;
+  }
+  EuclideanVector v{magnitudes.begin(), magnitudes.end()};
+  return v;
 }

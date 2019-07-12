@@ -68,8 +68,8 @@ class EuclideanVector {
 
   // Move constructor
   EuclideanVector(EuclideanVector&& sourceVector) noexcept
-    : numDimensions_{sourceVector.numDimensions_},
-      magnitudes_{std::move(sourceVector.magnitudes_)} {
+    : numDimensions_{sourceVector.numDimensions_}, magnitudes_{
+                                                       std::move(sourceVector.magnitudes_)} {
     // Clear out the the other source vector
     sourceVector.numDimensions_ = 0;
   }
@@ -79,7 +79,6 @@ class EuclideanVector {
     magnitudes_ = std::move(o.magnitudes_);
     numDimensions_ = o.numDimensions_;
     o.numDimensions_ = 0;
-
   }
 
   // Destructor
