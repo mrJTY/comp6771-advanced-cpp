@@ -94,6 +94,23 @@ TEST_CASE("Copy assignment") {
 }
 
 /**
+ * Test move assignment
+ * by passing an existing EV to a new EV.
+ * The old OV should NOT retain the
+ * it's magnitudes.
+ **/
+TEST_CASE("Move assignment") {
+  EuclideanVector oldEV{2, 4.0};
+  EuclideanVector newEV = std::move(oldEV);
+
+  REQUIRE(newEV[0] == 4.0);
+  REQUIRE(newEV[1] == 4.0);
+
+  REQUIRE(newEV.GetNumDimensions() == 2);
+  REQUIRE(oldEV.GetNumDimensions() == 0);
+}
+
+/**
  * Test move constructor
  * by passing an existing EV to a new EV.
  * The old OV should NOT retain the
@@ -101,7 +118,7 @@ TEST_CASE("Copy assignment") {
  **/
 TEST_CASE("Move constructor") {
   EuclideanVector oldEV{2, 4.0};
-  EuclideanVector newEV = std::move(oldEV);
+  EuclideanVector newEV = EuclideanVector{std::move(oldEV)};
 
   REQUIRE(newEV[0] == 4.0);
   REQUIRE(newEV[1] == 4.0);
@@ -128,7 +145,7 @@ TEST_CASE("At and subscripts") {
   // Get using at
   REQUIRE(a.at(1) == 20.0);
   REQUIRE(a.at(2) == 30.0);
-  // TODO(jt): Force an exception
+
 }
 
 /**
@@ -298,8 +315,6 @@ TEST_CASE("Vector type conversion") {
   EuclideanVector a{1, 100.0};
   std::vector<double> vf = std::vector<double>{a};
   REQUIRE(vf.at(0) == 100.0);
-  // TODO(jt): require this to fail
-  // REQUIRE(vf.at(1));
 }
 
 /**
