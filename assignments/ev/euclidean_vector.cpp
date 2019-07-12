@@ -282,7 +282,7 @@ EuclideanVector EuclideanVector::CreateUnitVector() {
   }
   auto norm = this->GetEuclideanNorm();
   auto magnitudes = std::vector<double>{*this};
-  for(auto i=0; i < this->GetNumDimensions(); ++i){
+  for (auto i = 0; i < this->GetNumDimensions(); ++i) {
     magnitudes[i] = magnitudes[i] / norm;
   }
   EuclideanVector v{magnitudes.begin(), magnitudes.end()};

@@ -357,12 +357,12 @@ TEST_CASE("Eucliean norm catch") {
   }
 }
 
-double round(double num){
-  double value = (int)(num * 10000 + 0.5);
-  return (double)value / 10000;
+double round(double num) {
+  double value = static_cast<int>(num * 10000 + 0.5);
+  return static_cast<double> value / 10000;
 }
 
-TEST_CASE("Unit vector"){
+TEST_CASE("Unit vector") {
   std::vector<double> l;
   l.push_back(5.0);
   l.push_back(4.0);
