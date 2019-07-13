@@ -49,13 +49,19 @@ int EuclideanVector::GetNumDimensions() const noexcept {
 
 // Setter subscript
 double& EuclideanVector::operator[](int i) {
-  assert(i < GetNumDimensions());
+  if (i > GetNumDimensions()) {
+    std::string index = std::to_string(i);
+    throw EuclideanVectorError("Index " + index + " is not valid for this EuclideanVector object");
+  }
   return this->magnitudes_[i];
 }
 
 // Getter subscript
 double EuclideanVector::operator[](int i) const {
-  assert(i < numDimensions_);
+  if (i > GetNumDimensions()) {
+    std::string index = std::to_string(i);
+    throw EuclideanVectorError("Index " + index + " is not valid for this EuclideanVector object");
+  }
   return this->magnitudes_[i];
 }
 
