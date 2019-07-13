@@ -86,8 +86,8 @@ class EuclideanVector {
   ~EuclideanVector() { magnitudes_.reset(); }
 
   // Methods
-  int GetNumDimensions() noexcept;
-  double at(const int);
+  int GetNumDimensions() const noexcept;
+  double at(const int) const;
   double GetEuclideanNorm();
   EuclideanVector CreateUnitVector();
 

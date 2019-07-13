@@ -11,8 +11,8 @@
 #include <vector>
 
 // Methods
-double EuclideanVector::at(const int i) {
-  assert(i <= this->numDimensions_);
+double EuclideanVector::at(const int i) const {
+  assert(i <= GetNumDimensions());
   return this->magnitudes_[i];
 }
 
@@ -32,19 +32,20 @@ std::ostream& operator<<(std::ostream& os, const EuclideanVector& v) {
   return os;
 }
 
-int EuclideanVector::GetNumDimensions() noexcept {
-  return numDimensions_;
+int EuclideanVector::GetNumDimensions() const noexcept {
+  int dimensions =  numDimensions_;
+  return dimensions;
 }
 
 // Setter subscript
 double& EuclideanVector::operator[](int i) {
-  assert(i < this->numDimensions_);
+  assert(i < GetNumDimensions());
   return this->magnitudes_[i];
 }
 
 // Getter subscript
 double EuclideanVector::operator[](int i) const {
-  assert(i < this->numDimensions_);
+  assert(i < numDimensions_);
   return this->magnitudes_[i];
 }
 
