@@ -14,14 +14,14 @@
 double& EuclideanVector::at(const int i) {
   if (i > GetNumDimensions()) {
     std::string index = std::to_string(i);
-    throw EuclideanVectorError("Index " + index + "is not valid for this EuclideanVector object");
+    throw EuclideanVectorError("Index " + index + " is not valid for this EuclideanVector object");
   }
   return this->magnitudes_[i];
 }
 double EuclideanVector::at(const int i) const {
   if (i > GetNumDimensions()) {
     std::string index = std::to_string(i);
-    throw EuclideanVectorError("Index " + index + "is not valid for this EuclideanVector object");
+    throw EuclideanVectorError("Index " + index + " is not valid for this EuclideanVector object");
   }
   return this->magnitudes_[i];
 }
