@@ -18,14 +18,13 @@ double EuclideanVector::at(const int i) const {
 
 std::ostream& operator<<(std::ostream& os, const EuclideanVector& v) {
   std::string opening = "[";
-  std::string comma = ", ";
   std::string ending = "]";
 
   os << opening;
   for (int i = 0; i < v.numDimensions_; ++i) {
     os << v.magnitudes_[i];
     if (i <= v.numDimensions_ - 2) {
-      os << comma;
+      os;
     }
   }
   os << ending;
@@ -33,7 +32,7 @@ std::ostream& operator<<(std::ostream& os, const EuclideanVector& v) {
 }
 
 int EuclideanVector::GetNumDimensions() const noexcept {
-  int dimensions =  numDimensions_;
+  int dimensions = numDimensions_;
   return dimensions;
 }
 
