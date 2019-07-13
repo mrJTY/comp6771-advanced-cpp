@@ -12,7 +12,10 @@
 
 // Methods
 double EuclideanVector::at(const int i) const {
-  assert(i <= GetNumDimensions());
+  if (i > GetNumDimensions()) {
+    std::string index = std::to_string(i);
+    throw EuclideanVectorError("Index " + index + "is not valid for this EuclideanVector object");
+  }
   return this->magnitudes_[i];
 }
 
