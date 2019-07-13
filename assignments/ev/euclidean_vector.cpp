@@ -12,14 +12,14 @@
 
 // Methods
 double& EuclideanVector::at(const int i) {
-  if (i > GetNumDimensions()) {
+  if (i < 0 || i >= GetNumDimensions()) {
     std::string index = std::to_string(i);
     throw EuclideanVectorError("Index " + index + " is not valid for this EuclideanVector object");
   }
   return this->magnitudes_[i];
 }
 double EuclideanVector::at(const int i) const {
-  if (i > GetNumDimensions()) {
+  if (i < 0 || i >= GetNumDimensions()) {
     std::string index = std::to_string(i);
     throw EuclideanVectorError("Index " + index + " is not valid for this EuclideanVector object");
   }
@@ -49,19 +49,13 @@ int EuclideanVector::GetNumDimensions() const noexcept {
 
 // Setter subscript
 double& EuclideanVector::operator[](int i) {
-  if (i > GetNumDimensions()) {
-    std::string index = std::to_string(i);
-    throw EuclideanVectorError("Index " + index + " is not valid for this EuclideanVector object");
-  }
+  assert(i < GetNumDimensions());
   return this->magnitudes_[i];
 }
 
 // Getter subscript
 double EuclideanVector::operator[](int i) const {
-  if (i > GetNumDimensions()) {
-    std::string index = std::to_string(i);
-    throw EuclideanVectorError("Index " + index + " is not valid for this EuclideanVector object");
-  }
+  assert(i < numDimensions_);
   return this->magnitudes_[i];
 }
 
