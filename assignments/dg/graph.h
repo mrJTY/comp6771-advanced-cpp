@@ -42,19 +42,20 @@ class Graph {
     }
   };
 
-//   Graph(typename std::vector<std::tuple<N, N, E>>::const_iterator begin,
-//      typename std::vector<std::tuple<N, N, E>>::const_iterator end){
-//       for (auto iter = begin; iter != end; ++iter) {
-//           auto srcVal = std::get<0>(*iter);
-//           auto destVal = std::get<1>(*iter);
-//
-//           auto srcNode = Node<N>{srcVal};
-//           auto destNode = Node<N>{srcVal};
-//
-//           nodes_.push_back(srcNode);
-//       }
-//
-//   };
+   Graph(typename std::vector<std::tuple<N, N, E>>::const_iterator begin,
+      typename std::vector<std::tuple<N, N, E>>::const_iterator end){
+       for (auto iter = begin; iter != end; ++iter) {
+           auto srcVal = std::get<0>(*iter);
+           auto destVal = std::get<1>(*iter);
+
+           auto srcNode = Node<N>{srcVal};
+           auto destNode = Node<N>{srcVal};
+
+           nodes_.push_back(srcNode);
+           nodes_.push_back(destNode);
+       }
+
+   };
 
   // Methods
   std::vector<N> GetNodes();
