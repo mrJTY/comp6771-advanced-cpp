@@ -11,13 +11,15 @@ template <typename N>
 class Node {
  public:
   Node(N val) { value_ = val; };
+  N GetValue() {return value_; };
+private:
   N value_;
 };
 
 template <typename N, typename E>
 class Edge {
 public:
-    Edge(typename Node<N> src, Node<N> dest, E weight){
+    Edge(Node<N> src, Node<N> dest, E weight){
         src_ = src;
         dest_ = dest;
         weight_ = weight;
@@ -34,6 +36,7 @@ class Graph {
   // class const_iterator {};
 
   // Constructors
+  Graph() = default;
   Graph(typename std::vector<N>::const_iterator begin,
         typename std::vector<N>::const_iterator end) {
     for (auto iter = begin; iter != end; ++iter) {
@@ -69,8 +72,8 @@ class Graph {
 
 
            // Check if src and dest are in edges
-           //E weight = std::get<2>(*iter);
-           //auto newEdge = Edge<N, E>{srcNode, destNode, weight};
+//           E weight = std::get<2>(*iter);
+//           Edge<N, E> newEdge = Edge<N, E>{srcNode, destNode, weight};
 //           bool foundSrc = false;
 //           bool foundDest = false;
 //           for(auto eIter = edges_.cbegin(); eIter != edges_.cend(); ++eIter){
@@ -88,6 +91,7 @@ class Graph {
 
   // Methods
   std::vector<N> GetNodes();
+  bool InsertNode(const N& val);
 
  private:
     // TODO(JT): make this a set

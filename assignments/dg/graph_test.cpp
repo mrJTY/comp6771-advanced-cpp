@@ -27,6 +27,17 @@ TEST_CASE("Constructors") {
   auto nodes = b.GetNodes();
 }
 
+TEST_CASE("Hello how are you"){
+    gdwg::Graph<std::string, int> g;
+    g.InsertNode("hello");
+    g.InsertNode("how");
+    g.InsertNode("are");
+    g.InsertNode("you?");
+
+    //std::vector<std::string> nodes = g.GetNodes();
+
+}
+
 TEST_CASE("Tuple constructor") {
   std::string s1{"Hello"};
   std::string s2{"how"};
