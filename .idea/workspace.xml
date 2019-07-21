@@ -10,13 +10,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="76c12b3d-2e0b-4fa0-885f-5d396831d6cd" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/assignments/ev/euclidean_vector.h" beforeDir="false" afterPath="$PROJECT_DIR$/assignments/ev/euclidean_vector.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assignments/dg/graph.h" beforeDir="false" afterPath="$PROJECT_DIR$/assignments/dg/graph.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assignments/dg/graph.tpp" beforeDir="false" afterPath="$PROJECT_DIR$/assignments/dg/graph.tpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assignments/dg/graph_test.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/assignments/dg/graph_test.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/.bazelrc" beforeDir="false" afterPath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/.bazelrc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/.clang-format" beforeDir="false" afterPath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/.clang-format" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/.idea/comp6771-advanced-cpp.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/.idea/workspace.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/BUILD" beforeDir="false" afterPath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/BUILD" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/WORKSPACE" beforeDir="false" afterPath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/WORKSPACE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/assignments/dg/BUILD" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/assignments/dg/client.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/assignments/dg/graph.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/assignments/dg/graph.tpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/assignments/dg/graph_test.cpp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/assignments/ev/BUILD" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/assignments/ev/Makefile" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/assignments/ev/client.cpp" beforeDir="false" />
@@ -82,9 +95,32 @@
       <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week4/subscript.cpp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week4/type.cpp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week5/BUILD" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week5/operators.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week5/processes.cpp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week5/reader.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week5/smart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week5/smart.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week6/BUILD" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week6/default.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week6/explicit.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week6/iwyu.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week6/iwyu.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week6/nontype.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week6/partial.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week6/partial2.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week6/stack.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week6/stack.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week6/stack.tpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week6/unwind.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week6/week6/md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week7/BUILD" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week7/int_stack.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week7/static.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week7/static_use.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week9/BUILD" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week9/animal.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week9/basic.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week9/cast.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week9/cat.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/lectures/week9/dog.h" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/third_party/BUILD" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/third_party/catch.hpp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/bazel-comp6771-advanced-cpp/tutorials/week1/BUILD" beforeDir="false" />
@@ -112,7 +148,7 @@
     <option name="formatViaClangd" value="false" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assignments/ev/client.cpp">
           <provider selected="true" editor-type-id="text-editor">
@@ -124,29 +160,22 @@
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assignments/ev/euclidean_vector.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-19" />
-          </provider>
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/assignments/ev/euclidean_vector.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="24" column="4" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="4" />
+            <state relative-caret-position="254">
+              <caret line="33" column="50" selection-start-line="33" selection-start-column="50" selection-end-line="33" selection-end-column="50" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lectures/week5/smart.cpp">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lectures/week5/reader.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="336">
               <caret line="16" column="14" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
             </state>
           </provider>
@@ -154,9 +183,7 @@
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assignments/ev/euclidean_vector_test.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-315" />
-          </provider>
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -199,28 +226,6 @@
               <item name="comp6771-advanced-cpp" type="b2602c69:ProjectViewProjectNode" />
               <item name="comp6771-advanced-cpp" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="comp6771-advanced-cpp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="comp6771-advanced-cpp" type="462c0819:PsiDirectoryNode" />
-              <item name="lectures" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="comp6771-advanced-cpp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="comp6771-advanced-cpp" type="462c0819:PsiDirectoryNode" />
-              <item name="lectures" type="462c0819:PsiDirectoryNode" />
-              <item name="week4" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="comp6771-advanced-cpp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="comp6771-advanced-cpp" type="462c0819:PsiDirectoryNode" />
-              <item name="lectures" type="462c0819:PsiDirectoryNode" />
-              <item name="week5" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="comp6771-advanced-cpp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="comp6771-advanced-cpp" type="462c0819:PsiDirectoryNode" />
-              <item name="tutorials" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -228,11 +233,13 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.advertisement.text.has.clang-format" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="MTConfigurable" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -246,6 +253,16 @@
       </list>
     </option>
   </component>
+  <component name="RunManager">
+    <configuration name="graph_test" type="BlazeCommandRunConfigurationType" factoryName="Bazel Command">
+      <blaze-settings blaze-command="test" handler-id="BlazeCommandGenericRunConfigurationHandlerProvider">
+        <blaze-target>/assignment/dg/graph_test</blaze-target>
+      </blaze-settings>
+      <method v="2">
+        <option name="Blaze.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -257,23 +274,20 @@
       <option name="presentableId" value="Default" />
       <updated>1562376421446</updated>
       <workItem from="1562376425152" duration="492000" />
+      <workItem from="1563701594754" duration="260000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="492000" />
+    <option name="totallyTimeSpent" value="752000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-1" width="1920" height="1042" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2497332" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2524013" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -281,10 +295,14 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Database" />
+      <window_info anchor="bottom" id="Database Changes" order="7" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -299,29 +317,28 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/assignments/ev/euclidean_vector.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-19" />
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/lectures/week5/smart.cpp">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/lectures/week5/reader.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="336">
           <caret line="16" column="14" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/assignments/ev/euclidean_vector_test.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-315" />
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WORKSPACE">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/assignments/ev/euclidean_vector.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="24" column="4" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="4" />
+        <state relative-caret-position="254">
+          <caret line="33" column="50" selection-start-line="33" selection-start-column="50" selection-end-line="33" selection-end-column="50" />
         </state>
       </provider>
     </entry>

@@ -7,12 +7,16 @@ namespace gdwg {
 
 template <typename N, typename E>
 class Graph {
- public: bb
-  class const_iterator {};
+ public:
+  //class const_iterator {};
+
   // Constructors
-  Graph<N, E>(std::vector<N>::const_iterator begin, std::vector<N>::const_iterator end){
-    
-  }
+  Graph(typename std::vector<N>::const_iterator begin,
+        typename std::vector<N>::const_iterator end) {
+    for(auto iter = begin; iter != end; ++iter){
+      nodes_.push_back(*iter);
+    }
+  };
 
   // Methods
   std::vector<N> GetNodes();

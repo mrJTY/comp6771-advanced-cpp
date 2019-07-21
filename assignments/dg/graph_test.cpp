@@ -10,10 +10,19 @@
 
 #include "assignments/dg/graph.h"
 #include "catch.h"
+#include "iostream"
 #include "string"
+
+//TEST_CASE("Hello"){
+//  gdwg::Graph<std::string, int> a;
+//  auto nodes = a.GetNodes();
+//  for(auto it = nodes.begin(); it!=nodes.end(); ++it){
+//    std::cout << *it;
+//  }
+//}
 
 TEST_CASE("Constructors") {
   std::vector<std::string> v{"Hello", "how", "are", "you"};
-  auto a = gdwg::Graph<std::string, double> b{v.begin(),v.end()};
-  auto nodes = a.GetNodes();
+  gdwg::Graph<std::string, double> b{v.begin(),v.end()};
+  auto nodes = b.GetNodes();
 }
