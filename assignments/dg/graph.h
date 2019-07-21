@@ -17,7 +17,7 @@ class Node {
 template <typename N, typename E>
 class Edge {
 public:
-    Edge(Node<N> src, Node<N> dest, E weight){
+    Edge(typename Node<N> src, Node<N> dest, E weight){
         src_ = src;
         dest_ = dest;
         weight_ = weight;
@@ -46,11 +46,11 @@ class Graph {
    Graph(typename std::vector<std::tuple<N, N, E>>::const_iterator begin,
       typename std::vector<std::tuple<N, N, E>>::const_iterator end){
        for (auto iter = begin; iter != end; ++iter) {
-           auto srcVal = std::get<0>(*iter);
-           auto destVal = std::get<1>(*iter);
+           N srcVal = std::get<0>(*iter);
+           N destVal = std::get<1>(*iter);
 
-           auto srcNode = Node<N>{srcVal};
-           auto destNode = Node<N>{srcVal};
+           Node<N> srcNode = Node<N>{srcVal};
+           Node<N> destNode = Node<N>{srcVal};
 
            std::vector<N> nodeValues = GetNodes();
 
@@ -66,6 +66,22 @@ class Graph {
            } else{
                nodes_.push_back(destNode);
            }
+
+
+           // Check if src and dest are in edges
+           //E weight = std::get<2>(*iter);
+           //auto newEdge = Edge<N, E>{srcNode, destNode, weight};
+//           bool foundSrc = false;
+//           bool foundDest = false;
+//           for(auto eIter = edges_.cbegin(); eIter != edges_.cend(); ++eIter){
+//               foundSrc = (*eIter).src_.value_ == newEdge.src_.value_;
+//               foundDest = (*eIter).dest_.value_ == newEdge.dest_.value_;
+//           }
+//           if(foundSrc && foundDest){
+//           } else{
+//               edges_.push_back(newEdge);
+//           }
+
        }
 
    };
