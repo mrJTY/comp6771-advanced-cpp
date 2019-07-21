@@ -1,8 +1,9 @@
 #ifndef ASSIGNMENTS_DG_GRAPH_H_
 #define ASSIGNMENTS_DG_GRAPH_H_
 
-#include "vector"
-#include "tuple"
+#include <vector>
+#include <tuple>
+#include <algorithm>
 
 namespace gdwg {
 
@@ -51,8 +52,20 @@ class Graph {
            auto srcNode = Node<N>{srcVal};
            auto destNode = Node<N>{srcVal};
 
-           nodes_.push_back(srcNode);
-           nodes_.push_back(destNode);
+           std::vector<N> nodeValues = GetNodes();
+
+           // Only add to the nodes, if it hasn't been added before
+           auto searchSrc = std::find(nodeValues.cbegin(), nodeValues.cend(), srcVal);
+           if(searchSrc != nodeValues.end()){
+           } else{
+               nodes_.push_back(srcNode);
+           }
+
+           auto searchDest = std::find(nodeValues.cbegin(), nodeValues.cend(), destVal);
+           if(searchDest != nodeValues.end()){
+           } else{
+               nodes_.push_back(destNode);
+           }
        }
 
    };
