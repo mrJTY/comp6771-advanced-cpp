@@ -10,5 +10,10 @@
 
 #include "assignments/dg/graph.h"
 #include "catch.h"
+#include "string"
 
-// TODO(students): Fill this in.
+TEST_CASE("Constructors") {
+  std::vector<std::string> v{"Hello", "how", "are", "you"};
+  auto a = gdwg::Graph<std::string, double> b{v.begin(),v.end()};
+  auto nodes = a.GetNodes();
+}
