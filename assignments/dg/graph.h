@@ -27,9 +27,6 @@ struct Node {
 
 };
 
-
-
-
 template <typename N, typename E>
 struct Edge{
 public:
@@ -85,6 +82,8 @@ class Graph {
   bool InsertNode(const N& val);
   bool InsertEdge(const N& src, const N& dst, const E& w);
   bool DeleteNode(const N&);
+  void Clear();
+  bool IsNode(const N& val);
 
 private:
   std::set<Node<N>> nodes_;

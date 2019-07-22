@@ -14,13 +14,7 @@ typename std::vector<N> gdwg::Graph<N, E>::GetNodes() {
 template <typename N, typename E>
 bool gdwg::Graph<N, E>::InsertNode(const N& val) {
 
-    bool found = false;
-    auto search = nodes_.find(val);
-
-    if(search != nodes_.end()){
-        found = true;
-    }
-
+    bool found = IsNode(val);
     // Add only if its not found
     if(!found){
         nodes_.emplace(val);
@@ -57,5 +51,20 @@ bool gdwg::Graph<N, E>::DeleteNode(const N &val) {
         nodes_.erase(val);
     }
 
+    return found;
+}
+
+template<typename N, typename E>
+void gdwg::Graph<N, E>::Clear(){
+    nodes_.erase(nodes_.cbegin(), nodes_.cend());
+}
+
+template<typename N, typename E>
+bool gdwg::Graph<N, E>::IsNode(const N& val){
+    auto search = nodes_.find(val);
+    bool found = false;
+    if(search != nodes_.end()){
+        found = true;
+    }
     return found;
 }

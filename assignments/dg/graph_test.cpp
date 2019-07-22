@@ -67,6 +67,15 @@ TEST_CASE("Erase"){
     g.InsertNode(a);
     REQUIRE(g.DeleteNode(a) == true);
     REQUIRE(g.DeleteNode(a) == false);
+    REQUIRE(g.GetNodes().empty());
+}
 
+TEST_CASE("Clear"){
+    std::string a{"a"};
+    Graph<std::string, int> g;
+    g.InsertNode(a);
+    REQUIRE(!g.GetNodes().empty());
+    g.Clear();
+    REQUIRE(g.GetNodes().empty());
 
 }
