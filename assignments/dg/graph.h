@@ -4,29 +4,35 @@
 #include <vector>
 #include <tuple>
 #include <algorithm>
+#include <set>
+#include <memory>
 
 namespace gdwg {
 
 template <typename N>
-class Node {
- public:
-  Node(N val) { value_ = val; };
-  N GetValue() {return value_; };
-private:
-  N value_;
+struct Node {
+    Node();
+    Node(N value): value_{value} {};
+    Node(N value, std::unique_ptr<Node>&& next): value_{value}, next{std::move(next)} {}
+    N value_;
+    std::unique_ptr<Node> next;
+
+    friend bool operator< (const Node<N>& lhs, const Node<N>& rhs) {
+        return lhs.value_ < rhs.value_;
+    };
+
+    friend bool operator== (const Node<N>& lhs, const Node<N>& rhs) {
+        return lhs.value_ == rhs.value_;
+    };
+
 };
 
 template <typename N, typename E>
-class Edge {
+struct Edge{
 public:
-    Edge(Node<N> src, Node<N> dest, E weight){
-        src_ = src;
-        dest_ = dest;
-        weight_ = weight;
-    }
-private:
-    Node<N> src_;
-    Node<N> dest_;
+    Edge(N src, N dst, E weight): src_(src), dst_(dst), weight_(weight){};
+    N src_;
+    N dst_;
     E weight_;
 };
 
@@ -40,63 +46,48 @@ class Graph {
   Graph(typename std::vector<N>::const_iterator begin,
         typename std::vector<N>::const_iterator end) {
     for (auto iter = begin; iter != end; ++iter) {
-      // Create a new node
-      auto node = Node(*iter);
-      nodes_.push_back(node);
+        nodes_.emplace(*iter);
     }
   };
+
+  // Copy constructor
+  Graph(const Graph& other) : nodes_{other.nodes_}, edges_{other.edges} {};
+  // Copy assignment
+  Graph& operator=(const Graph& rhs);
+
+  // Move constructor
+  Graph(Graph&& other) noexcept: nodes_{std::move(other.nodes_)}, edges_{std::move(other.edges_)} {};
 
    Graph(typename std::vector<std::tuple<N, N, E>>::const_iterator begin,
       typename std::vector<std::tuple<N, N, E>>::const_iterator end){
        for (auto iter = begin; iter != end; ++iter) {
            N srcVal = std::get<0>(*iter);
            N destVal = std::get<1>(*iter);
-
-           Node<N> srcNode = Node<N>{srcVal};
-           Node<N> destNode = Node<N>{srcVal};
+           E weight = std::get<2>(*iter);
 
            std::vector<N> nodeValues = GetNodes();
 
            // Only add to the nodes, if it hasn't been added before
-           auto searchSrc = std::find(nodeValues.cbegin(), nodeValues.cend(), srcVal);
-           if(searchSrc != nodeValues.end()){
-           } else{
-               nodes_.push_back(srcNode);
-           }
-
-           auto searchDest = std::find(nodeValues.cbegin(), nodeValues.cend(), destVal);
-           if(searchDest != nodeValues.end()){
-           } else{
-               nodes_.push_back(destNode);
-           }
-
-
-           // Check if src and dest are in edges
-//           E weight = std::get<2>(*iter);
-//           Edge<N, E> newEdge = Edge<N, E>{srcNode, destNode, weight};
-//           bool foundSrc = false;
-//           bool foundDest = false;
-//           for(auto eIter = edges_.cbegin(); eIter != edges_.cend(); ++eIter){
-//               foundSrc = (*eIter).src_.value_ == newEdge.src_.value_;
-//               foundDest = (*eIter).dest_.value_ == newEdge.dest_.value_;
-//           }
-//           if(foundSrc && foundDest){
-//           } else{
-//               edges_.push_back(newEdge);
-//           }
+           InsertNode(srcVal);
+           InsertNode(destVal);
+           InsertEdge(srcVal, destVal, weight);
 
        }
 
    };
 
+
   // Methods
   std::vector<N> GetNodes();
   bool InsertNode(const N& val);
+  bool InsertEdge(const N& src, const N& dst, const E& w);
+  bool DeleteNode(const N&);
+  void Clear();
+  bool IsNode(const N& val);
 
- private:
-    // TODO(JT): make this a set
-  std::vector<Node<N>> nodes_;
-  std::vector<Edge<N, E>> edges_;
+private:
+  std::set<Node<N>> nodes_;
+  std::vector<Edge<N,E>> edges_;
 
 };
 
