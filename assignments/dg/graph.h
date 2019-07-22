@@ -31,20 +31,32 @@ class Graph {
     }
   };
 
+  // Copy constructor
+  Graph(const Graph& other) : nodes_{other.nodes_}, edges_{other.edges} {};
+  // Copy assignment
+  Graph& operator=(const Graph& rhs);
+
+  // Move constructor
+  Graph(Graph&& other) noexcept: nodes_{std::move(other.nodes_)}, edges_{std::move(other.edges_)} {};
+
    Graph(typename std::vector<std::tuple<N, N, E>>::const_iterator begin,
       typename std::vector<std::tuple<N, N, E>>::const_iterator end){
        for (auto iter = begin; iter != end; ++iter) {
            N srcVal = std::get<0>(*iter);
            N destVal = std::get<1>(*iter);
+           E weight = std::get<2>(*iter);
 
            std::vector<N> nodeValues = GetNodes();
 
            // Only add to the nodes, if it hasn't been added before
-           nodes_.emplace(srcVal);
-           nodes_.emplace(destVal);
+           InsertNode(srcVal);
+           InsertNode(destVal);
+           InsertEdge(srcVal, destVal, weight);
+
        }
 
    };
+
 
   // Methods
   std::vector<N> GetNodes();
