@@ -15,14 +15,6 @@
 
 using namespace gdwg;
 
-// TEST_CASE("Hello"){
-//  gdwg::Graph<std::string, int> a;
-//  auto nodes = a.GetNodes();
-//  for(auto it = nodes.begin(); it!=nodes.end(); ++it){
-//    std::cout << *it;
-//  }
-//}
-
 TEST_CASE("Constructors") {
   std::vector<std::string> v{"Hello", "how", "are", "you"};
   Graph<std::string, double> b{v.begin(), v.end()};
@@ -67,5 +59,4 @@ TEST_CASE("Insert edges"){
     REQUIRE(g.InsertEdge(srcVal, dstVal, 10) == true );
     REQUIRE(g.InsertEdge(srcVal, dstVal, 10) == false );
     REQUIRE(g.InsertEdge(srcVal, dstVal, 20) == true );
-
 }
