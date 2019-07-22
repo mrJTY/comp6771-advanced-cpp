@@ -92,6 +92,7 @@ class Graph {
   // Methods
   std::vector<N> GetNodes();
   bool InsertNode(const N& val);
+  bool InsertEdge(const N& src, const N& dst, const E& w);
 
  private:
     // TODO(JT): make this a set
