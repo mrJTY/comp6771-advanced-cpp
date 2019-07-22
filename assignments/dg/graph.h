@@ -5,17 +5,39 @@
 #include <tuple>
 #include <algorithm>
 #include <set>
+#include <memory>
 
 namespace gdwg {
 
-    template <typename N, typename E>
-    class Edge{
-    public:
-        Edge(N src, N dst, E weight): src_(src), dst_(dst), weight_(weight){};
-        N src_;
-        N dst_;
-        E weight_;
+template <typename N>
+struct Node {
+    Node();
+    Node(N value): value_{value} {};
+    Node(N value, std::unique_ptr<Node>&& next): value_{value}, next{std::move(next)} {}
+    N value_;
+    std::unique_ptr<Node> next;
+
+    friend bool operator< (const Node<N>& lhs, const Node<N>& rhs) {
+        return lhs.value_ < rhs.value_;
     };
+
+    friend bool operator== (const Node<N>& lhs, const Node<N>& rhs) {
+        return lhs.value_ == rhs.value_;
+    };
+
+};
+
+
+
+
+template <typename N, typename E>
+struct Edge{
+public:
+    Edge(N src, N dst, E weight): src_(src), dst_(dst), weight_(weight){};
+    N src_;
+    N dst_;
+    E weight_;
+};
 
 template <typename N, typename E>
 class Graph {
@@ -62,9 +84,10 @@ class Graph {
   std::vector<N> GetNodes();
   bool InsertNode(const N& val);
   bool InsertEdge(const N& src, const N& dst, const E& w);
+  bool DeleteNode(const N&);
 
 private:
-  std::set<N> nodes_;
+  std::set<Node<N>> nodes_;
   std::vector<Edge<N,E>> edges_;
 
 };

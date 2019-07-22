@@ -60,3 +60,13 @@ TEST_CASE("Insert edges"){
     REQUIRE(g.InsertEdge(srcVal, dstVal, 10) == false );
     REQUIRE(g.InsertEdge(srcVal, dstVal, 20) == true );
 }
+
+TEST_CASE("Erase"){
+    std::string a{"a"};
+    Graph<std::string, int> g;
+    g.InsertNode(a);
+    REQUIRE(g.DeleteNode(a) == true);
+    REQUIRE(g.DeleteNode(a) == false);
+
+
+}

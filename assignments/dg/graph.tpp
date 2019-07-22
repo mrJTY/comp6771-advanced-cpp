@@ -6,7 +6,7 @@ template <typename N, typename E>
 typename std::vector<N> gdwg::Graph<N, E>::GetNodes() {
     std::vector<N> out;
     for(auto iter = nodes_.cbegin(); iter != nodes_.cend(); ++iter){
-        out.push_back(*iter);
+        out.push_back((*iter).value_);
     }
     return out;
 }
@@ -48,3 +48,14 @@ bool gdwg::Graph<N, E>::InsertEdge(const N &src, const N &dst, const E &w) {
    return true;
 }
 
+template<typename N, typename E>
+bool gdwg::Graph<N, E>::DeleteNode(const N &val) {
+    bool found = false;
+    auto search = nodes_.find(val);
+    if(search != nodes_.end()){
+        found = true;
+        nodes_.erase(val);
+    }
+
+    return found;
+}
