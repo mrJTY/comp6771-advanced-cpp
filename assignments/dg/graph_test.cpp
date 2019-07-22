@@ -52,10 +52,21 @@ TEST_CASE("Tuple constructor") {
 
 TEST_CASE("Insert nodes"){
     std::string srcVal{"src"};
-    std::string dstVal{"dst"};
+    std::string dstVal{"dst_"};
     Graph<std::string, int> g;
 
     REQUIRE(g.InsertNode(srcVal) == true);
     REQUIRE(g.InsertNode(srcVal) == false);
     REQUIRE(g.InsertNode(dstVal) == true);
+}
+
+TEST_CASE("Insert edges"){
+    std::string srcVal{"src"};
+    std::string dstVal{"dst_"};
+    Graph<std::string, int> g;
+//    g.InsertEdge(srcVal, dstVal, 10);
+    //REQUIRE(g.InsertEdge(srcVal, dstVal, 10) == true );
+    //REQUIRE(g.InsertEdge(srcVal, dstVal, 10) == false );
+    REQUIRE(1 == 1);
+
 }

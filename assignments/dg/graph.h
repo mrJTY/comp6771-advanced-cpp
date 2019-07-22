@@ -10,24 +10,25 @@ namespace gdwg {
 template <typename N>
 class Node {
  public:
-  Node(N val) { value_ = val; };
-  N GetValue() {return value_; };
-private:
+  Node();
+  Node(N val) : value_(val){};
   N value_;
 };
 
+
 template <typename N, typename E>
 class Edge {
-public:
-    Edge(Node<N> src, Node<N> dest, E weight){
-        src_ = src;
-        dest_ = dest;
-        weight_ = weight;
-    }
-private:
-    Node<N> src_;
-    Node<N> dest_;
-    E weight_;
+    public:
+//        Edge();
+        Edge(N src, N  dst, E weight) {
+            src_ = Node{src};
+            dst_ = Node{dst};
+            weight_ = weight;
+        };
+
+        Node<N> src_;
+        Node<N> dst_;
+        E weight_;
 };
 
 template <typename N, typename E>
@@ -78,7 +79,7 @@ class Graph {
 //           bool foundDest = false;
 //           for(auto eIter = edges_.cbegin(); eIter != edges_.cend(); ++eIter){
 //               foundSrc = (*eIter).src_.value_ == newEdge.src_.value_;
-//               foundDest = (*eIter).dest_.value_ == newEdge.dest_.value_;
+//               foundDest = (*eIter).dst_.value_ == newEdge.dst_.value_;
 //           }
 //           if(foundSrc && foundDest){
 //           } else{
@@ -92,7 +93,7 @@ class Graph {
   // Methods
   std::vector<N> GetNodes();
   bool InsertNode(const N& val);
-  bool InsertEdge(const N& src, const N& dst, const E& w);
+  bool InsertEdge(const N src, const N dst, const E w);
 
  private:
     // TODO(JT): make this a set
