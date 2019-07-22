@@ -33,7 +33,7 @@ bool gdwg::Graph<N, E>::InsertNode(const N& val) {
 }
 
 template<typename N, typename E>
-bool gdwg::Graph<N, E>::InsertEdge(const N src, const N dst, const E w) {
+bool gdwg::Graph<N, E>::InsertEdge(const N &src, const N &dst, const E &w) {
    Edge<N, E> newEdge{src, dst, w};
    bool foundSrc = false;
    bool foundDest = false;

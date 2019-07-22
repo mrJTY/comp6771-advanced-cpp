@@ -64,9 +64,8 @@ TEST_CASE("Insert edges"){
     std::string srcVal{"src"};
     std::string dstVal{"dst_"};
     Graph<std::string, int> g;
-//    g.InsertEdge(srcVal, dstVal, 10);
-    //REQUIRE(g.InsertEdge(srcVal, dstVal, 10) == true );
-    //REQUIRE(g.InsertEdge(srcVal, dstVal, 10) == false );
-    REQUIRE(1 == 1);
+    REQUIRE(g.InsertEdge(srcVal, dstVal, 10) == true );
+    REQUIRE(g.InsertEdge(srcVal, dstVal, 10) == false );
+    REQUIRE(g.InsertEdge(srcVal, dstVal, 20) == true );
 
 }

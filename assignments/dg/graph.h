@@ -10,7 +10,7 @@ namespace gdwg {
 template <typename N>
 class Node {
  public:
-  Node();
+  Node(){};
   Node(N val) : value_(val){};
   N value_;
 };
@@ -19,10 +19,10 @@ class Node {
 template <typename N, typename E>
 class Edge {
     public:
-//        Edge();
+        Edge(){};
         Edge(N src, N  dst, E weight) {
-            src_ = Node{src};
-            dst_ = Node{dst};
+            src_.value_ = src;
+            dst_.value_ = dst;
             weight_ = weight;
         };
 
@@ -72,20 +72,6 @@ class Graph {
            }
 
 
-           // Check if src and dest are in edges
-//           E weight = std::get<2>(*iter);
-//           Edge<N, E> newEdge = Edge<N, E>{srcNode, destNode, weight};
-//           bool foundSrc = false;
-//           bool foundDest = false;
-//           for(auto eIter = edges_.cbegin(); eIter != edges_.cend(); ++eIter){
-//               foundSrc = (*eIter).src_.value_ == newEdge.src_.value_;
-//               foundDest = (*eIter).dst_.value_ == newEdge.dst_.value_;
-//           }
-//           if(foundSrc && foundDest){
-//           } else{
-//               edges_.push_back(newEdge);
-//           }
-
        }
 
    };
@@ -93,7 +79,7 @@ class Graph {
   // Methods
   std::vector<N> GetNodes();
   bool InsertNode(const N& val);
-  bool InsertEdge(const N src, const N dst, const E w);
+  bool InsertEdge(const N& src, const N& dst, const E& w);
 
  private:
     // TODO(JT): make this a set
