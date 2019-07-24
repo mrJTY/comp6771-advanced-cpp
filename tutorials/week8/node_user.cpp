@@ -4,8 +4,11 @@
 
 #include "string"
 #include "iostream"
+#include "tutorials/week8/node.h"
 
 int main(){
-    std::cout << "Hello!";
+    std::string hellostr = "hello";
+    Node<std::string> node{hellostr, nullptr };
+    std::cout << node.value_;
     return 0;
 }
