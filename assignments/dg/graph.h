@@ -5,6 +5,7 @@
 #include <tuple>
 #include <algorithm>
 #include <set>
+#include <iostream>
 #include <memory>
 
 namespace gdwg {
@@ -121,14 +122,10 @@ public:
   void Clear();
   bool IsNode(const N& val);
 
-  friend std::ostream& operator<<(std::ostream& os, Graph<N, E> g){
-//      for(auto iter = g.nodes_.begin(); iter != g.nodes_.end(); ++iter){
-//          os << "asdf";
-//      }
-if(g.foo){
-
-    os << "asdf";
-}
+  friend std::ostream& operator<<(std::ostream& os, const Graph<N, E> &g){
+      for(auto iter = g.nodes_.begin(); iter != g.nodes_.end(); ++iter){
+          os << (*iter).value_;
+      }
       return os;
   };
 

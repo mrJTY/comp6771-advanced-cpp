@@ -24,6 +24,8 @@ int main() {
     i++;
     std::cout << (*i);
 
-    //std::cout << g;
+    std::cout << "---\n";
+
+    std::cout << g;
 
 }
