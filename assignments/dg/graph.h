@@ -36,34 +36,59 @@ public:
     E weight_;
 };
 
-template <typename N, typename E>
-class Graph {
- public:
-class const_iterator: public std::iterator<
-        std::forward_iterator_tag,
-        Node<N>, // value type for comparison
-        Node<N>, // diff type
-        const N*,
-        Node<N> //Reference
-        >{
-    public:
-        Node<N> node;
 
-        // Pre increment
-        const_iterator& operator++(){
-            node = node.next;
-            return *this;
-        }
+template<typename T>
+class MyIter{
+public:
+    MyIter(Node<T>* node): node_{node}{};
+    using iterator_category = std::forward_iterator_tag;
+    using value_type = T;
+    using reference = T&;
+    using pointer = T*;
+    using difference_type = int;
 
-       // Post increment
-       const_iterator operator++(int)
-
-       //bool operator==(const_iterator other) const {return *this != *other;}
-       //bool operator!=()
-       reference operator*() const {return }
+    reference operator*() const{
+        return node_->value_;
+    };
+    MyIter& operator++(){
+        node_ = node_->next_.get();
+        return *this;
     };
 
+    MyIter operator++(int){
+        auto copy{*this};
+        ++(*this);
+        return copy;
+    }
+
+    friend bool operator==(const MyIter& lhs, const MyIter& rhs){
+        return lhs.node_ == rhs.node_;
+    }
+
+    friend bool operator!=(const MyIter& lhs, const MyIter& rhs){ return !(lhs == rhs);}
+
+private:
+    Node<T>* node_;
+};
+
+template <typename N, typename E>
+class Graph {
+public:
+    // Iterator stuff
+    using iterator = MyIter<N>;
+    using const_iterator = MyIter<N>;
+    iterator begin() {
+        auto head = nodes_.begin();
+        return iterator{head};
+    }
+
+    iterator end() {
+        auto tail = nodes_.end();
+        return iterator{tail};
+    }
+
   // Constructors
+
   Graph() = default;
   Graph(typename std::vector<N>::const_iterator begin,
         typename std::vector<N>::const_iterator end) {
@@ -95,7 +120,6 @@ class const_iterator: public std::iterator<
            InsertEdge(srcVal, destVal, weight);
 
        }
-
    };
 
 
@@ -110,6 +134,7 @@ class const_iterator: public std::iterator<
 private:
   std::set<Node<N>> nodes_;
   std::vector<Edge<N,E>> edges_;
+  std::unique_ptr<Node<N>> head_;
 
 };
 
