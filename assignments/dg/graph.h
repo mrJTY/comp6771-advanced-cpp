@@ -9,21 +9,22 @@
 
 namespace gdwg {
 
-template <typename N>
+template <typename N, typename E>
 struct Node {
     Node();
     Node(N value): value_{value} {};
-    Node(N value, std::unique_ptr<Node>&& next): value_{value}, next{std::move(next)} {}
-    N value_;
-    std::unique_ptr<Node> next;
+    //Node(N value, std::unique_ptr<Node>&& next): value_{value}, next{std::move(next)} {}
 
-    friend bool operator< (const Node<N>& lhs, const Node<N>& rhs) {
+    friend bool operator< (const Node<N, E>& lhs, const Node<N, E>& rhs) {
         return lhs.value_ < rhs.value_;
     };
 
-    friend bool operator== (const Node<N>& lhs, const Node<N>& rhs) {
+    friend bool operator== (const Node<N, E>& lhs, const Node<N, E>& rhs) {
         return lhs.value_ == rhs.value_;
     };
+
+    N value_;
+    std::vector<std::tuple<std::unique_ptr<Node>, E>> neighbours_;
 
 };
 
@@ -37,10 +38,10 @@ public:
 };
 
 
-template<typename T>
+template<typename T, typename E>
 class MyIter{
 public:
-    MyIter(Node<T>* node): node_{node}{};
+    MyIter(Node<T, E>* node): node_{node}{};
     using iterator_category = std::forward_iterator_tag;
     using value_type = T;
     using reference = T&;
@@ -68,15 +69,15 @@ public:
     friend bool operator!=(const MyIter& lhs, const MyIter& rhs){ return !(lhs == rhs);}
 
 private:
-    Node<T>* node_;
+    Node<T, E>* node_;
 };
 
 template <typename N, typename E>
 class Graph {
 public:
     // Iterator stuff
-    using iterator = MyIter<N>;
-    using const_iterator = MyIter<N>;
+    using iterator = MyIter<N, E>;
+    using const_iterator = MyIter<N, E>;
     iterator begin() {
         auto head = nodes_.begin();
         return iterator{head};
@@ -132,9 +133,9 @@ public:
   bool IsNode(const N& val);
 
 private:
-  std::set<Node<N>> nodes_;
+  std::set<Node<N, E>> nodes_;
   std::vector<Edge<N,E>> edges_;
-  std::unique_ptr<Node<N>> head_;
+  std::unique_ptr<Node<N, E>> head_;
 
 };
 

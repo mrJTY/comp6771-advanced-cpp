@@ -1,5 +1,6 @@
-#include "vector"
 #include "assignments/dg/graph.h"
+#include <vector>
+#include <iostream>
 
 
 template <typename N, typename E>
@@ -67,4 +68,30 @@ bool gdwg::Graph<N, E>::IsNode(const N& val){
         found = true;
     }
     return found;
+}
+template<typename N, typename E>
+std::ostream& operator<<(std::ostream& os, const gdwg::Graph<N,E> g) {
+    for(auto iter = g.begin(); iter != g.end(); ++iter){
+        auto node =  *iter;
+       os <<  node.value_;
+       os << " (\n";
+
+       /**
+       // Edges TODO:
+       for(auto edge : node.edges_){
+           os << "    ";
+           os << edge.dst_.value_;
+           os << " | ";
+           os << edge.weight_;
+           os << "\n";
+       }
+
+        **/
+       os << ")\n";
+    }
+
+    //1 (
+    //    5 | -1
+    //)
+    return os;
 }
