@@ -51,8 +51,7 @@ class const_iterator: public std::iterator<
 
         // Pre increment
         const_iterator& operator++(){
-
-            node =
+            node = node.next;
             return *this;
         }
 
