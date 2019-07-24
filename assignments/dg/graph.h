@@ -39,7 +39,30 @@ public:
 template <typename N, typename E>
 class Graph {
  public:
-  // class const_iterator {};
+class const_iterator: public std::iterator<
+        std::forward_iterator_tag,
+        Node<N>, // value type for comparison
+        Node<N>, // diff type
+        const N*,
+        Node<N> //Reference
+        >{
+    public:
+        Node<N> node;
+
+        // Pre increment
+        const_iterator& operator++(){
+
+            node =
+            return *this;
+        }
+
+       // Post increment
+       const_iterator operator++(int)
+
+       //bool operator==(const_iterator other) const {return *this != *other;}
+       //bool operator!=()
+       reference operator*() const {return }
+    };
 
   // Constructors
   Graph() = default;
