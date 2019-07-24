@@ -121,8 +121,20 @@ public:
   void Clear();
   bool IsNode(const N& val);
 
-private:
+  friend std::ostream& operator<<(std::ostream& os, Graph<N, E> g){
+//      for(auto iter = g.nodes_.begin(); iter != g.nodes_.end(); ++iter){
+//          os << "asdf";
+//      }
+if(g.foo){
+
+    os << "asdf";
+}
+      return os;
+  };
+
     std::set<Node<N, E>> nodes_;
+    bool foo = true;
+private:
   std::unique_ptr<Node<N, E>> head_;
 
 };

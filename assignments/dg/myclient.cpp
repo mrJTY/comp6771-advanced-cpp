@@ -21,6 +21,8 @@ int main() {
     auto i = g.begin();
 
     std::cout << (*i);
+    i++;
+    std::cout << (*i);
 
     //std::cout << g;
 
