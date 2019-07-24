@@ -1,12 +1,23 @@
 cc_library(
     name = "graph",
-    hdrs = ["graph.h", "graph.tpp"],
+    hdrs = [
+        "graph.h",
+        "graph.tpp",
+    ],
     deps = [],
 )
 
 cc_binary(
     name = "client",
     srcs = ["client.cpp"],
+    deps = [
+        ":graph",
+    ],
+)
+
+cc_binary(
+    name = "myclient",
+    srcs = ["myclient.cpp"],
     deps = [
         ":graph",
     ],

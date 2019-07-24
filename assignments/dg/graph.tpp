@@ -27,19 +27,43 @@ bool gdwg::Graph<N, E>::InsertNode(const N& val) {
 
 template<typename N, typename E>
 bool gdwg::Graph<N, E>::InsertEdge(const N &src, const N &dst, const E &w) {
-   Edge<N, E> newEdge{src, dst, w};
-   bool foundSrc = false;
-   bool foundDest = false;
-   bool foundWeight = false;
-   for(auto eIter = edges_.cbegin(); eIter != edges_.cend(); ++eIter){
-       foundSrc = (*eIter).src_ == newEdge.src_;
-       foundDest = (*eIter).dst_ == newEdge.dst_;
-       foundWeight = (*eIter).weight_ == newEdge.weight_;
-       if(foundSrc && foundDest && foundWeight){
-           return false;
-       }
+//   Edge<N, E> newEdge{src, dst, w};
+//   bool foundSrc = false;
+//   bool foundDest = false;
+//   bool foundWeight = false;
+//   for(auto eIter = edges_.cbegin(); eIter != edges_.cend(); ++eIter){
+//       foundSrc = (*eIter).src_ == newEdge.src_;
+//       foundDest = (*eIter).dst_ == newEdge.dst_;
+//       foundWeight = (*eIter).weight_ == newEdge.weight_;
+//       if(foundSrc && foundDest && foundWeight){
+//           return false;
+//       }
+//   }
+
+   auto srcNode = std::find(nodes_.begin(), nodes_.end(), src);
+   auto dstNode = std::find(nodes_.begin(), nodes_.end(), dst);
+
+   // If the edge already exists, return false
+   if(srcNode != nodes_.end() || dstNode != nodes_.end()){
+       // TODO: add a check for the weight
+       return false;
    }
-   edges_.push_back(newEdge);
+
+   // Else create it
+   InsertNode(src);
+   InsertNode(dst);
+
+   if(w==1){
+
+   }
+//   srcNode = std::find(nodes_.begin(), nodes_.end(), src);
+//   dstNode = std::find(nodes_.begin(), nodes_.end(), dst);
+//    (*srcNode).neighbours_.push((dstNode,w));
+
+   //TODO:
+   //(*srcNode).neighbours_.push_back(dst, w);
+
+   // Return true for creating a new edge
    return true;
 }
 
@@ -70,10 +94,10 @@ bool gdwg::Graph<N, E>::IsNode(const N& val){
     return found;
 }
 template<typename N, typename E>
-std::ostream& operator<<(std::ostream& os, const gdwg::Graph<N,E> g) {
+std::ostream& operator<<(std::ostream& os, gdwg::Graph<N,E> g) {
     for(auto iter = g.begin(); iter != g.end(); ++iter){
         auto node =  *iter;
-       os <<  node.value_;
+       os <<  node;
        os << " (\n";
 
        /**

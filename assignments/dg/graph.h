@@ -28,31 +28,23 @@ struct Node {
 
 };
 
-template <typename N, typename E>
-struct Edge{
-public:
-    Edge(N src, N dst, E weight): src_(src), dst_(dst), weight_(weight){};
-    N src_;
-    N dst_;
-    E weight_;
-};
-
 
 template<typename T, typename E>
 class MyIter{
 public:
-    MyIter(Node<T, E>* node): node_{node}{};
+    MyIter(std::set<Node<T,E>> &nodes):iter_{nodes.begin()} {};
+
     using iterator_category = std::forward_iterator_tag;
     using value_type = T;
-    using reference = T&;
+    using reference = T;
     using pointer = T*;
     using difference_type = int;
 
     reference operator*() const{
-        return node_->value_;
+        return (*iter_).value_;
     };
     MyIter& operator++(){
-        node_ = node_->next_.get();
+        ++iter_;
         return *this;
     };
 
@@ -63,30 +55,27 @@ public:
     }
 
     friend bool operator==(const MyIter& lhs, const MyIter& rhs){
-        return lhs.node_ == rhs.node_;
+        return *(lhs.iter_) == *(rhs.iter_);
     }
 
     friend bool operator!=(const MyIter& lhs, const MyIter& rhs){ return !(lhs == rhs);}
 
 private:
-    Node<T, E>* node_;
+    typename std::set<Node<T, E>>::iterator iter_;
 };
 
 template <typename N, typename E>
 class Graph {
 public:
     // Iterator stuff
-    using iterator = MyIter<N, E>;
-    using const_iterator = MyIter<N, E>;
-    iterator begin() {
-        auto head = nodes_.begin();
-        return iterator{head};
-    }
+    using iterator = MyIter<N,E>;
+    // TODO my own const iterator
 
-    iterator end() {
-        auto tail = nodes_.end();
-        return iterator{tail};
+    iterator begin() {
+        iterator i = iterator{nodes_};
+        return i;
     }
+    iterator end() { return nullptr; }
 
   // Constructors
 
@@ -99,12 +88,12 @@ public:
   };
 
   // Copy constructor
-  Graph(const Graph& other) : nodes_{other.nodes_}, edges_{other.edges} {};
+  Graph(const Graph& other) : nodes_{other.nodes_}{}; //, edges_{other.edges} {};
   // Copy assignment
   Graph& operator=(const Graph& rhs);
 
   // Move constructor
-  Graph(Graph&& other) noexcept: nodes_{std::move(other.nodes_)}, edges_{std::move(other.edges_)} {};
+  Graph(Graph&& other) noexcept: nodes_{std::move(other.nodes_)}{} //, edges_{std::move(other.edges_)} {};
 
    Graph(typename std::vector<std::tuple<N, N, E>>::const_iterator begin,
       typename std::vector<std::tuple<N, N, E>>::const_iterator end){
@@ -133,8 +122,7 @@ public:
   bool IsNode(const N& val);
 
 private:
-  std::set<Node<N, E>> nodes_;
-  std::vector<Edge<N,E>> edges_;
+    std::set<Node<N, E>> nodes_;
   std::unique_ptr<Node<N, E>> head_;
 
 };
