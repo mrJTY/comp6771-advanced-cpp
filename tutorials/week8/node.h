@@ -7,6 +7,8 @@
 #include <iterator>
 #include <memory>
 #include "string"
+#include <utility>
+#include <algorithm>
 
 template<typename T>
 struct Node{
@@ -32,7 +34,8 @@ public:
         return node_->value_;
     };
     MyIter& operator++(){
-        node_ = node_->next;
+        node_ = node_->next_.get();
+        return *this;
     };
     MyIter operator++(int){
         auto copy{*this};
@@ -55,10 +58,10 @@ class Stack{
 public:
     // TODO(lecture): show how make const and non-const iterators during lecture.
     using iterator = MyIter<T>;
-    //using const_iterator = Iterator;
+    using const_iterator = MyIter<T>;
 
     iterator begin() { return iterator{head_.get()}; }
-//    const_iterator begin() const { return cbegin(); }
+    //const_iterator begin() const { return cbegin(); }
     //const_iterator cbegin() const { return const_iterator{head_.get()}; }
     iterator end() { return iterator{nullptr}; }
     //const_iterator end() const { return cend(); }

@@ -23,6 +23,12 @@ int main(){
     s.push("foo");
     std::cout << s.top();
 
+    auto iter = s.begin();
+    std::cout << *iter;
+    ++iter;
+    std::cout << *iter;
+
+
 
 
 
