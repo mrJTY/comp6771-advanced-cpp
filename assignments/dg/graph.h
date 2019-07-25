@@ -79,6 +79,7 @@ public:
   bool IsNode(const N& val);
   std::vector<N> GetNodes();
   bool DeleteNode(const N& val);
+  void Clear();
 
 private:
     std::set<std::shared_ptr<Node<N>>, CustomCompare<Node<N>>> nodes_;

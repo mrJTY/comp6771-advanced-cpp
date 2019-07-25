@@ -92,3 +92,9 @@ bool gdwg::Graph<N, E>::DeleteNode(const N& val){
   }
   return false;
 }
+
+template<typename N, typename E>
+void gdwg::Graph<N, E>::Clear(){
+  nodes_.erase(nodes_.begin(), nodes_.end());
+  edges_.erase(edges_.begin(), edges_.end());
+}

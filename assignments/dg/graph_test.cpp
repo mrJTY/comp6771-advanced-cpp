@@ -74,7 +74,6 @@ TEST_CASE("Delete ptr"){
   REQUIRE(g.DeleteNode("hello") == false);
 }
 
-/**
 TEST_CASE("Erase"){
     std::string a{"a"};
     Graph<std::string, int> g;
@@ -85,11 +84,12 @@ TEST_CASE("Erase"){
 }
 
 TEST_CASE("Clear"){
-    std::string a{"a"};
     Graph<std::string, int> g;
-    g.InsertNode(a);
+    g.InsertNode("a");
+    g.InsertNode("b");
+    g.InsertEdge("a", "b", 99);
     REQUIRE(!g.GetNodes().empty());
     g.Clear();
     REQUIRE(g.GetNodes().empty());
 
-}**/
+}
