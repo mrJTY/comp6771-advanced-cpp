@@ -50,10 +50,15 @@ struct Edge{
 template<typename T>
 class const_iterator{
  public:
-  const_iterator(typename std::set<std::shared_ptr<Node<T>>, CustomCompare<Node<T>>> &nodes) :
-    iter_{nodes.begin()} {};
+  const_iterator(typename std::set<std::shared_ptr<Node<T>>, CustomCompare<Node<T>>> &nodes, std::string iterType) {
+      if(iterType == "begin"){
+          iter_ = nodes.begin();
+      } else if(iterType == "end"){
+          iter_ = nodes.end();
+      }
+  };
 
-    using iterator_category = std::forward_iterator_tag;
+    using iterator_category = std::bidirectional_iterator_tag;
     using value_type = T;
     using reference = T;
     using pointer = T*;
@@ -103,9 +108,10 @@ public:
 
   iterator begin() {
     // Pass the nodes to the constructor
-      iterator i = iterator{nodes_};
+      iterator i = iterator{nodes_, "begin"};
       return i;
   }
+    iterator end() { return iterator{nodes_, "end"}; }
 
   //    iterator end() { return nullptr; }
 
