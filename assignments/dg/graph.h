@@ -23,10 +23,6 @@ struct Node {
         return lhs.value_ == rhs.value_;
     };
 
-//    friend bool operator== (std::shared_ptr<Node<N>>& lhs, N rhs) {
-//        return (*lhs) == rhs;
-//    };
-
     N value_;
 };
 
@@ -82,6 +78,7 @@ public:
   bool InsertEdge(const N& src, const N& dst, const E& w);
   bool IsNode(const N& val);
   std::vector<N> GetNodes();
+  bool DeleteNode(const N& val);
 
 private:
     std::set<std::shared_ptr<Node<N>>, CustomCompare<Node<N>>> nodes_;

@@ -82,4 +82,13 @@ bool gdwg::Graph<N, E>::InsertEdge(const N& src, const N& dst, const E& w){
     return true;
 }
 
-
+template<typename N, typename E>
+bool gdwg::Graph<N, E>::DeleteNode(const N& val){
+  for(auto iter = nodes_.begin(); iter != nodes_.end(); ++iter){
+    std::shared_ptr<Node<N>> p = (*iter);
+    if((*p).value_ == val){
+      return true;
+    }
+  }
+  return false;
+}
