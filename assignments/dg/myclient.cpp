@@ -9,23 +9,29 @@
 // Note: At the moment, there is no client.sampleout. Please do your own testing
 
 int main() {
-    gdwg::Graph<std::string, int> g;
+
+    std::vector<std::string> v {"a"};
+    gdwg::Graph<std::string, int> g{v.cbegin(), v.cend()};
     g.InsertNode("hello");
-    g.InsertNode("how");
-    g.InsertNode("are");
-    g.InsertNode("you?");
 
-    g.InsertEdge("hello", "how", 5);
-    g.InsertEdge("hello", "are", 8);
-    g.InsertEdge("hello", "are", 2);
-    auto i = g.begin();
+    auto i = 1;
+    std::cout << i;
 
-    std::cout << (*i);
-    i++;
-    std::cout << (*i);
+//    g.InsertNode("how");
+//    g.InsertNode("are");
+//    g.InsertNode("you?");
 
-    std::cout << "---\n";
-
-    std::cout << g;
+//    g.InsertEdge("hello", "how", 5);
+//    g.InsertEdge("hello", "are", 8);
+//    g.InsertEdge("hello", "are", 2);
+//    auto i = g.begin();
+//
+//    std::cout << (*i);
+//    i++;
+//    std::cout << (*i);
+//
+//    std::cout << "---\n";
+//
+//    std::cout << g;
 
 }
