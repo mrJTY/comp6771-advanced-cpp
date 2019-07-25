@@ -28,7 +28,7 @@ struct Node {
 
 template<typename N>
 struct CustomCompare {
-    bool operator()(const std::unique_ptr<N>& lhs, const std::unique_ptr<N>& rhs)
+    bool operator()(const std::shared_ptr<N>& lhs, const std::shared_ptr<N>& rhs)
     {
         return (*lhs)< (*rhs);
     }
@@ -42,7 +42,7 @@ public:
   Graph(typename std::vector<N>::const_iterator begin,
         typename std::vector<N>::const_iterator end) {
     for (auto iter = begin; iter != end; ++iter) {
-        std::unique_ptr<Node<N>> ptr = std::make_unique<Node<N>>(*iter);
+        std::shared_ptr<Node<N>> ptr = std::make_unique<Node<N>>(*iter);
         // Give ownership to the set
         nodes_.emplace(std::move(ptr));
     }
@@ -53,7 +53,7 @@ public:
   bool IsNode(const N& val);
 
 private:
-    std::set<std::unique_ptr<Node<N>>, CustomCompare<Node<N>>> nodes_;
+    std::set<std::shared_ptr<Node<N>>, CustomCompare<Node<N>>> nodes_;
 };
 
 }  // namespace gdwg
