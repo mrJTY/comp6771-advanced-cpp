@@ -18,11 +18,11 @@ bool gdwg::Graph<N, E>::InsertNode(const N& val) {
 }
 template<typename N, typename E>
 bool gdwg::Graph<N, E>::IsNode(const N& val){
-    std::shared_ptr<Node<N>> ptr = std::make_shared<Node<N>>(val);
-    auto search = std::find(nodes_.begin(), nodes_.end(), ptr);
     bool found = false;
-    if(search != nodes_.end()){
-        found = true;
+    for(auto iter = nodes_.begin(); iter != nodes_.end(); ++iter){
+        if(val == (*iter)->value_){
+            found = true;
+        }
     }
     return found;
 }
@@ -40,16 +40,46 @@ std::vector<N> gdwg::Graph<N, E>::GetNodes(){
 template<typename N, typename E>
 bool gdwg::Graph<N, E>::InsertEdge(const N& src, const N& dst, const E& w){
 
-//    auto searchSrc = std::find(nodes_.begin(), nodes_.end(), src);
-//    auto searchDst = std::find(nodes_.begin(), nodes_.end(), dst);
-//    bool foundSrc = searchSrc !=nodes_.end();
-//    bool foundDst = searchDst !=nodes_.end();
+    // If src dst, and weight exists, return false
+    {
+        bool srcExists = false;
+        bool dstExists = false;
+        // Check for existing nodes
+        for(auto iter = nodes_.begin(); iter != nodes_.end(); ++iter){
+            srcExists = (*iter)->value_ == src ? true : srcExists;
+            dstExists = (*iter)->value_ == dst ? true : dstExists;
+        }
+        if(!srcExists || !dstExists) {
+            throw std::runtime_error("Cannot call Graph::InsertEdge when either src or dst node does not exist");
+        }
+    }
 
+    {
+        // Check for existing edges
+        for(auto iter = edges_.begin(); iter != edges_.end(); ++iter){
+            bool srcExists = (*(*iter).src_).value_ == src;
+            bool dstExists = (*(*iter).dst_).value_ == dst;
+            bool weightExists = (*iter).weight_ == w;
+            if(srcExists && dstExists && weightExists){
+                return false;
+            }
+        }
+    }
+    // Else, add a new edge...
+    // Create a weak pointer for the edges
+    std::shared_ptr<Node<N>> srcWp;
+    std::shared_ptr<Node<N>> dstWp;
+    for(auto iter = nodes_.begin(); iter != nodes_.end(); ++iter) {
+        if((*iter)->value_ == src){
+            srcWp = (*iter);
+        } else if((*iter)->value_ == dst) {
+            dstWp = (*iter);
+        }
+    }
 
-
-    std::cout << src;
-    std::cout << dst;
-    std::cout << w;
-
+    Edge<N, E> e{srcWp, dstWp, w};
+    edges_.push_back(e);
     return true;
 }
+
+

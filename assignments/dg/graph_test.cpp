@@ -28,7 +28,7 @@ TEST_CASE("Hello how are you"){
     g.InsertNode("are");
     g.InsertNode("you?");
 
-    //std::vector<std::string> nodes = g.GetNodes();
+    REQUIRE(g.IsNode("hello") == true);
 
 }
 
@@ -52,16 +52,21 @@ TEST_CASE("Insert nodes"){
     REQUIRE(g.InsertNode(dstVal) == true);
 }
 
-/**
 TEST_CASE("Insert edges"){
-    std::string srcVal{"src"};
-    std::string dstVal{"dst_"};
-    Graph<std::string, int> g;
-    REQUIRE(g.InsertEdge(srcVal, dstVal, 10) == true );
-    REQUIRE(g.InsertEdge(srcVal, dstVal, 10) == false );
-    REQUIRE(g.InsertEdge(srcVal, dstVal, 20) == true );
+
+    std::vector<std::string> v {"a"};
+    gdwg::Graph<std::string, int> g{v.cbegin(), v.cend()};
+    g.InsertNode("hello");
+    g.InsertNode("how");
+
+    // First insert must be true
+    REQUIRE(g.InsertEdge("hello", "how", 10) == true);
+
+    // Second insert must be false
+    REQUIRE(g.InsertEdge("hello", "how", 10) == false);
 }
 
+/**
 TEST_CASE("Erase"){
     std::string a{"a"};
     Graph<std::string, int> g;
