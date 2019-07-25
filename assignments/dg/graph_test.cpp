@@ -52,6 +52,7 @@ TEST_CASE("Insert nodes"){
     REQUIRE(g.InsertNode(dstVal) == true);
 }
 
+/**
 TEST_CASE("Insert edges"){
     std::string srcVal{"src"};
     std::string dstVal{"dst_"};
@@ -78,4 +79,4 @@ TEST_CASE("Clear"){
     g.Clear();
     REQUIRE(g.GetNodes().empty());
 
-}
+}**/

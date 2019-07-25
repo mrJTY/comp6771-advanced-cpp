@@ -1,6 +1,7 @@
 #include "assignments/dg/graph.h"
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 template <typename N, typename E>
 bool gdwg::Graph<N, E>::InsertNode(const N& val) {
@@ -17,7 +18,8 @@ bool gdwg::Graph<N, E>::InsertNode(const N& val) {
 }
 template<typename N, typename E>
 bool gdwg::Graph<N, E>::IsNode(const N& val){
-    auto search = nodes_.find(val);
+    std::unique_ptr<Node<N>> ptr = std::make_unique<Node<N>>(val);
+    auto search = std::find(nodes_.begin(), nodes_.end(), ptr);
     bool found = false;
     if(search != nodes_.end()){
         found = true;

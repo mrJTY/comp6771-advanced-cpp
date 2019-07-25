@@ -13,12 +13,13 @@ int main() {
     std::vector<std::string> v {"a"};
     gdwg::Graph<std::string, int> g{v.cbegin(), v.cend()};
     g.InsertNode("hello");
+    g.InsertNode("hello");
+    g.InsertNode("how");
+    g.InsertNode("are");
 
     auto i = 1;
     std::cout << i;
 
-//    g.InsertNode("how");
-//    g.InsertNode("are");
 //    g.InsertNode("you?");
 
 //    g.InsertEdge("hello", "how", 5);
