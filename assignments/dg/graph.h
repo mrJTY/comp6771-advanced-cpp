@@ -23,10 +23,6 @@ struct Node {
         return lhs.value_ == rhs.value_;
     };
 
-//    friend bool operator== (std::shared_ptr<Node<N>>& lhs, N rhs) {
-//        return (*lhs) == rhs;
-//    };
-
     N value_;
 };
 
@@ -49,6 +45,36 @@ struct Edge{
   std::shared_ptr<Node<N>> src_;
   std::shared_ptr<Node<N>> dst_;
   E weight_;
+};
+
+template<typename T>
+class const_iterator{
+ public:
+  const_iterator(typename std::set<std::shared_ptr<Node<T>>, CustomCompare<Node<T>>> &nodes, std::string iterType) {
+      if(iterType == "begin"){
+          iter_ = nodes.begin();
+      } else if(iterType == "end"){
+          iter_ = nodes.end();
+      }
+  };
+
+    using iterator_category = std::bidirectional_iterator_tag;
+    using value_type = T;
+    using reference = T;
+    using pointer = T*;
+    using difference_type = int;
+
+    reference operator*() const{
+        return (*iter_)->value_;
+    };
+
+    const_iterator& operator++(){
+        ++iter_;
+        return *this;
+    };
+
+    private:
+      typename std::set<std::shared_ptr<Node<T>>, CustomCompare<Node<T>>>::iterator iter_;
 };
 
 template <typename N, typename E>
@@ -77,15 +103,31 @@ public:
       }
   }
 
+  // Iterator stuff
+  using iterator = const_iterator<N>;
+
+  iterator begin() {
+    // Pass the nodes to the constructor
+      iterator i = iterator{nodes_, "begin"};
+      return i;
+  }
+    iterator end() { return iterator{nodes_, "end"}; }
+
+  //    iterator end() { return nullptr; }
+
   // Methods:
   bool InsertNode(const N& val);
   bool InsertEdge(const N& src, const N& dst, const E& w);
   bool IsNode(const N& val);
   std::vector<N> GetNodes();
+  bool DeleteNode(const N& val);
+  bool IsConnected(const N& src, const N& dst);
+  void Clear();
 
 private:
     std::set<std::shared_ptr<Node<N>>, CustomCompare<Node<N>>> nodes_;
     std::vector<Edge<N, E>> edges_;
+
 };
 
 }  // namespace gdwg

@@ -66,7 +66,14 @@ TEST_CASE("Insert edges"){
     REQUIRE(g.InsertEdge("hello", "how", 10) == false);
 }
 
-/**
+TEST_CASE("Delete ptr"){
+  gdwg::Graph<std::string, int> g;
+  REQUIRE(g.DeleteNode("hello") == false);
+  g.InsertNode("hello");
+  REQUIRE(g.DeleteNode("hello") == true);
+  REQUIRE(g.DeleteNode("hello") == false);
+}
+
 TEST_CASE("Erase"){
     std::string a{"a"};
     Graph<std::string, int> g;
@@ -77,11 +84,42 @@ TEST_CASE("Erase"){
 }
 
 TEST_CASE("Clear"){
-    std::string a{"a"};
     Graph<std::string, int> g;
-    g.InsertNode(a);
+    g.InsertNode("a");
+    g.InsertNode("b");
+    g.InsertEdge("a", "b", 99);
     REQUIRE(!g.GetNodes().empty());
     g.Clear();
     REQUIRE(g.GetNodes().empty());
+}
 
-}**/
+TEST_CASE("Is connected"){
+  Graph<std::string, int> g;
+  g.InsertNode("a");
+  g.InsertNode("b");
+  g.InsertNode("c");
+  g.InsertEdge("a", "b", 99);
+
+  REQUIRE(g.IsConnected("a", "b") == true);
+  REQUIRE(g.IsConnected("a", "c") == false);
+  REQUIRE(g.IsConnected("b", "a") == false);
+
+}
+
+TEST_CASE("Graph iterator"){
+  Graph<std::string, int> g;
+  g.InsertNode("a");
+  g.InsertNode("b");
+  g.InsertNode("c");
+
+  auto i = g.begin();
+
+  REQUIRE(*i == "a");
+  ++i;
+  REQUIRE(*i == "b");
+  ++i;
+  REQUIRE(*i == "c");
+
+
+
+}

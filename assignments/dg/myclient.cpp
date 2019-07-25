@@ -16,11 +16,18 @@ int main() {
     g.InsertNode("hello");
     g.InsertNode("how");
     g.InsertNode("are");
-    std::cout << g.InsertEdge("hello", "how", 10);
-    std::cout << g.InsertEdge("hello", "how", 10);
+    //std::cout << g.InsertEdge("hello", "how", 10);
+    //std::cout << g.InsertEdge("hello", "how", 10);
 
+    std::cout << g.DeleteNode("are");
+    std::cout << g.DeleteNode("are");
     auto i = "Done";
     std::cout << i;
+
+    auto iter = g.begin();
+    std::cout << *iter;
+    ++iter;
+    std::cout << *iter;
 
 
 }
