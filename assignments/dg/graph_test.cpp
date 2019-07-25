@@ -105,3 +105,21 @@ TEST_CASE("Is connected"){
   REQUIRE(g.IsConnected("b", "a") == false);
 
 }
+
+TEST_CASE("Graph iterator"){
+  Graph<std::string, int> g;
+  g.InsertNode("a");
+  g.InsertNode("b");
+  g.InsertNode("c");
+
+  auto i = g.begin();
+
+  REQUIRE(*i == "a");
+  ++i;
+  REQUIRE(*i == "b");
+  ++i;
+  REQUIRE(*i == "c");
+
+
+
+}

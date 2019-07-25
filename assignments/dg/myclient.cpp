@@ -24,5 +24,10 @@ int main() {
     auto i = "Done";
     std::cout << i;
 
+    auto iter = g.begin();
+    std::cout << *iter;
+    ++iter;
+    std::cout << *iter;
+
 
 }

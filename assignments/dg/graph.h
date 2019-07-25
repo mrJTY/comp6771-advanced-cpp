@@ -47,6 +47,31 @@ struct Edge{
   E weight_;
 };
 
+template<typename T>
+class const_iterator{
+ public:
+  const_iterator(typename std::set<std::shared_ptr<Node<T>>, CustomCompare<Node<T>>> &nodes) :
+    iter_{nodes.begin()} {};
+
+    using iterator_category = std::forward_iterator_tag;
+    using value_type = T;
+    using reference = T;
+    using pointer = T*;
+    using difference_type = int;
+
+    reference operator*() const{
+        return (*iter_)->value_;
+    };
+
+    const_iterator& operator++(){
+        ++iter_;
+        return *this;
+    };
+
+    private:
+      typename std::set<std::shared_ptr<Node<T>>, CustomCompare<Node<T>>>::iterator iter_;
+};
+
 template <typename N, typename E>
 class Graph {
 public:
@@ -72,6 +97,17 @@ public:
           InsertEdge(srcVal, destVal, weight);
       }
   }
+
+  // Iterator stuff
+  using iterator = const_iterator<N>;
+
+  iterator begin() {
+    // Pass the nodes to the constructor
+      iterator i = iterator{nodes_};
+      return i;
+  }
+
+  //    iterator end() { return nullptr; }
 
   // Methods:
   bool InsertNode(const N& val);
