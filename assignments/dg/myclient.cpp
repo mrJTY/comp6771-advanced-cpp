@@ -16,8 +16,9 @@ int main() {
     g.InsertNode("hello");
     g.InsertNode("how");
     g.InsertNode("are");
+    g.InsertEdge("hello", "how", 10);
 
-    auto i = 1;
+    auto i = "Done";
     std::cout << i;
 
 

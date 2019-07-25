@@ -23,6 +23,10 @@ struct Node {
         return lhs.value_ == rhs.value_;
     };
 
+//    friend bool operator== (std::shared_ptr<Node<N>>& lhs, N rhs) {
+//        return (*lhs) == rhs;
+//    };
+
     N value_;
 };
 
@@ -30,7 +34,12 @@ template<typename N>
 struct CustomCompare {
     bool operator()(const std::shared_ptr<N>& lhs, const std::shared_ptr<N>& rhs)
     {
-        return (*lhs)< (*rhs);
+        return (*lhs) < (*rhs);
+    }
+
+    bool operator()(const std::shared_ptr<N>& lhs, const N& rhs)
+    {
+        return (*lhs) < (rhs);
     }
 
 };
@@ -64,16 +73,15 @@ public:
           InsertNode(srcVal);
           InsertNode(destVal);
 
-          std::shared_ptr<Node<N>> srcPtr = std::make_shared<Node<N>>(srcVal);
-          std::shared_ptr<Node<N>> dstPtr = std::make_shared<Node<N>>(destVal);
-
-          Edge<N, E> edge{srcPtr, dstPtr, weight};
+          InsertEdge(srcVal, destVal, weight);
       }
   }
 
   // Methods:
   bool InsertNode(const N& val);
+  bool InsertEdge(const N& src, const N& dst, const E& w);
   bool IsNode(const N& val);
+  std::vector<N> GetNodes();
 
 private:
     std::set<std::shared_ptr<Node<N>>, CustomCompare<Node<N>>> nodes_;
