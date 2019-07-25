@@ -68,9 +68,10 @@ TEST_CASE("Insert edges"){
 
 TEST_CASE("Delete ptr"){
   gdwg::Graph<std::string, int> g;
+  REQUIRE(g.DeleteNode("hello") == false);
   g.InsertNode("hello");
-  bool res = g.DeleteNode("hello");
-  REQUIRE(res == true);
+  REQUIRE(g.DeleteNode("hello") == true);
+  REQUIRE(g.DeleteNode("hello") == false);
 }
 
 /**

@@ -66,7 +66,6 @@ bool gdwg::Graph<N, E>::InsertEdge(const N& src, const N& dst, const E& w){
         }
     }
     // Else, add a new edge...
-    // Create a weak pointer for the edges
     std::shared_ptr<Node<N>> srcWp;
     std::shared_ptr<Node<N>> dstWp;
     for(auto iter = nodes_.begin(); iter != nodes_.end(); ++iter) {
@@ -87,6 +86,7 @@ bool gdwg::Graph<N, E>::DeleteNode(const N& val){
   for(auto iter = nodes_.begin(); iter != nodes_.end(); ++iter){
     std::shared_ptr<Node<N>> p = (*iter);
     if((*p).value_ == val){
+      nodes_.erase(iter);
       return true;
     }
   }
