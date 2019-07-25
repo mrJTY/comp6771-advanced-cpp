@@ -35,6 +35,13 @@ struct CustomCompare {
 
 };
 
+template<typename N, typename E>
+struct Edge{
+  std::shared_ptr<Node<N>> src_;
+  std::shared_ptr<Node<N>> dst_;
+  E weight_;
+};
+
 template <typename N, typename E>
 class Graph {
 public:
@@ -48,12 +55,29 @@ public:
     }
   };
 
+  Graph(typename std::vector<std::tuple<N, N, E>>::const_iterator begin,
+        typename std::vector<std::tuple<N, N, E>>::const_iterator end){
+      for (auto iter = begin; iter != end; ++iter) {
+          N srcVal = std::get<0>(*iter);
+          N destVal = std::get<1>(*iter);
+          E weight = std::get<2>(*iter);
+          InsertNode(srcVal);
+          InsertNode(destVal);
+
+          std::shared_ptr<Node<N>> srcPtr = std::make_shared<Node<N>>(srcVal);
+          std::shared_ptr<Node<N>> dstPtr = std::make_shared<Node<N>>(destVal);
+
+          Edge<N, E> edge{srcPtr, dstPtr, weight};
+      }
+  }
+
   // Methods:
   bool InsertNode(const N& val);
   bool IsNode(const N& val);
 
 private:
     std::set<std::shared_ptr<Node<N>>, CustomCompare<Node<N>>> nodes_;
+    std::vector<Edge<N, E>> edges_;
 };
 
 }  // namespace gdwg
