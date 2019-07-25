@@ -91,5 +91,17 @@ TEST_CASE("Clear"){
     REQUIRE(!g.GetNodes().empty());
     g.Clear();
     REQUIRE(g.GetNodes().empty());
+}
+
+TEST_CASE("Is connected"){
+  Graph<std::string, int> g;
+  g.InsertNode("a");
+  g.InsertNode("b");
+  g.InsertNode("c");
+  g.InsertEdge("a", "b", 99);
+
+  REQUIRE(g.IsConnected("a", "b") == true);
+  REQUIRE(g.IsConnected("a", "c") == false);
+  REQUIRE(g.IsConnected("b", "a") == false);
 
 }

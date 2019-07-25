@@ -79,11 +79,13 @@ public:
   bool IsNode(const N& val);
   std::vector<N> GetNodes();
   bool DeleteNode(const N& val);
+  bool IsConnected(const N& src, const N& dst);
   void Clear();
 
 private:
     std::set<std::shared_ptr<Node<N>>, CustomCompare<Node<N>>> nodes_;
     std::vector<Edge<N, E>> edges_;
+
 };
 
 }  // namespace gdwg

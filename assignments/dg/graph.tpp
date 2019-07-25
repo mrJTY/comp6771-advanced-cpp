@@ -37,18 +37,14 @@ std::vector<N> gdwg::Graph<N, E>::GetNodes(){
     return v;
 }
 
+
 template<typename N, typename E>
 bool gdwg::Graph<N, E>::InsertEdge(const N& src, const N& dst, const E& w){
 
     // If src dst, and weight exists, return false
     {
-        bool srcExists = false;
-        bool dstExists = false;
-        // Check for existing nodes
-        for(auto iter = nodes_.begin(); iter != nodes_.end(); ++iter){
-            srcExists = (*iter)->value_ == src ? true : srcExists;
-            dstExists = (*iter)->value_ == dst ? true : dstExists;
-        }
+      bool srcExists = IsNode(src);
+      bool dstExists = IsNode(dst);
         if(!srcExists || !dstExists) {
             throw std::runtime_error("Cannot call Graph::InsertEdge when either src or dst node does not exist");
         }
@@ -97,4 +93,26 @@ template<typename N, typename E>
 void gdwg::Graph<N, E>::Clear(){
   nodes_.erase(nodes_.begin(), nodes_.end());
   edges_.erase(edges_.begin(), edges_.end());
+}
+
+template<typename N, typename E>
+bool gdwg::Graph<N, E>::IsConnected(const N& src, const N& dst){
+  // If src dst, and weight exists, return false
+  {
+    bool srcExists = IsNode(src);
+    bool dstExists = IsNode(dst);
+    if(!srcExists || !dstExists) {
+      throw std::runtime_error("Cannot call Graph::InsertEdge when either src or dst node does not exist");
+    }
+  }
+
+  // Check for existing edges
+  for(auto iter = edges_.begin(); iter != edges_.end(); ++iter){
+    bool srcExists = (*(*iter).src_).value_ == src;
+    bool dstExists = (*(*iter).dst_).value_ == dst;
+    if(srcExists && dstExists){
+      return true;
+    }
+  }
+  return false;
 }
