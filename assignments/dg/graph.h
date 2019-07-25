@@ -10,130 +10,82 @@
 
 namespace gdwg {
 
-template <typename N, typename E>
+template <typename N>
 struct Node {
     Node();
     Node(N value): value_{value} {};
-    //Node(N value, std::unique_ptr<Node>&& next): value_{value}, next{std::move(next)} {}
 
-    friend bool operator< (const Node<N, E>& lhs, const Node<N, E>& rhs) {
+    friend bool operator< (const Node<N>& lhs, const Node<N>& rhs) {
         return lhs.value_ < rhs.value_;
     };
 
-    friend bool operator== (const Node<N, E>& lhs, const Node<N, E>& rhs) {
+    friend bool operator== (const Node<N>& lhs, const Node<N>& rhs) {
         return lhs.value_ == rhs.value_;
     };
 
+//    friend bool operator== (std::shared_ptr<Node<N>>& lhs, N rhs) {
+//        return (*lhs) == rhs;
+//    };
+
     N value_;
-    std::vector<std::tuple<std::unique_ptr<Node>, E>> neighbours_;
+};
+
+template<typename N>
+struct CustomCompare {
+    bool operator()(const std::shared_ptr<N>& lhs, const std::shared_ptr<N>& rhs)
+    {
+        return (*lhs) < (*rhs);
+    }
+
+    bool operator()(const std::shared_ptr<N>& lhs, const N& rhs)
+    {
+        return (*lhs) < (rhs);
+    }
 
 };
 
-
-template<typename T, typename E>
-class MyIter{
-public:
-    MyIter(std::set<Node<T,E>> &nodes):iter_{nodes.begin()} {};
-
-    using iterator_category = std::forward_iterator_tag;
-    using value_type = T;
-    using reference = T;
-    using pointer = T*;
-    using difference_type = int;
-
-    reference operator*() const{
-        return (*iter_).value_;
-    };
-    MyIter& operator++(){
-        ++iter_;
-        return *this;
-    };
-
-    MyIter operator++(int){
-        auto copy{*this};
-        ++(*this);
-        return copy;
-    }
-
-    friend bool operator==(const MyIter& lhs, const MyIter& rhs){
-        return *(lhs.iter_) == *(rhs.iter_);
-    }
-
-    friend bool operator!=(const MyIter& lhs, const MyIter& rhs){ return !(lhs == rhs);}
-
-private:
-    typename std::set<Node<T, E>>::iterator iter_;
+template<typename N, typename E>
+struct Edge{
+  std::shared_ptr<Node<N>> src_;
+  std::shared_ptr<Node<N>> dst_;
+  E weight_;
 };
 
 template <typename N, typename E>
 class Graph {
 public:
-    // Iterator stuff
-    using iterator = MyIter<N,E>;
-    // TODO my own const iterator
-
-    iterator begin() {
-        iterator i = iterator{nodes_};
-        return i;
-    }
-    iterator end() { return nullptr; }
-
-  // Constructors
-
   Graph() = default;
   Graph(typename std::vector<N>::const_iterator begin,
         typename std::vector<N>::const_iterator end) {
     for (auto iter = begin; iter != end; ++iter) {
-        nodes_.emplace(*iter);
+        std::shared_ptr<Node<N>> ptr = std::make_unique<Node<N>>(*iter);
+        // Give ownership to the set
+        nodes_.emplace(std::move(ptr));
     }
   };
 
-  // Copy constructor
-  Graph(const Graph& other) : nodes_{other.nodes_}{}; //, edges_{other.edges} {};
-  // Copy assignment
-  Graph& operator=(const Graph& rhs);
+  Graph(typename std::vector<std::tuple<N, N, E>>::const_iterator begin,
+        typename std::vector<std::tuple<N, N, E>>::const_iterator end){
+      for (auto iter = begin; iter != end; ++iter) {
+          N srcVal = std::get<0>(*iter);
+          N destVal = std::get<1>(*iter);
+          E weight = std::get<2>(*iter);
+          InsertNode(srcVal);
+          InsertNode(destVal);
 
-  // Move constructor
-  Graph(Graph&& other) noexcept: nodes_{std::move(other.nodes_)}{} //, edges_{std::move(other.edges_)} {};
+          InsertEdge(srcVal, destVal, weight);
+      }
+  }
 
-   Graph(typename std::vector<std::tuple<N, N, E>>::const_iterator begin,
-      typename std::vector<std::tuple<N, N, E>>::const_iterator end){
-       for (auto iter = begin; iter != end; ++iter) {
-           N srcVal = std::get<0>(*iter);
-           N destVal = std::get<1>(*iter);
-           E weight = std::get<2>(*iter);
-
-           std::vector<N> nodeValues = GetNodes();
-
-           // Only add to the nodes, if it hasn't been added before
-           InsertNode(srcVal);
-           InsertNode(destVal);
-           InsertEdge(srcVal, destVal, weight);
-
-       }
-   };
-
-
-  // Methods
-  std::vector<N> GetNodes();
+  // Methods:
   bool InsertNode(const N& val);
   bool InsertEdge(const N& src, const N& dst, const E& w);
-  bool DeleteNode(const N&);
-  void Clear();
   bool IsNode(const N& val);
+  std::vector<N> GetNodes();
 
-  friend std::ostream& operator<<(std::ostream& os, const Graph<N, E> &g){
-      for(auto iter = g.nodes_.begin(); iter != g.nodes_.end(); ++iter){
-          os << (*iter).value_;
-      }
-      return os;
-  };
-
-    std::set<Node<N, E>> nodes_;
-    bool foo = true;
 private:
-  std::unique_ptr<Node<N, E>> head_;
-
+    std::set<std::shared_ptr<Node<N>>, CustomCompare<Node<N>>> nodes_;
+    std::vector<Edge<N, E>> edges_;
 };
 
 }  // namespace gdwg

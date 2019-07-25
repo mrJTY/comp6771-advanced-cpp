@@ -1,117 +1,85 @@
 #include "assignments/dg/graph.h"
 #include <vector>
 #include <iostream>
-
-
-template <typename N, typename E>
-typename std::vector<N> gdwg::Graph<N, E>::GetNodes() {
-    std::vector<N> out;
-    for(auto iter = nodes_.cbegin(); iter != nodes_.cend(); ++iter){
-        out.push_back((*iter).value_);
-    }
-    return out;
-}
+#include <algorithm>
 
 template <typename N, typename E>
 bool gdwg::Graph<N, E>::InsertNode(const N& val) {
 
     bool found = IsNode(val);
-    // Add only if its not found
     if(!found){
-        nodes_.emplace(val);
+        std::shared_ptr<Node<N>> ptr = std::make_shared<Node<N>>(val);
+        // Give ownership to the set
+        nodes_.emplace(std::move(ptr));
     }
 
     // Return false if there is already a Node
     return !found;
 }
-
-template<typename N, typename E>
-bool gdwg::Graph<N, E>::InsertEdge(const N &src, const N &dst, const E &w) {
-//   Edge<N, E> newEdge{src, dst, w};
-//   bool foundSrc = false;
-//   bool foundDest = false;
-//   bool foundWeight = false;
-//   for(auto eIter = edges_.cbegin(); eIter != edges_.cend(); ++eIter){
-//       foundSrc = (*eIter).src_ == newEdge.src_;
-//       foundDest = (*eIter).dst_ == newEdge.dst_;
-//       foundWeight = (*eIter).weight_ == newEdge.weight_;
-//       if(foundSrc && foundDest && foundWeight){
-//           return false;
-//       }
-//   }
-
-   auto srcNode = std::find(nodes_.begin(), nodes_.end(), src);
-   auto dstNode = std::find(nodes_.begin(), nodes_.end(), dst);
-
-   // If the edge already exists, return false
-   if(srcNode != nodes_.end() || dstNode != nodes_.end()){
-       // TODO: add a check for the weight
-       return false;
-   }
-
-   // Else create it
-   InsertNode(src);
-   InsertNode(dst);
-
-   if(w==1){
-
-   }
-//   srcNode = std::find(nodes_.begin(), nodes_.end(), src);
-//   dstNode = std::find(nodes_.begin(), nodes_.end(), dst);
-//    (*srcNode).neighbours_.push((dstNode,w));
-
-   //TODO:
-   //(*srcNode).neighbours_.push_back(dst, w);
-
-   // Return true for creating a new edge
-   return true;
-}
-
-template<typename N, typename E>
-bool gdwg::Graph<N, E>::DeleteNode(const N &val) {
-    bool found = false;
-    auto search = nodes_.find(val);
-    if(search != nodes_.end()){
-        found = true;
-        nodes_.erase(val);
-    }
-
-    return found;
-}
-
-template<typename N, typename E>
-void gdwg::Graph<N, E>::Clear(){
-    nodes_.erase(nodes_.cbegin(), nodes_.cend());
-}
-
 template<typename N, typename E>
 bool gdwg::Graph<N, E>::IsNode(const N& val){
-    auto search = nodes_.find(val);
     bool found = false;
-    if(search != nodes_.end()){
-        found = true;
+    for(auto iter = nodes_.begin(); iter != nodes_.end(); ++iter){
+        if(val == (*iter)->value_){
+            found = true;
+        }
     }
     return found;
 }
-//    for(auto iter = g.begin(); iter != g.end(); ++iter){
-//        auto node =  *iter;
-//       os <<  node;
-//       os << " (\n";
-//
-//       /**
-//       // Edges TODO:
-//       for(auto edge : node.edges_){
-//           os << "    ";
-//           os << edge.dst_.value_;
-//           os << " | ";
-//           os << edge.weight_;
-//           os << "\n";
-//       }
-//
-//        **/
-//       os << ")\n";
-//    }
 
-    //1 (
-    //    5 | -1
-    //)
+template<typename N, typename E>
+std::vector<N> gdwg::Graph<N, E>::GetNodes(){
+    std::vector<N> v;
+    // This is how you iterate through...
+    for(auto iter = nodes_.begin(); iter != nodes_.end(); ++iter){
+        v.push_back((*iter)->value_);
+    }
+    return v;
+}
+
+template<typename N, typename E>
+bool gdwg::Graph<N, E>::InsertEdge(const N& src, const N& dst, const E& w){
+
+    // If src dst, and weight exists, return false
+    {
+        bool srcExists = false;
+        bool dstExists = false;
+        // Check for existing nodes
+        for(auto iter = nodes_.begin(); iter != nodes_.end(); ++iter){
+            srcExists = (*iter)->value_ == src ? true : srcExists;
+            dstExists = (*iter)->value_ == dst ? true : dstExists;
+        }
+        if(!srcExists || !dstExists) {
+            throw std::runtime_error("Cannot call Graph::InsertEdge when either src or dst node does not exist");
+        }
+    }
+
+    {
+        // Check for existing edges
+        for(auto iter = edges_.begin(); iter != edges_.end(); ++iter){
+            bool srcExists = (*(*iter).src_).value_ == src;
+            bool dstExists = (*(*iter).dst_).value_ == dst;
+            bool weightExists = (*iter).weight_ == w;
+            if(srcExists && dstExists && weightExists){
+                return false;
+            }
+        }
+    }
+    // Else, add a new edge...
+    // Create a weak pointer for the edges
+    std::shared_ptr<Node<N>> srcWp;
+    std::shared_ptr<Node<N>> dstWp;
+    for(auto iter = nodes_.begin(); iter != nodes_.end(); ++iter) {
+        if((*iter)->value_ == src){
+            srcWp = (*iter);
+        } else if((*iter)->value_ == dst) {
+            dstWp = (*iter);
+        }
+    }
+
+    Edge<N, E> e{srcWp, dstWp, w};
+    edges_.push_back(e);
+    return true;
+}
+
+
