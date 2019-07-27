@@ -115,6 +115,8 @@ public:
   // Copy constructor
   Graph(const Graph& other)  : nodes_{other.nodes_}, edges_{other.edges_} {};
 
+  // Move constructor
+  Graph(Graph&& source) noexcept : nodes_{std::move(source.nodes_)}, edges_{source.edges_}{};
 
 
     // Iterator stuff
