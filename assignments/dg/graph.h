@@ -64,35 +64,6 @@ struct CompareEdges {
     }
 };
 
-template<typename T>
-class const_iterator{
- public:
-  const_iterator(typename std::set<std::shared_ptr<Node<T>>, CustomCompare<Node<T>>> &nodes, std::string iterType) {
-      if(iterType == "begin"){
-          iter_ = nodes.begin();
-      } else if(iterType == "end"){
-          iter_ = nodes.end();
-      }
-  };
-
-    using iterator_category = std::bidirectional_iterator_tag;
-    using value_type = T;
-    using reference = T;
-    using pointer = T*;
-    using difference_type = int;
-
-    reference operator*() const{
-        return (*iter_)->value_;
-    };
-
-    const_iterator& operator++(){
-        ++iter_;
-        return *this;
-    };
-
-    private:
-      typename std::set<std::shared_ptr<Node<T>>, CustomCompare<Node<T>>>::iterator iter_;
-};
 
 template <typename N, typename E>
 class Graph {
@@ -136,14 +107,44 @@ public:
 
 
     // Iterator stuff
+    template<typename T>
+    class const_iterator{
+    public:
+        const_iterator(std::set<Edge<N, E>, CompareEdges<N, E>> &edges, std::string iterType){
+            if(iterType == "begin"){
+                iter_ = edges.begin();
+            } else if(iterType == "end"){
+                iter_ = edges.end();
+            }
+        };
+
+        using iterator_category = std::bidirectional_iterator_tag;
+        using value_type = T;
+        using reference = T;
+        using pointer = T*;
+        using difference_type = int;
+
+        reference operator*() const{
+            return (*(*iter_).src_).value_;
+        };
+
+        const_iterator& operator++(){
+            ++iter_;
+            return *this;
+        };
+
+    private:
+        typename std::set<Edge<N, E>, CompareEdges<N, E>>::iterator iter_;
+  };
+
   using iterator = const_iterator<N>;
 
   iterator begin() {
     // Pass the nodes to the constructor
-      iterator i = iterator{nodes_, "begin"};
+      iterator i = iterator{edges_, "begin"};
       return i;
   }
-    iterator end() { return iterator{nodes_, "end"}; }
+    iterator end() { return iterator{edges_, "end"}; }
 
   //    iterator end() { return nullptr; }
 

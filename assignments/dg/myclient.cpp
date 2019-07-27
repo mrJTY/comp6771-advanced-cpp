@@ -16,21 +16,21 @@ int main() {
     g.InsertNode("hello");
     g.InsertNode("how");
     g.InsertNode("are");
-    std::cout << g.InsertEdge("hello", "how", 10);
-    std::cout << g.InsertEdge("hello", "how", 10);
+    g.InsertEdge("hello", "how", 10);
+    g.InsertEdge("hello", "how", 10);
 
-    std::cout << g.DeleteNode("are");
-    std::cout << g.DeleteNode("are");
+    g.DeleteNode("are");
+    g.DeleteNode("are");
     std::vector<std::string> connectedNodes = g.GetConnected("hello");
-    auto iter = connectedNodes.cbegin();
-    std::cout << *iter;
+    auto connIter = connectedNodes.cbegin();
+    std::cout << *connIter << "\n";
+
+    auto iter = g.begin();
+    std::cout << *iter << "\n";
+    ++iter;
+    std::cout << *iter << "\n";
+
+
     auto done = "Done";
     std::cout << done;
-
-    /**
-    auto iter = g.begin();
-    std::cout << *iter;
-    ++iter;
-    std::cout << *iter;
-**/
 }
