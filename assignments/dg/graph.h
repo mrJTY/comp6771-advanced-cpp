@@ -169,16 +169,36 @@ public:
   std::vector<N> GetConnected(const N& src);
   std::vector<E> GetWeights(const N& src, const N& dst);
   friend std::ostream& operator<<(std::ostream& os, Graph<N, E> &g){
-    // TODO
+
+    N currentSrc;
+    bool firstPrint = true;
+
     for(auto iter = g.cbegin(); iter != g.cend(); ++iter){
         N src = (*(*iter).src_).value_;
         N dst = (*(*iter).dst_).value_;
         E weight = (*iter).weight_;
 
-        os << src << " (\n";
-        os << "  " << dst << " | " << weight << "\n";
+        // Print out new source
+        if(currentSrc != src){
+            if(firstPrint){
+                os << src << " (\n";
+                firstPrint = false;
+            } else{
+                // Close it up
+                os << ")\n";
+                os << src << " (\n";
+            }
+        }
+
+        // TODO make this weight anything else but 0
+        if( weight != 0){
+            os << "  " << dst << " | " << weight << "\n";
+        }
+
 
     }
+
+    os << ")\n";
 
     return os;
   };
