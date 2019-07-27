@@ -53,6 +53,16 @@ TEST_CASE("Init list constructor"){
 
 }
 
+TEST_CASE("Copy constructor"){
+  gdwg::Graph<std::string, int> g {"Hello", "how", "are"};
+  gdwg::Graph<std::string, int> h{g};
+  REQUIRE(g.IsNode("Hello") == true);
+  REQUIRE(g.IsNode("False") == false);
+  REQUIRE(h.IsNode("Hello") == true);
+  REQUIRE(h.IsNode("False") == false);
+}
+
+
 TEST_CASE("Insert nodes"){
     std::string srcVal{"src"};
     std::string dstVal{"dst_"};

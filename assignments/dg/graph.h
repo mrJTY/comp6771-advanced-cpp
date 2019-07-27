@@ -112,8 +112,12 @@ public:
     }
   }
 
+  // Copy constructor
+  Graph(const Graph& other)  : nodes_{other.nodes_}, edges_{other.edges_} {};
 
-  // Iterator stuff
+
+
+    // Iterator stuff
   using iterator = const_iterator<N>;
 
   iterator begin() {
