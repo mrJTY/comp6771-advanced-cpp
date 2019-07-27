@@ -11,6 +11,16 @@ bool gdwg::Graph<N, E>::InsertNode(const N& val) {
         std::shared_ptr<Node<N>> ptr = std::make_shared<Node<N>>(val);
         // Give ownership to the set
         nodes_.emplace(std::move(ptr));
+
+        // Add an edge to a null node
+        std::shared_ptr<Node<N>> srcPtr;
+        for(auto iter = nodes_.begin(); iter != nodes_.end(); ++iter) {
+            if ((*iter)->value_ == val) {
+                srcPtr = (*iter);
+            }
+        }
+        Edge<N, E> e{srcPtr, srcPtr, 0};
+        edges_.emplace(e);
     }
 
     // Return false if there is already a Node

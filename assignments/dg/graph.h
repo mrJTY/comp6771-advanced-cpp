@@ -46,7 +46,7 @@ struct Edge{
 };
 
 template<typename N, typename E>
-  struct CompareEdges {
+struct CompareEdges {
     bool operator()(const Edge<N, E>& lhs, const Edge<N, E>& rhs)
     {
       Node<N> lhsSrc = (*lhs.src_);
@@ -63,7 +63,6 @@ template<typename N, typename E>
         ((lhsSrc == rhsSrc) && (lhsDst == rhsDst) && (lhsWeight < rhsWeight)) ;
     }
 };
-
 
 template<typename T>
 class const_iterator{
