@@ -107,7 +107,7 @@ bool gdwg::Graph<N, E>::IsConnected(const N& src, const N& dst){
   }
 
   // Check for existing edges
-  for(auto iter = edges_.begin(); iter != edges_.end(); ++iter){
+  for(auto iter = edges_.cbegin(); iter != edges_.cend(); ++iter){
     bool srcExists = (*(*iter).src_).value_ == src;
     bool dstExists = (*(*iter).dst_).value_ == dst;
     if(srcExists && dstExists){
@@ -115,4 +115,22 @@ bool gdwg::Graph<N, E>::IsConnected(const N& src, const N& dst){
     }
   }
   return false;
+}
+
+template<typename N, typename E>
+std::vector<N> gdwg::Graph<N, E>::GetConnected(const N& src){
+  std::vector<N> v;
+
+  for(auto iter = edges_.cbegin(); iter != edges_.cend(); ++iter){
+    auto edgePtr = (*iter);
+    auto srcNodeValue = (*(edgePtr).src_).value_;
+
+    if(srcNodeValue == src){
+      auto dstNodeValue = (*(edgePtr).dst_).value_;
+      v.push_back(dstNodeValue);
+    }
+  }
+
+  return v;
+
 }

@@ -106,6 +106,23 @@ TEST_CASE("Is connected"){
 
 }
 
+TEST_CASE("Get connected"){
+  Graph<std::string, int> g;
+  g.InsertNode("a");
+  g.InsertNode("b");
+  g.InsertNode("c");
+  g.InsertEdge("a", "b", 99);
+  g.InsertEdge("a", "c", 99);
+
+  std::vector<std::string> connectedNodes = g.GetConnected("a");
+
+  auto iter = connectedNodes.cbegin();
+  REQUIRE(*iter == "b");
+  ++iter;
+  REQUIRE(*iter == "c");
+}
+
+/**
 TEST_CASE("Graph iterator"){
   Graph<std::string, int> g;
   g.InsertNode("a");
@@ -120,6 +137,5 @@ TEST_CASE("Graph iterator"){
   ++i;
   REQUIRE(*i == "c");
 
-
-
 }
+**/

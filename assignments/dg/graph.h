@@ -123,6 +123,7 @@ public:
   bool DeleteNode(const N& val);
   bool IsConnected(const N& src, const N& dst);
   void Clear();
+  std::vector<N> GetConnected(const N& src);
 
 private:
     std::set<std::shared_ptr<Node<N>>, CustomCompare<Node<N>>> nodes_;
