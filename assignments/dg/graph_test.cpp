@@ -151,7 +151,6 @@ TEST_CASE("Get connected"){
   REQUIRE(*i == "c");
 }
 
-/**
 TEST_CASE("Get weights"){
   Graph<std::string, int> g;
   g.InsertNode("a");
@@ -169,6 +168,7 @@ TEST_CASE("Get weights"){
   REQUIRE(*iter == 101);
 }
 
+/**
 TEST_CASE("Graph iterator"){
   Graph<std::string, int> g;
   g.InsertNode("a");

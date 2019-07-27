@@ -52,7 +52,15 @@ template<typename N, typename E>
       Node<N> lhsSrc = (*lhs.src_);
       Node<N> rhsSrc = (*rhs.src_);
 
-      return  lhsSrc < rhsSrc;
+      Node<N> lhsDst = (*lhs.dst_);
+      Node<N> rhsDst = (*rhs.dst_);
+
+      E lhsWeight = (lhs.weight_);
+      E rhsWeight = (rhs.weight_);
+
+      return  (lhsSrc < rhsSrc) ||
+        ((lhsSrc == rhsSrc) && (lhsDst < rhsDst)) ||
+        ((lhsSrc == rhsSrc) && (lhsDst == rhsDst) && (lhsWeight < rhsWeight)) ;
     }
 };
 
