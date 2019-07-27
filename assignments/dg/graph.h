@@ -64,6 +64,38 @@ struct CompareEdges {
     }
 };
 
+template<typename N, typename E>
+// Iterator stuff
+class const_iterator{
+public:
+  const_iterator(std::set<Edge<N, E>, CompareEdges<N, E>> &edges, std::string iterType){
+    if(iterType == "begin"){
+      iter_ = edges.begin();
+    } else if(iterType == "end"){
+      iter_ = edges.end();
+    }
+  };
+
+  using iterator_category = std::bidirectional_iterator_tag;
+  using value_type = N;
+  using reference = N;
+  using pointer = N*;
+  using difference_type = int;
+
+  reference operator*() const{
+    N srcValue = (*(*iter_).src_).value_;
+    return srcValue;
+  };
+
+  const_iterator& operator++(){
+    ++iter_;
+    return *this;
+  };
+
+private:
+  typename std::set<Edge<N, E>, CompareEdges<N, E>>::iterator iter_;
+};
+
 
 template <typename N, typename E>
 class Graph {
@@ -106,38 +138,7 @@ public:
   Graph(Graph&& source) noexcept : nodes_{std::move(source.nodes_)}, edges_{source.edges_}{};
 
 
-    // Iterator stuff
-    template<typename T>
-    class const_iterator{
-    public:
-        const_iterator(std::set<Edge<N, E>, CompareEdges<N, E>> &edges, std::string iterType){
-            if(iterType == "begin"){
-                iter_ = edges.begin();
-            } else if(iterType == "end"){
-                iter_ = edges.end();
-            }
-        };
-
-        using iterator_category = std::bidirectional_iterator_tag;
-        using value_type = T;
-        using reference = T;
-        using pointer = T*;
-        using difference_type = int;
-
-        reference operator*() const{
-            return (*(*iter_).src_).value_;
-        };
-
-        const_iterator& operator++(){
-            ++iter_;
-            return *this;
-        };
-
-    private:
-        typename std::set<Edge<N, E>, CompareEdges<N, E>>::iterator iter_;
-  };
-
-  using iterator = const_iterator<N>;
+  using iterator = const_iterator<N, E>;
 
   iterator begin() {
     // Pass the nodes to the constructor
