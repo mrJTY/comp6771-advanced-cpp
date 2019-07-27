@@ -26,9 +26,9 @@ int main() {
     std::cout << *connIter << "\n";
 
     auto iter = g.begin();
-    std::cout << *iter << "\n";
+    std::cout << (*iter).weight_ << "\n";
     ++iter;
-    std::cout << *iter << "\n";
+    //std::cout << *iter << "\n";
 
 
     auto done = "Done";

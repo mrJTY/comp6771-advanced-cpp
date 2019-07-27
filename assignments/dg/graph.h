@@ -77,14 +77,13 @@ public:
   };
 
   using iterator_category = std::bidirectional_iterator_tag;
-  using value_type = N;
-  using reference = N;
-  using pointer = N*;
+  using value_type = Edge<N, E>;
+  using reference = Edge<N, E>;
+  using pointer = Edge<N, E>*;
   using difference_type = int;
 
   reference operator*() const{
-    N srcValue = (*(*iter_).src_).value_;
-    return srcValue;
+      return *iter_;
   };
 
   const_iterator& operator++(){
