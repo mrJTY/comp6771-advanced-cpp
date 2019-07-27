@@ -33,12 +33,9 @@ struct CustomCompare {
         return (*lhs) < (*rhs);
     }
 
-    bool operator()(const std::shared_ptr<N>& lhs, const N& rhs)
-    {
-        return (*lhs) < (rhs);
-    }
 
 };
+
 
 
 template<typename N, typename E>
@@ -48,35 +45,64 @@ struct Edge{
   E weight_;
 };
 
-template<typename T>
+template<typename N, typename E>
+struct CompareEdges {
+    bool operator()(const Edge<N, E>& lhs, const Edge<N, E>& rhs)
+    {
+      Node<N> lhsSrc = (*lhs.src_);
+      Node<N> rhsSrc = (*rhs.src_);
+
+      Node<N> lhsDst = (*lhs.dst_);
+      Node<N> rhsDst = (*rhs.dst_);
+
+      E lhsWeight = (lhs.weight_);
+      E rhsWeight = (rhs.weight_);
+
+      return  (lhsSrc < rhsSrc) ||
+        ((lhsSrc == rhsSrc) && (lhsDst < rhsDst)) ||
+        ((lhsSrc == rhsSrc) && (lhsDst == rhsDst) && (lhsWeight < rhsWeight)) ;
+    }
+};
+
+template<typename N, typename E>
+// Iterator stuff
 class const_iterator{
- public:
-  const_iterator(typename std::set<std::shared_ptr<Node<T>>, CustomCompare<Node<T>>> &nodes, std::string iterType) {
-      if(iterType == "begin"){
-          iter_ = nodes.begin();
-      } else if(iterType == "end"){
-          iter_ = nodes.end();
-      }
+public:
+  const_iterator(std::set<Edge<N, E>, CompareEdges<N, E>> &edges, std::string iterType){
+    if(iterType == "begin"){
+      iter_ = edges.begin();
+    } else if(iterType == "end"){
+      iter_ = edges.end();
+    } else if(iterType == "cbegin"){
+      iter_ = edges.cbegin();
+    } else if(iterType == "cend") {
+        iter_ = edges.cend();
+    }
   };
 
-    using iterator_category = std::bidirectional_iterator_tag;
-    using value_type = T;
-    using reference = T;
-    using pointer = T*;
-    using difference_type = int;
+  using iterator_category = std::bidirectional_iterator_tag;
+  using value_type = Edge<N, E>;
+  using reference = Edge<N, E>;
+  using pointer = Edge<N, E>*;
+  using difference_type = int;
 
-    reference operator*() const{
-        return (*iter_)->value_;
-    };
+  reference operator*() const{
+      return *iter_;
+  };
 
-    const_iterator& operator++(){
-        ++iter_;
-        return *this;
-    };
+  const_iterator& operator++(){
+    ++iter_;
+    return *this;
+  };
 
-    private:
-      typename std::set<std::shared_ptr<Node<T>>, CustomCompare<Node<T>>>::iterator iter_;
+  friend bool operator!=(const const_iterator &lhs, const const_iterator &rhs){
+      return lhs.iter_ != rhs.iter_;
+  }
+
+   private:
+    typename std::set<Edge<N, E>, CompareEdges<N, E>>::iterator iter_;
 };
+
 
 template <typename N, typename E>
 class Graph {
@@ -119,15 +145,16 @@ public:
   Graph(Graph&& source) noexcept : nodes_{std::move(source.nodes_)}, edges_{source.edges_}{};
 
 
-    // Iterator stuff
-  using iterator = const_iterator<N>;
+  using iterator = const_iterator<N, E>;
 
   iterator begin() {
     // Pass the nodes to the constructor
-      iterator i = iterator{nodes_, "begin"};
+      iterator i = iterator{edges_, "begin"};
       return i;
   }
-    iterator end() { return iterator{nodes_, "end"}; }
+    iterator cbegin() { return iterator{edges_, "cbegin"}; }
+    iterator end() { return iterator{edges_, "end"}; }
+    iterator cend() { return iterator{edges_, "cend"}; }
 
   //    iterator end() { return nullptr; }
 
@@ -141,11 +168,49 @@ public:
   void Clear();
   std::vector<N> GetConnected(const N& src);
   std::vector<E> GetWeights(const N& src, const N& dst);
+  friend std::ostream& operator<<(std::ostream& os, Graph<N, E> &g){
+
+    N currentSrc;
+    bool firstPrint = true;
+
+    for(auto iter = g.cbegin(); iter != g.cend(); ++iter){
+        N src = (*(*iter).src_).value_;
+        N dst = (*(*iter).dst_).value_;
+        E weight = (*iter).weight_;
+
+        // Print out new source
+        if(currentSrc != src){
+            if(firstPrint){
+                os << src << " (\n";
+                firstPrint = false;
+            } else{
+                // Close it up
+                os << ")\n";
+                os << src << " (\n";
+            }
+            // Update the current src
+            currentSrc = src;
+        }
+
+        // TODO make this weight anything else but 0
+        if( weight != 0){
+            os << "  " << dst << " | " << weight << "\n";
+        }
+
+
+    }
+
+    os << ")\n";
+
+    return os;
+  };
+
+
 
 
 private:
     std::set<std::shared_ptr<Node<N>>, CustomCompare<Node<N>>> nodes_;
-    std::vector<Edge<N, E>> edges_;
+    std::set<Edge<N, E>, CompareEdges<N, E>> edges_;
 
 };
 

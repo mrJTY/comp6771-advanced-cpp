@@ -145,11 +145,10 @@ TEST_CASE("Get connected"){
   g.InsertEdge("a", "b", 99);
 
   std::vector<std::string> connectedNodes = g.GetConnected("a");
-
-  auto iter = connectedNodes.cbegin();
-  REQUIRE(*iter == "b");
-  ++iter;
-  REQUIRE(*iter == "c");
+  auto i = connectedNodes.cbegin();
+  REQUIRE(*i == "b");
+  ++i;
+  REQUIRE(*i == "c");
 }
 
 TEST_CASE("Get weights"){
