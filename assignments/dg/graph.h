@@ -91,6 +91,7 @@ public:
     }
   };
 
+  // Tuple constructor
   Graph(typename std::vector<std::tuple<N, N, E>>::const_iterator begin,
         typename std::vector<std::tuple<N, N, E>>::const_iterator end){
       for (auto iter = begin; iter != end; ++iter) {
@@ -103,6 +104,14 @@ public:
           InsertEdge(srcVal, destVal, weight);
       }
   }
+
+  // Initialiser list
+  Graph(std::initializer_list<N> init_list){
+    for(auto i : init_list){
+      InsertNode(i);
+    }
+  }
+
 
   // Iterator stuff
   using iterator = const_iterator<N>;
