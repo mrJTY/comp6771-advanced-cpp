@@ -188,6 +188,8 @@ public:
                 os << ")\n";
                 os << src << " (\n";
             }
+            // Update the current src
+            currentSrc = src;
         }
 
         // TODO make this weight anything else but 0
