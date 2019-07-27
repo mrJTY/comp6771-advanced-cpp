@@ -33,12 +33,26 @@ struct CustomCompare {
         return (*lhs) < (*rhs);
     }
 
-    bool operator()(const std::shared_ptr<N>& lhs, const N& rhs)
-    {
-        return (*lhs) < (rhs);
-    }
 
 };
+
+/**
+ template<typename N, typename E>
+  struct CompareEdges {
+    bool operator()(const std::shared_ptr<N>& Edge, const std::shared_ptr<N>& rhs)
+    {
+      return (*lhs) < (*rhs);
+    }
+
+    bool operator()(const std::shared_ptr<N>& lhs, const N& rhs)
+    {
+      return (*lhs) < (rhs);
+      }
+
+  };
+    **/
+
+
 
 
 template<typename N, typename E>
