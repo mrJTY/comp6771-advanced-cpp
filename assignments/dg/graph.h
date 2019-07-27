@@ -40,6 +40,7 @@ struct CustomCompare {
 
 };
 
+
 template<typename N, typename E>
 struct Edge{
   std::shared_ptr<Node<N>> src_;
@@ -90,6 +91,7 @@ public:
     }
   };
 
+  // Tuple constructor
   Graph(typename std::vector<std::tuple<N, N, E>>::const_iterator begin,
         typename std::vector<std::tuple<N, N, E>>::const_iterator end){
       for (auto iter = begin; iter != end; ++iter) {
@@ -103,7 +105,21 @@ public:
       }
   }
 
-  // Iterator stuff
+  // Initialiser list
+  Graph(std::initializer_list<N> init_list){
+    for(auto i : init_list){
+      InsertNode(i);
+    }
+  }
+
+  // Copy constructor
+  Graph(const Graph& other)  : nodes_{other.nodes_}, edges_{other.edges_} {};
+
+  // Move constructor
+  Graph(Graph&& source) noexcept : nodes_{std::move(source.nodes_)}, edges_{source.edges_}{};
+
+
+    // Iterator stuff
   using iterator = const_iterator<N>;
 
   iterator begin() {
@@ -123,6 +139,9 @@ public:
   bool DeleteNode(const N& val);
   bool IsConnected(const N& src, const N& dst);
   void Clear();
+  std::vector<N> GetConnected(const N& src);
+  std::vector<E> GetWeights(const N& src, const N& dst);
+
 
 private:
     std::set<std::shared_ptr<Node<N>>, CustomCompare<Node<N>>> nodes_;

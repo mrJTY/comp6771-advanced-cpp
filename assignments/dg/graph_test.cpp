@@ -15,22 +15,24 @@
 
 using namespace gdwg;
 
-TEST_CASE("Constructors") {
+TEST_CASE("Default constructor"){
+  gdwg::Graph<std::string, int> g;
+  g.InsertNode("Hello");
+  g.InsertNode("how");
+  g.InsertNode("are");
+  g.InsertNode("you?");
+
+  REQUIRE(g.IsNode("Hello") == true);
+  REQUIRE(g.IsNode("False") == false);
+}
+
+TEST_CASE("Vector constructor") {
   std::vector<std::string> v{"Hello", "how", "are", "you"};
-  Graph<std::string, double> b{v.begin(), v.end()};
-  auto nodes = b.GetNodes();
+  Graph<std::string, double> g{v.begin(), v.end()};
+  REQUIRE(g.IsNode("Hello") == true);
+  REQUIRE(g.IsNode("False") == false);
 }
 
-TEST_CASE("Hello how are you"){
-    Graph<std::string, int> g;
-    g.InsertNode("hello");
-    g.InsertNode("how");
-    g.InsertNode("are");
-    g.InsertNode("you?");
-
-    REQUIRE(g.IsNode("hello") == true);
-
-}
 
 TEST_CASE("Tuple constructor") {
   std::string s1{"Hello"};
@@ -39,8 +41,36 @@ TEST_CASE("Tuple constructor") {
   auto e1 = std::make_tuple(s1, s2, 5.4);
   auto e2 = std::make_tuple(s2, s3, 7.6);
   auto e = std::vector<std::tuple<std::string, std::string, double>>{e1, e2};
-  Graph<std::string, double> b{e.begin(), e.end()};
+  Graph<std::string, double> g{e.begin(), e.end()};
+  REQUIRE(g.IsNode("Hello") == true);
+  REQUIRE(g.IsNode("False") == false);
 }
+
+TEST_CASE("Init list constructor"){
+  gdwg::Graph<std::string, int> g {"Hello", "how", "are"};
+  REQUIRE(g.IsNode("Hello") == true);
+  REQUIRE(g.IsNode("False") == false);
+
+}
+
+TEST_CASE("Copy constructor"){
+  gdwg::Graph<std::string, int> g {"Hello", "how", "are"};
+  gdwg::Graph<std::string, int> h{g};
+  REQUIRE(g.IsNode("Hello") == true);
+  REQUIRE(g.IsNode("False") == false);
+  REQUIRE(h.IsNode("Hello") == true);
+  REQUIRE(h.IsNode("False") == false);
+}
+
+TEST_CASE("Move constructor"){
+  gdwg::Graph<std::string, int> g {"Hello", "how", "are"};
+  gdwg::Graph<std::string, int> h{std::move(g)};
+  REQUIRE(g.IsNode("Hello") == false);
+  REQUIRE(g.IsNode("False") == false);
+  REQUIRE(h.IsNode("Hello") == true);
+  REQUIRE(h.IsNode("False") == false);
+}
+
 
 TEST_CASE("Insert nodes"){
     std::string srcVal{"src"};
@@ -106,6 +136,40 @@ TEST_CASE("Is connected"){
 
 }
 
+TEST_CASE("Get connected"){
+  Graph<std::string, int> g;
+  g.InsertNode("a");
+  g.InsertNode("b");
+  g.InsertNode("c");
+  g.InsertEdge("a", "c", 100);
+  g.InsertEdge("a", "b", 99);
+
+  std::vector<std::string> connectedNodes = g.GetConnected("a");
+
+  auto iter = connectedNodes.cbegin();
+  REQUIRE(*iter == "b");
+  ++iter;
+  REQUIRE(*iter == "c");
+}
+
+TEST_CASE("Get weights"){
+  Graph<std::string, int> g;
+  g.InsertNode("a");
+  g.InsertNode("b");
+  g.InsertNode("c");
+  g.InsertEdge("a", "c", 100);
+  g.InsertEdge("a", "c", 101);
+  g.InsertEdge("a", "b", 99);
+
+  std::vector<int> weights = g.GetWeights("a", "c");
+
+  auto iter = weights.cbegin();
+  REQUIRE(*iter == 100);
+  ++iter;
+  REQUIRE(*iter == 101);
+}
+
+/**
 TEST_CASE("Graph iterator"){
   Graph<std::string, int> g;
   g.InsertNode("a");
@@ -120,6 +184,5 @@ TEST_CASE("Graph iterator"){
   ++i;
   REQUIRE(*i == "c");
 
-
-
 }
+**/
