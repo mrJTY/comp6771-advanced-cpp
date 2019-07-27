@@ -40,6 +40,7 @@ struct CustomCompare {
 
 };
 
+
 template<typename N, typename E>
 struct Edge{
   std::shared_ptr<Node<N>> src_;
@@ -124,6 +125,8 @@ public:
   bool IsConnected(const N& src, const N& dst);
   void Clear();
   std::vector<N> GetConnected(const N& src);
+  std::vector<E> GetWeights(const N& src, const N& dst);
+
 
 private:
     std::set<std::shared_ptr<Node<N>>, CustomCompare<Node<N>>> nodes_;

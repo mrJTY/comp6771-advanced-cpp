@@ -121,16 +121,45 @@ template<typename N, typename E>
 std::vector<N> gdwg::Graph<N, E>::GetConnected(const N& src){
   std::vector<N> v;
 
+  if(!IsNode(src)){
+      throw std::runtime_error("Cannot call Graph::GetConnected if src doesn't exist in the graph");
+  }
+
   for(auto iter = edges_.cbegin(); iter != edges_.cend(); ++iter){
-    auto edgePtr = (*iter);
-    auto srcNodeValue = (*(edgePtr).src_).value_;
+    auto edge = (*iter);
+    auto srcNodeValue = (*(edge).src_).value_;
 
     if(srcNodeValue == src){
-      auto dstNodeValue = (*(edgePtr).dst_).value_;
+      auto dstNodeValue = (*(edge).dst_).value_;
       v.push_back(dstNodeValue);
     }
   }
+  std::sort(v.begin(), v.end());
 
   return v;
+}
 
+template<typename N, typename E>
+std::vector<E> gdwg::Graph<N, E>::GetWeights(const N& src, const N& dst){
+  std::vector<E> v;
+
+  if(!IsNode(src) || !IsNode(dst)){
+    throw std::runtime_error("Cannot call Graph::GetWeights if src or dst node don't exist in the graph");
+  }
+
+  for(auto iter = edges_.cbegin(); iter != edges_.cend(); ++iter){
+    auto edge = (*iter);
+    auto srcNodeValue = (*(edge).src_).value_;
+    auto dstNodeValue = (*(edge).dst_).value_;
+
+    if(srcNodeValue == src && dstNodeValue == dst){
+      auto weight = edge.weight_;
+      v.push_back(weight);
+    }
+  }
+
+  // Return based on increasing order of Edge
+  std::sort(v.begin(), v.end());
+
+  return v;
 }

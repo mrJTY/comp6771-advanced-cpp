@@ -111,8 +111,8 @@ TEST_CASE("Get connected"){
   g.InsertNode("a");
   g.InsertNode("b");
   g.InsertNode("c");
+  g.InsertEdge("a", "c", 100);
   g.InsertEdge("a", "b", 99);
-  g.InsertEdge("a", "c", 99);
 
   std::vector<std::string> connectedNodes = g.GetConnected("a");
 
@@ -120,6 +120,23 @@ TEST_CASE("Get connected"){
   REQUIRE(*iter == "b");
   ++iter;
   REQUIRE(*iter == "c");
+}
+
+TEST_CASE("Get weights"){
+  Graph<std::string, int> g;
+  g.InsertNode("a");
+  g.InsertNode("b");
+  g.InsertNode("c");
+  g.InsertEdge("a", "c", 100);
+  g.InsertEdge("a", "c", 101);
+  g.InsertEdge("a", "b", 99);
+
+  std::vector<int> weights = g.GetWeights("a", "c");
+
+  auto iter = weights.cbegin();
+  REQUIRE(*iter == 100);
+  ++iter;
+  REQUIRE(*iter == 101);
 }
 
 /**
