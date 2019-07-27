@@ -30,6 +30,8 @@ int main() {
     ++iter;
     //std::cout << *iter << "\n";
 
+    std::cout << g;
+
 
     auto done = "Done";
     std::cout << done;

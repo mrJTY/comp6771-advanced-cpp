@@ -73,6 +73,10 @@ public:
       iter_ = edges.begin();
     } else if(iterType == "end"){
       iter_ = edges.end();
+    } else if(iterType == "cbegin"){
+      iter_ = edges.cbegin();
+    } else if(iterType == "cend") {
+        iter_ = edges.cend();
     }
   };
 
@@ -91,8 +95,12 @@ public:
     return *this;
   };
 
-private:
-  typename std::set<Edge<N, E>, CompareEdges<N, E>>::iterator iter_;
+  friend bool operator!=(const const_iterator &lhs, const const_iterator &rhs){
+      return lhs.iter_ != rhs.iter_;
+  }
+
+   private:
+    typename std::set<Edge<N, E>, CompareEdges<N, E>>::iterator iter_;
 };
 
 
@@ -144,7 +152,9 @@ public:
       iterator i = iterator{edges_, "begin"};
       return i;
   }
+    iterator cbegin() { return iterator{edges_, "cbegin"}; }
     iterator end() { return iterator{edges_, "end"}; }
+    iterator cend() { return iterator{edges_, "cend"}; }
 
   //    iterator end() { return nullptr; }
 
@@ -158,6 +168,22 @@ public:
   void Clear();
   std::vector<N> GetConnected(const N& src);
   std::vector<E> GetWeights(const N& src, const N& dst);
+  friend std::ostream& operator<<(std::ostream& os, Graph<N, E> &g){
+    // TODO
+    for(auto iter = g.cbegin(); iter != g.cend(); ++iter){
+        N src = (*(*iter).src_).value_;
+        N dst = (*(*iter).dst_).value_;
+        E weight = (*iter).weight_;
+
+        os << src << " (\n";
+        os << "  " << dst << " | " << weight << "\n";
+
+    }
+
+    return os;
+  };
+
+
 
 
 private:
