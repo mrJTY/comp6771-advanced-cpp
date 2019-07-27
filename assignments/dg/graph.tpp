@@ -13,14 +13,16 @@ bool gdwg::Graph<N, E>::InsertNode(const N& val) {
         nodes_.emplace(std::move(ptr));
 
         // Add an edge to a null node
-        // TODO(jt): can we emplace something other than 0?
+        // TODO(jt): can we emplace something other than NULL?
         std::shared_ptr<Node<N>> srcPtr;
         for(auto iter = nodes_.begin(); iter != nodes_.end(); ++iter) {
             if ((*iter)->value_ == val) {
                 srcPtr = (*iter);
             }
         }
-        Edge<N, E> e{srcPtr, srcPtr, 0};
+
+        E null = static_cast<E>(0);
+        Edge<N, E> e{srcPtr, srcPtr, null};
         edges_.emplace(e);
     }
 
@@ -142,7 +144,10 @@ std::vector<N> gdwg::Graph<N, E>::GetConnected(const N& src){
 
     if(srcNodeValue == src){
       auto dstNodeValue = (*(edge).dst_).value_;
-      v.push_back(dstNodeValue);
+      E null = static_cast<E>(0);
+      if((edge).weight_ != null){
+          v.push_back(dstNodeValue);
+      }
     }
   }
   std::sort(v.begin(), v.end());
@@ -165,7 +170,10 @@ std::vector<E> gdwg::Graph<N, E>::GetWeights(const N& src, const N& dst){
 
     if(srcNodeValue == src && dstNodeValue == dst){
       auto weight = edge.weight_;
-      v.push_back(weight);
+      E null = static_cast<E>(0);
+      if(weight != null) {
+          v.push_back(weight);
+      }
     }
   }
 
