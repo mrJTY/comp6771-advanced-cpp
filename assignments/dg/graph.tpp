@@ -73,7 +73,7 @@ bool gdwg::Graph<N, E>::InsertEdge(const N& src, const N& dst, const E& w){
     }
 
     Edge<N, E> e{srcWp, dstWp, w};
-    edges_.push_back(e);
+    edges_.emplace(e);
     return true;
 }
 

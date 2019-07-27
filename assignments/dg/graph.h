@@ -36,23 +36,6 @@ struct CustomCompare {
 
 };
 
-/**
- template<typename N, typename E>
-  struct CompareEdges {
-    bool operator()(const std::shared_ptr<N>& Edge, const std::shared_ptr<N>& rhs)
-    {
-      return (*lhs) < (*rhs);
-    }
-
-    bool operator()(const std::shared_ptr<N>& lhs, const N& rhs)
-    {
-      return (*lhs) < (rhs);
-      }
-
-  };
-    **/
-
-
 
 
 template<typename N, typename E>
@@ -61,6 +44,18 @@ struct Edge{
   std::shared_ptr<Node<N>> dst_;
   E weight_;
 };
+
+template<typename N, typename E>
+  struct CompareEdges {
+    bool operator()(const Edge<N, E>& lhs, const Edge<N, E>& rhs)
+    {
+      Node<N> lhsSrc = (*lhs.src_);
+      Node<N> rhsSrc = (*rhs.src_);
+
+      return  lhsSrc < rhsSrc;
+    }
+};
+
 
 template<typename T>
 class const_iterator{
@@ -159,7 +154,7 @@ public:
 
 private:
     std::set<std::shared_ptr<Node<N>>, CustomCompare<Node<N>>> nodes_;
-    std::vector<Edge<N, E>> edges_;
+    std::set<Edge<N, E>, CompareEdges<N, E>> edges_;
 
 };
 
