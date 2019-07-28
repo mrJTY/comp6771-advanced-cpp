@@ -20,11 +20,12 @@ int main() {
     g.InsertEdge("hello", "how", 20);
     g.InsertEdge("how", "are", 10);
 
-    g.DeleteNode("are");
-    g.DeleteNode("are");
 
 
-    auto foo = g.GetConnected("hello");
+    std::cout << g;
+    std::cout << "\n\n";
+
+    g.DeleteNode("are");
     std::cout << g;
 
 
