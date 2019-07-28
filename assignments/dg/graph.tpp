@@ -66,8 +66,10 @@ bool gdwg::Graph<N, E>::InsertEdge(const N& src, const N& dst, const E& w){
     {
         // Check for existing edges
         for(auto iter = edges_.begin(); iter != edges_.end(); ++iter){
-            bool srcExists = (*(*iter).src_).value_ == src;
-            bool dstExists = (*(*iter).dst_).value_ == dst;
+            auto srcWk = (*iter).src_.lock();
+            auto dstWk = (*iter).dst_.lock();
+            bool srcExists = (*srcWk).value_ == src;
+            bool dstExists = (*dstWk).value_ == dst;
             bool weightExists = (*iter).weight_ == w;
             if(srcExists && dstExists && weightExists){
                 return false;
@@ -75,13 +77,14 @@ bool gdwg::Graph<N, E>::InsertEdge(const N& src, const N& dst, const E& w){
         }
     }
     // Else, add a new edge...
-    std::shared_ptr<Node<N>> srcWp;
-    std::shared_ptr<Node<N>> dstWp;
+    std::weak_ptr<Node<N>> srcWp;
+    std::weak_ptr<Node<N>> dstWp;
     for(auto iter = nodes_.begin(); iter != nodes_.end(); ++iter) {
+        std::shared_ptr<Node<N>> sharedPtr = *iter;
         if((*iter)->value_ == src){
-            srcWp = (*iter);
+            srcWp = sharedPtr;
         } else if((*iter)->value_ == dst) {
-            dstWp = (*iter);
+            dstWp = sharedPtr;
         }
     }
 
@@ -140,10 +143,12 @@ std::vector<N> gdwg::Graph<N, E>::GetConnected(const N& src){
 
   for(auto iter = edges_.cbegin(); iter != edges_.cend(); ++iter){
     auto edge = (*iter);
-    auto srcNodeValue = (*(edge).src_).value_;
+    auto srcNodePtr = edge.src_.lock();
+    N srcNodeValue = (*srcNodePtr).value_;
 
     if(srcNodeValue == src){
-      auto dstNodeValue = (*(edge).dst_).value_;
+        auto dstNodePtr = edge.dst_.lock();
+        N dstNodeValue = (*dstNodePtr).value_;
       E null = static_cast<E>(0);
       if((edge).weight_ != null){
           v.push_back(dstNodeValue);

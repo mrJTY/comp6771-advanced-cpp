@@ -40,8 +40,8 @@ struct CustomCompare {
 
 template<typename N, typename E>
 struct Edge{
-  std::shared_ptr<Node<N>> src_;
-  std::shared_ptr<Node<N>> dst_;
+  std::weak_ptr<Node<N>> src_;
+  std::weak_ptr<Node<N>> dst_;
   E weight_;
 };
 
@@ -49,11 +49,15 @@ template<typename N, typename E>
 struct CompareEdges {
     bool operator()(const Edge<N, E>& lhs, const Edge<N, E>& rhs)
     {
-      Node<N> lhsSrc = (*lhs.src_);
-      Node<N> rhsSrc = (*rhs.src_);
+      auto lhsSrcPtr = lhs.src_.lock();
+      auto rhsSrcPtr = rhs.src_.lock();
+      Node<N> lhsSrc = (*lhsSrcPtr);
+      Node<N> rhsSrc = (*rhsSrcPtr);
 
-      Node<N> lhsDst = (*lhs.dst_);
-      Node<N> rhsDst = (*rhs.dst_);
+      auto lhsDstPtr = lhs.dst_.lock();
+      auto rhsDstPtr = rhs.dst_.lock();
+      Node<N> lhsDst = (*lhsDstPtr);
+      Node<N> rhsDst = (*rhsDstPtr);
 
       E lhsWeight = (lhs.weight_);
       E rhsWeight = (rhs.weight_);
@@ -174,8 +178,10 @@ public:
     bool firstPrint = true;
 
     for(auto iter = g.cbegin(); iter != g.cend(); ++iter){
-        N src = (*(*iter).src_).value_;
-        N dst = (*(*iter).dst_).value_;
+        auto srcPtr = (*iter).src_.lock();
+        auto dstPtr = (*iter).dst_.lock();
+        N src = (*srcPtr).value_;
+        N dst = (*dstPtr).value_;
         E weight = (*iter).weight_;
 
         // Print out new source

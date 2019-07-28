@@ -24,8 +24,8 @@ int main() {
     g.DeleteNode("are");
 
 
-    auto foo = g.GetConnected("hello");
-    std::cout << g;
+//    auto foo = g.GetConnected("hello");
+//    std::cout << g;
 
 
     auto done = "Done";
