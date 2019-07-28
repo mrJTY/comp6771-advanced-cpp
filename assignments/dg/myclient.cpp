@@ -24,7 +24,11 @@ int main() {
     g.DeleteNode("are");
 
 
-//    auto foo = g.GetConnected("hello");
+    auto weights = g.GetWeights("hello", "how");
+    for(auto i : weights){
+        std::cout << i;
+    }
+    //auto foo = g.GetConnected("hello");
 //    std::cout << g;
 
 

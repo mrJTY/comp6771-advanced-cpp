@@ -124,8 +124,10 @@ bool gdwg::Graph<N, E>::IsConnected(const N& src, const N& dst){
 
   // Check for existing edges
   for(auto iter = edges_.cbegin(); iter != edges_.cend(); ++iter){
-    bool srcExists = (*(*iter).src_).value_ == src;
-    bool dstExists = (*(*iter).dst_).value_ == dst;
+      auto srcPtr = (*iter).src_.lock();
+      auto dstPtr = (*iter).dst_.lock();
+    bool srcExists = (*srcPtr).value_ == src;
+    bool dstExists = (*dstPtr).value_ == dst;
     if(srcExists && dstExists){
       return true;
     }
@@ -170,8 +172,10 @@ std::vector<E> gdwg::Graph<N, E>::GetWeights(const N& src, const N& dst){
 
   for(auto iter = edges_.cbegin(); iter != edges_.cend(); ++iter){
     auto edge = (*iter);
-    auto srcNodeValue = (*(edge).src_).value_;
-    auto dstNodeValue = (*(edge).dst_).value_;
+    auto srcPtr = edge.src_.lock();
+      auto dstPtr = edge.dst_.lock();
+    auto srcNodeValue = (*srcPtr).value_;
+    auto dstNodeValue = (*dstPtr).value_;
 
     if(srcNodeValue == src && dstNodeValue == dst){
       auto weight = edge.weight_;
