@@ -203,7 +203,7 @@ std::vector<E> gdwg::Graph<N, E>::GetWeights(const N& src, const N& dst) {
 
 template <typename N, typename E>
 bool gdwg::Graph<N, E>::Replace(const N& oldData, const N& newData) {
-
+  bool found = false;
   if (!IsNode(oldData)) {
     throw std::runtime_error("Cannot call Graph::Replace on a node that doesn't exist");
   }
@@ -212,17 +212,27 @@ bool gdwg::Graph<N, E>::Replace(const N& oldData, const N& newData) {
     auto edge = *iter;
     N srcVal = (*edge.src_).value_;
     N dstVal = (*edge.dst_).value_;
-    if (srcVal == oldData || dstVal == oldData) {
+    if (srcVal == oldData){
       (*edge.src_).value_ = newData;
-      return true;
+      found = true;
+    } else if(dstVal == oldData){
+      (*edge.dst_).value_ = newData;
+      found = true;
     }
   }
-
-  return false;
+  return found;
 }
+
 
 
 template <typename N>
 void MergeReplace(const N& oldData, const N& newData){
-  oldData + newData;
+  for (auto iter = this->begin(); iter != this->end(); ++iter) {
+    auto edge = *iter;
+    N srcVal = (*edge.src_).value_;
+    N dstVal = (*edge.dst_).value_;
+    if (srcVal == oldData || dstVal == oldData) {
+      (*edge.src_)
+    }
+  }
 }
