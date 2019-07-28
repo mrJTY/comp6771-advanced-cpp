@@ -28,6 +28,23 @@ int main() {
     g.DeleteNode("are");
     std::cout << g;
 
+    gdwg::Graph<std::string, int> h{g};
+    auto same = g == h;
+    std::cout << same;
+
+    gdwg::Graph<std::string, int> k;
+    k.InsertNode("a");
+    k.InsertNode("b");
+    k.InsertNode("c");
+    k.InsertEdge("a", "c", 100);
+    k.InsertEdge("a", "b", 99);
+    // Copy construct
+    gdwg::Graph<std::string, int> f{k};
+    auto same2 = k == f;
+    std::cout << same2;
+
+
+
 
     auto done = "Done";
     std::cout << done;

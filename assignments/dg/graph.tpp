@@ -194,3 +194,4 @@ std::vector<E> gdwg::Graph<N, E>::GetWeights(const N& src, const N& dst){
 
   return v;
 }
+

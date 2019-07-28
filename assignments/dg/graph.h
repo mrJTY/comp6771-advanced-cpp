@@ -205,6 +205,33 @@ public:
     return os;
   };
 
+  friend bool operator==(gdwg::Graph<N, E>& lhs, gdwg::Graph<N, E>& rhs){
+      auto j = rhs.cbegin();
+      for(auto i = lhs.cbegin(); i != lhs.cend(); ++i){
+         try{
+             N srcI = (*(*i).src_).value_;
+             N srcJ = (*(*j).src_).value_;
+             N dstI = (*(*i).dst_).value_;
+             N dstJ = (*(*j).dst_).value_;
+             E weightI = (*i).weight_;
+             E weightJ = (*j).weight_;
+
+             bool sameSrc = static_cast<bool>(srcI == srcJ);
+             bool sameDst = static_cast<bool>(dstI == dstJ);
+             bool sameWeight = static_cast<bool>(weightI == weightJ);
+
+             if((!sameSrc) || (!sameDst) || (!sameWeight)){
+                 return false;
+             }
+             ++j;
+         } catch(std::exception){
+             return false;
+         }
+      }
+        return true;
+  };
+
+
 
 
 

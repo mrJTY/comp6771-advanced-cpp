@@ -168,6 +168,20 @@ TEST_CASE("Get weights"){
   REQUIRE(*iter == 101);
 }
 
+TEST_CASE("Similarity"){
+    Graph<std::string, int> g;
+    g.InsertNode("a");
+    g.InsertNode("b");
+    g.InsertNode("c");
+    g.InsertEdge("a", "c", 100);
+    g.InsertEdge("a", "b", 99);
+
+    // Copy construct
+    Graph<std::string, int> h{g};
+    bool same = g == h;
+    REQUIRE(same == true);
+}
+
 /**
 TEST_CASE("Graph iterator"){
   Graph<std::string, int> g;
