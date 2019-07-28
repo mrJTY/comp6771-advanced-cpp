@@ -5,7 +5,9 @@
 #include <iostream>
 #include <memory>
 #include <set>
+#include <string>
 #include <tuple>
+#include <utility>
 #include <vector>
 
 namespace gdwg {
@@ -13,13 +15,13 @@ namespace gdwg {
 template <typename N>
 struct Node {
   Node();
-  Node(N value) : value_{value} {};
+  explicit Node(N value) : value_{value} {};
 
-  friend bool operator<(const Node<N>& lhs, const Node<N>& rhs) { return lhs.value_ < rhs.value_; };
+  friend bool operator<(const Node<N>& lhs, const Node<N>& rhs) { return lhs.value_ < rhs.value_; }
 
   friend bool operator==(const Node<N>& lhs, const Node<N>& rhs) {
     return lhs.value_ == rhs.value_;
-  };
+  }
 
   N value_;
 };
@@ -69,7 +71,7 @@ class const_iterator {
     } else if (iterType == "cend") {
       iter_ = edges.cend();
     }
-  };
+  }
 
   using iterator_category = std::bidirectional_iterator_tag;
   using value_type = Edge<N, E>;
@@ -77,12 +79,12 @@ class const_iterator {
   using pointer = Edge<N, E>*;
   using difference_type = int;
 
-  reference operator*() const { return *iter_; };
+  reference operator*() const { return *iter_; }
 
   const_iterator& operator++() {
     ++iter_;
     return *this;
-  };
+  }
 
   friend bool operator!=(const const_iterator& lhs, const const_iterator& rhs) {
     return lhs.iter_ != rhs.iter_;
@@ -103,7 +105,7 @@ class Graph {
       // Give ownership to the set
       nodes_.emplace(std::move(ptr));
     }
-  };
+  }
 
   // Tuple constructor
   Graph(typename std::vector<std::tuple<N, N, E>>::const_iterator begin,
@@ -158,7 +160,6 @@ class Graph {
   bool Replace(const N& oldData, const N& newData);
 
   friend std::ostream& operator<<(std::ostream& os, Graph<N, E>& g) {
-
     N currentSrc;
     bool firstPrint = true;
 
@@ -181,7 +182,7 @@ class Graph {
         currentSrc = src;
       }
 
-      // TODO make this weight anything else but 0
+      // TODO(JT): make this weight anything else but 0
       if (weight != 0) {
         os << "  " << dst << " | " << weight << "\n";
       }
@@ -190,7 +191,7 @@ class Graph {
     os << ")\n";
 
     return os;
-  };
+  }
 
   friend bool operator==(gdwg::Graph<N, E>& lhs, gdwg::Graph<N, E>& rhs) {
     auto j = rhs.cbegin();
@@ -216,7 +217,8 @@ class Graph {
       }
     }
     return true;
-  };
+  }
+
   friend bool operator!=(gdwg::Graph<N, E>& lhs, gdwg::Graph<N, E>& rhs) { return !(lhs == rhs); }
 
  private:
