@@ -15,7 +15,7 @@
 
 using namespace gdwg;
 
-TEST_CASE("Default constructor"){
+TEST_CASE("Default constructor") {
   gdwg::Graph<std::string, int> g;
   g.InsertNode("Hello");
   g.InsertNode("how");
@@ -33,7 +33,6 @@ TEST_CASE("Vector constructor") {
   REQUIRE(g.IsNode("False") == false);
 }
 
-
 TEST_CASE("Tuple constructor") {
   std::string s1{"Hello"};
   std::string s2{"how"};
@@ -46,15 +45,14 @@ TEST_CASE("Tuple constructor") {
   REQUIRE(g.IsNode("False") == false);
 }
 
-TEST_CASE("Init list constructor"){
-  gdwg::Graph<std::string, int> g {"Hello", "how", "are"};
+TEST_CASE("Init list constructor") {
+  gdwg::Graph<std::string, int> g{"Hello", "how", "are"};
   REQUIRE(g.IsNode("Hello") == true);
   REQUIRE(g.IsNode("False") == false);
-
 }
 
-TEST_CASE("Copy constructor"){
-  gdwg::Graph<std::string, int> g {"Hello", "how", "are"};
+TEST_CASE("Copy constructor") {
+  gdwg::Graph<std::string, int> g{"Hello", "how", "are"};
   gdwg::Graph<std::string, int> h{g};
   REQUIRE(g.IsNode("Hello") == true);
   REQUIRE(g.IsNode("False") == false);
@@ -62,8 +60,8 @@ TEST_CASE("Copy constructor"){
   REQUIRE(h.IsNode("False") == false);
 }
 
-TEST_CASE("Move constructor"){
-  gdwg::Graph<std::string, int> g {"Hello", "how", "are"};
+TEST_CASE("Move constructor") {
+  gdwg::Graph<std::string, int> g{"Hello", "how", "are"};
   gdwg::Graph<std::string, int> h{std::move(g)};
   REQUIRE(g.IsNode("Hello") == false);
   REQUIRE(g.IsNode("False") == false);
@@ -71,32 +69,31 @@ TEST_CASE("Move constructor"){
   REQUIRE(h.IsNode("False") == false);
 }
 
+TEST_CASE("Insert nodes") {
+  std::string srcVal{"src"};
+  std::string dstVal{"dst_"};
+  Graph<std::string, int> g;
 
-TEST_CASE("Insert nodes"){
-    std::string srcVal{"src"};
-    std::string dstVal{"dst_"};
-    Graph<std::string, int> g;
-
-    REQUIRE(g.InsertNode(srcVal) == true);
-    REQUIRE(g.InsertNode(srcVal) == false);
-    REQUIRE(g.InsertNode(dstVal) == true);
+  REQUIRE(g.InsertNode(srcVal) == true);
+  REQUIRE(g.InsertNode(srcVal) == false);
+  REQUIRE(g.InsertNode(dstVal) == true);
 }
 
-TEST_CASE("Insert edges"){
+TEST_CASE("Insert edges") {
 
-    std::vector<std::string> v {"a"};
-    gdwg::Graph<std::string, int> g{v.cbegin(), v.cend()};
-    g.InsertNode("hello");
-    g.InsertNode("how");
+  std::vector<std::string> v{"a"};
+  gdwg::Graph<std::string, int> g{v.cbegin(), v.cend()};
+  g.InsertNode("hello");
+  g.InsertNode("how");
 
-    // First insert must be true
-    REQUIRE(g.InsertEdge("hello", "how", 10) == true);
+  // First insert must be true
+  REQUIRE(g.InsertEdge("hello", "how", 10) == true);
 
-    // Second insert must be false
-    REQUIRE(g.InsertEdge("hello", "how", 10) == false);
+  // Second insert must be false
+  REQUIRE(g.InsertEdge("hello", "how", 10) == false);
 }
 
-TEST_CASE("Delete ptr"){
+TEST_CASE("Delete ptr") {
   gdwg::Graph<std::string, int> g;
   REQUIRE(g.DeleteNode("hello") == false);
   g.InsertNode("hello");
@@ -104,26 +101,26 @@ TEST_CASE("Delete ptr"){
   REQUIRE(g.DeleteNode("hello") == false);
 }
 
-TEST_CASE("Erase"){
-    std::string a{"a"};
-    Graph<std::string, int> g;
-    g.InsertNode(a);
-    REQUIRE(g.DeleteNode(a) == true);
-    REQUIRE(g.DeleteNode(a) == false);
-    REQUIRE(g.GetNodes().empty());
+TEST_CASE("Erase") {
+  std::string a{"a"};
+  Graph<std::string, int> g;
+  g.InsertNode(a);
+  REQUIRE(g.DeleteNode(a) == true);
+  REQUIRE(g.DeleteNode(a) == false);
+  REQUIRE(g.GetNodes().empty());
 }
 
-TEST_CASE("Clear"){
-    Graph<std::string, int> g;
-    g.InsertNode("a");
-    g.InsertNode("b");
-    g.InsertEdge("a", "b", 99);
-    REQUIRE(!g.GetNodes().empty());
-    g.Clear();
-    REQUIRE(g.GetNodes().empty());
+TEST_CASE("Clear") {
+  Graph<std::string, int> g;
+  g.InsertNode("a");
+  g.InsertNode("b");
+  g.InsertEdge("a", "b", 99);
+  REQUIRE(!g.GetNodes().empty());
+  g.Clear();
+  REQUIRE(g.GetNodes().empty());
 }
 
-TEST_CASE("Is connected"){
+TEST_CASE("Is connected") {
   Graph<std::string, int> g;
   g.InsertNode("a");
   g.InsertNode("b");
@@ -133,10 +130,9 @@ TEST_CASE("Is connected"){
   REQUIRE(g.IsConnected("a", "b") == true);
   REQUIRE(g.IsConnected("a", "c") == false);
   REQUIRE(g.IsConnected("b", "a") == false);
-
 }
 
-TEST_CASE("Get connected"){
+TEST_CASE("Get connected") {
   Graph<std::string, int> g;
   g.InsertNode("a");
   g.InsertNode("b");
@@ -151,7 +147,7 @@ TEST_CASE("Get connected"){
   REQUIRE(*i == "c");
 }
 
-TEST_CASE("Get weights"){
+TEST_CASE("Get weights") {
   Graph<std::string, int> g;
   g.InsertNode("a");
   g.InsertNode("b");
@@ -168,37 +164,47 @@ TEST_CASE("Get weights"){
   REQUIRE(*iter == 101);
 }
 
-TEST_CASE("Similarity"){
-    Graph<std::string, int> g;
-    g.InsertNode("a");
-    g.InsertNode("b");
-    g.InsertNode("c");
-    g.InsertEdge("a", "c", 100);
-    g.InsertEdge("a", "b", 99);
+TEST_CASE("Similarity") {
+  Graph<std::string, int> g;
+  g.InsertNode("a");
+  g.InsertNode("b");
+  g.InsertNode("c");
+  g.InsertEdge("a", "c", 100);
+  g.InsertEdge("a", "b", 99);
 
-    // Copy construct
-    Graph<std::string, int> h{g};
-    bool same = g == h;
-    REQUIRE(same == true);
+  // Copy construct
+  Graph<std::string, int> h{g};
+  bool same = g == h;
+  REQUIRE(same == true);
 }
 
-TEST_CASE("Disimilarity"){
-    Graph<std::string, int> g;
-    g.InsertNode("a");
-    g.InsertNode("b");
-    g.InsertNode("c");
-    g.InsertEdge("a", "c", 100);
-    g.InsertEdge("a", "b", 99);
+TEST_CASE("Disimilarity") {
+  Graph<std::string, int> g;
+  g.InsertNode("a");
+  g.InsertNode("b");
+  g.InsertNode("c");
+  g.InsertEdge("a", "c", 100);
+  g.InsertEdge("a", "b", 99);
 
-    Graph<std::string, int> h{g};
-    h.InsertEdge("c", "a", 100);
-    h.InsertNode("foo");
+  Graph<std::string, int> h{g};
+  h.InsertEdge("c", "a", 100);
+  h.InsertNode("foo");
 
-    bool same = g == h;
-    REQUIRE(same == false);
+  bool same = g == h;
+  REQUIRE(same == false);
 
-    bool disimilar = g != h;
-    REQUIRE(disimilar == true) ;
+  bool disimilar = g != h;
+  REQUIRE(disimilar == true);
+}
+TEST_CASE("Replace") {
+  Graph<std::string, int> g;
+  g.InsertNode("a");
+  g.InsertNode("a");
+  REQUIRE(g.IsNode("a") == true);
+
+  g.Replace("a", "b");
+  REQUIRE(g.IsNode("a") == false);
+  REQUIRE(g.IsNode("b") == true);
 }
 
 /**
