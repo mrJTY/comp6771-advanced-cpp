@@ -182,6 +182,25 @@ TEST_CASE("Similarity"){
     REQUIRE(same == true);
 }
 
+TEST_CASE("Disimilarity"){
+    Graph<std::string, int> g;
+    g.InsertNode("a");
+    g.InsertNode("b");
+    g.InsertNode("c");
+    g.InsertEdge("a", "c", 100);
+    g.InsertEdge("a", "b", 99);
+
+    Graph<std::string, int> h{g};
+    h.InsertEdge("c", "a", 100);
+    h.InsertNode("foo");
+
+    bool same = g == h;
+    REQUIRE(same == false);
+
+    bool disimilar = g != h;
+    REQUIRE(disimilar == true) ;
+}
+
 /**
 TEST_CASE("Graph iterator"){
   Graph<std::string, int> g;

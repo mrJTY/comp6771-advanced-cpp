@@ -230,6 +230,9 @@ public:
       }
         return true;
   };
+  friend bool operator!=(gdwg::Graph<N, E>& lhs, gdwg::Graph<N, E>& rhs){
+      return !(lhs == rhs);
+  }
 
 
 
