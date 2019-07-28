@@ -92,14 +92,26 @@ bool gdwg::Graph<N, E>::InsertEdge(const N& src, const N& dst, const E& w){
 
 template<typename N, typename E>
 bool gdwg::Graph<N, E>::DeleteNode(const N& val){
+    bool found = false;
   for(auto iter = nodes_.begin(); iter != nodes_.end(); ++iter){
     std::shared_ptr<Node<N>> p = (*iter);
     if((*p).value_ == val){
       nodes_.erase(iter);
-      return true;
+      found = true;
     }
   }
-  return false;
+
+  for(auto iter = edges_.begin(); iter != edges_.end(); ++iter){
+      auto edge = (*iter);
+      auto srcVal = (*edge.src_).value_;
+      auto dstVal = (*edge.dst_).value_;
+
+      if(srcVal == val || dstVal == val){
+         edges_.erase(iter);
+      }
+
+  }
+  return found;
 }
 
 template<typename N, typename E>
@@ -182,3 +194,25 @@ std::vector<E> gdwg::Graph<N, E>::GetWeights(const N& src, const N& dst){
 
   return v;
 }
+
+template<typename N, typename E>
+bool gdwg::Graph<N, E>::Replace(const N &oldData, const N &newData) {
+
+   if(!IsNode(oldData)){
+       throw std::runtime_error("Cannot call Graph::Replace on a node that doesn't exist");
+   }
+
+
+   for(auto iter = this->begin(); iter != this->end(); ++iter){
+      auto edge = *iter;
+      N srcVal = (*edge.src_).value_;
+      N dstVal = (*edge.dst_).value_;
+      if(srcVal == oldData || dstVal == oldData){
+          (*edge.src_).value_ = newData;
+          return true;
+      }
+   }
+
+   return false;
+}
+
