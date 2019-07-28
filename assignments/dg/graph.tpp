@@ -220,3 +220,9 @@ bool gdwg::Graph<N, E>::Replace(const N& oldData, const N& newData) {
 
   return false;
 }
+
+
+template <typename N>
+void MergeReplace(const N& oldData, const N& newData){
+  oldData + newData;
+}
