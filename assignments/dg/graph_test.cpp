@@ -10,10 +10,9 @@
 
 #include "assignments/dg/graph.h"
 #include "catch.h"
-#include "iostream"
-#include "string"
-
-using namespace gdwg;
+#include <iostream>
+#include <string>
+#include <utility>
 
 TEST_CASE("Default constructor") {
   gdwg::Graph<std::string, int> g;
@@ -28,7 +27,7 @@ TEST_CASE("Default constructor") {
 
 TEST_CASE("Vector constructor") {
   std::vector<std::string> v{"Hello", "how", "are", "you"};
-  Graph<std::string, double> g{v.begin(), v.end()};
+  gdwg::Graph<std::string, double> g{v.begin(), v.end()};
   REQUIRE(g.IsNode("Hello") == true);
   REQUIRE(g.IsNode("False") == false);
 }
@@ -40,7 +39,7 @@ TEST_CASE("Tuple constructor") {
   auto e1 = std::make_tuple(s1, s2, 5.4);
   auto e2 = std::make_tuple(s2, s3, 7.6);
   auto e = std::vector<std::tuple<std::string, std::string, double>>{e1, e2};
-  Graph<std::string, double> g{e.begin(), e.end()};
+  gdwg::Graph<std::string, double> g{e.begin(), e.end()};
   REQUIRE(g.IsNode("Hello") == true);
   REQUIRE(g.IsNode("False") == false);
 }
@@ -72,7 +71,7 @@ TEST_CASE("Move constructor") {
 TEST_CASE("Insert nodes") {
   std::string srcVal{"src"};
   std::string dstVal{"dst_"};
-  Graph<std::string, int> g;
+  gdwg::Graph<std::string, int> g;
 
   REQUIRE(g.InsertNode(srcVal) == true);
   REQUIRE(g.InsertNode(srcVal) == false);
@@ -80,7 +79,6 @@ TEST_CASE("Insert nodes") {
 }
 
 TEST_CASE("Insert edges") {
-
   std::vector<std::string> v{"a"};
   gdwg::Graph<std::string, int> g{v.cbegin(), v.cend()};
   g.InsertNode("hello");
@@ -103,7 +101,7 @@ TEST_CASE("Delete ptr") {
 
 TEST_CASE("Erase") {
   std::string a{"a"};
-  Graph<std::string, int> g;
+  gdwg::Graph<std::string, int> g;
   g.InsertNode(a);
   REQUIRE(g.DeleteNode(a) == true);
   REQUIRE(g.DeleteNode(a) == false);
@@ -111,7 +109,7 @@ TEST_CASE("Erase") {
 }
 
 TEST_CASE("Clear") {
-  Graph<std::string, int> g;
+  gdwg::Graph<std::string, int> g;
   g.InsertNode("a");
   g.InsertNode("b");
   g.InsertEdge("a", "b", 99);
@@ -121,7 +119,7 @@ TEST_CASE("Clear") {
 }
 
 TEST_CASE("Is connected") {
-  Graph<std::string, int> g;
+  gdwg::Graph<std::string, int> g;
   g.InsertNode("a");
   g.InsertNode("b");
   g.InsertNode("c");
@@ -133,7 +131,7 @@ TEST_CASE("Is connected") {
 }
 
 TEST_CASE("Get connected") {
-  Graph<std::string, int> g;
+  gdwg::Graph<std::string, int> g;
   g.InsertNode("a");
   g.InsertNode("b");
   g.InsertNode("c");
@@ -148,7 +146,7 @@ TEST_CASE("Get connected") {
 }
 
 TEST_CASE("Get weights") {
-  Graph<std::string, int> g;
+  gdwg::Graph<std::string, int> g;
   g.InsertNode("a");
   g.InsertNode("b");
   g.InsertNode("c");
@@ -165,7 +163,7 @@ TEST_CASE("Get weights") {
 }
 
 TEST_CASE("Similarity") {
-  Graph<std::string, int> g;
+  gdwg::Graph<std::string, int> g;
   g.InsertNode("a");
   g.InsertNode("b");
   g.InsertNode("c");
@@ -173,20 +171,20 @@ TEST_CASE("Similarity") {
   g.InsertEdge("a", "b", 99);
 
   // Copy construct
-  Graph<std::string, int> h{g};
+  gdwg::Graph<std::string, int> h{g};
   bool same = g == h;
   REQUIRE(same == true);
 }
 
 TEST_CASE("Disimilarity") {
-  Graph<std::string, int> g;
+  gdwg::Graph<std::string, int> g;
   g.InsertNode("a");
   g.InsertNode("b");
   g.InsertNode("c");
   g.InsertEdge("a", "c", 100);
   g.InsertEdge("a", "b", 99);
 
-  Graph<std::string, int> h{g};
+  gdwg::Graph<std::string, int> h{g};
   h.InsertEdge("c", "a", 100);
   h.InsertNode("foo");
 
@@ -197,7 +195,7 @@ TEST_CASE("Disimilarity") {
   REQUIRE(disimilar == true);
 }
 TEST_CASE("Replace") {
-  Graph<std::string, int> g;
+  gdwg::Graph<std::string, int> g;
   g.InsertNode("a");
   g.InsertNode("a");
   REQUIRE(g.IsNode("a") == true);
