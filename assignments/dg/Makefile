@@ -1,6 +1,9 @@
 test:
 	bazel test graph_test
 
+myclient:
+	bazel run myclient
+
 format:
 	clang-format -i graph.tpp graph_test.cpp && \
 	clang-format -i graph.h && \

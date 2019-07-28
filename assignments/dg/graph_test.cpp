@@ -9,7 +9,7 @@
 */
 
 #include "assignments/dg/graph.h"
-#include <catch.h>
+#include "catch.h"
 #include <iostream>
 #include <string>
 #include <utility>
@@ -27,7 +27,7 @@ TEST_CASE("Default constructor") {
 
 TEST_CASE("Vector constructor") {
   std::vector<std::string> v{"Hello", "how", "are", "you"};
-  Graph<std::string, double> g{v.begin(), v.end()};
+  gdwg::Graph<std::string, double> g{v.begin(), v.end()};
   REQUIRE(g.IsNode("Hello") == true);
   REQUIRE(g.IsNode("False") == false);
 }
@@ -39,7 +39,7 @@ TEST_CASE("Tuple constructor") {
   auto e1 = std::make_tuple(s1, s2, 5.4);
   auto e2 = std::make_tuple(s2, s3, 7.6);
   auto e = std::vector<std::tuple<std::string, std::string, double>>{e1, e2};
-  Graph<std::string, double> g{e.begin(), e.end()};
+  gdwg::Graph<std::string, double> g{e.begin(), e.end()};
   REQUIRE(g.IsNode("Hello") == true);
   REQUIRE(g.IsNode("False") == false);
 }
@@ -101,7 +101,7 @@ TEST_CASE("Delete ptr") {
 
 TEST_CASE("Erase") {
   std::string a{"a"};
-  Graph<std::string, int> g;
+  gdwg::Graph<std::string, int> g;
   g.InsertNode(a);
   REQUIRE(g.DeleteNode(a) == true);
   REQUIRE(g.DeleteNode(a) == false);
@@ -163,7 +163,7 @@ TEST_CASE("Get weights") {
 }
 
 TEST_CASE("Similarity") {
-  Graph<std::string, int> g;
+  gdwg::Graph<std::string, int> g;
   g.InsertNode("a");
   g.InsertNode("b");
   g.InsertNode("c");
@@ -177,7 +177,7 @@ TEST_CASE("Similarity") {
 }
 
 TEST_CASE("Disimilarity") {
-  Graph<std::string, int> g;
+  gdwg::Graph<std::string, int> g;
   g.InsertNode("a");
   g.InsertNode("b");
   g.InsertNode("c");
