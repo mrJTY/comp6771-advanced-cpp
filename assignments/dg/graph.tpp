@@ -248,14 +248,14 @@ void gdwg::Graph<N, E>::MergeReplace(const N& oldData, const N& newData){
 
     // Outgoing edges are is where the old node was the src
     if (srcVal == oldData && !isInitializer) {
-        Edge <N, E> newEdge{edge.src_, edge.dst_, edge.weight_};
-        outgoingEdges.push_back(newEdge);
+        std::tuple<N, E> tup = {(*edge.src_).value_, edge.weight_};
+        outgoingEdges.push_back(tup);
     }
 
     // INcoming are were the old node was the dst
     if (dstVal == oldData && !isInitializer) {
-        Edge <N, E> newEdge{edge.src_, edge.dst_, edge.weight_};
-        incomingEdges.push_back(newEdge);
+        std::tuple<N, E> tup = {(*edge.dst_).value_, edge.weight_};
+        incomingEdges.push_back(tup);
     }
   }
 //
@@ -263,11 +263,18 @@ void gdwg::Graph<N, E>::MergeReplace(const N& oldData, const N& newData){
 //  std::cout << foo;
 
   // Add the incoming / outgoing edges to the new node
-//  for(auto iter = incomingEdges.begin(); iter != incomingEdges.end(); ++iter){
-//      N oldSrc = (*(*iter).src_).value_;
-//      // Add an edge from the old source to the new data
-//      this->InsertEdge(oldSrc, newData, (*iter).weight_);
-//  }
+  for(auto iter = incomingEdges.begin(); iter != incomingEdges.end(); ++iter){
+      N oldSrc = std::get<0>(*iter);
+      E weight = std::get<1>(*iter);
+      // Add an edge from the old source to the new data
+      InsertEdge(oldSrc, newData, weight);
+  }
+  for(auto iter = outgoingEdges.begin(); iter != outgoingEdges.end(); ++iter){
+        N oldDst = std::get<0>(*iter);
+        E weight = std::get<1>(*iter);
+        // Add an edge from the old source to the new data
+        InsertEdge(newData, oldDst, weight);
+  }
 
   InsertEdge(newData, "d", 999);
   DeleteNode(oldData);
