@@ -234,6 +234,27 @@ TEST_CASE("Merge replace 1"){
 
 }
 
+TEST_CASE("Reverse iterators"){
+    gdwg::Graph<std::string, int> g;
+    g.InsertNode("a");
+    g.InsertNode("b");
+    g.InsertNode("c");
+    g.InsertNode("d");
+
+    g.InsertEdge("a", "b", 1);
+    g.InsertEdge("a", "c", 2);
+    g.InsertEdge("a", "d", 3);
+
+    auto rbegin = g.rbegin();
+    ++rbegin;
+//    auto crbegin = g.crbegin();
+//    ++crbegin;
+//
+//    auto rend = g.rend();
+//   ++rend;
+//   auto crend = g.crend();
+//   ++crend;
+}
 /**
 TEST_CASE("Graph iterator"){
   Graph<std::string, int> g;

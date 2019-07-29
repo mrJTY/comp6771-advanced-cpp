@@ -96,6 +96,43 @@ class const_iterator {
 };
 
 template <typename N, typename E>
+class const_reverse_iterator {
+public:
+    const_reverse_iterator(std::set<Edge<N, E>, CompareEdges<N, E>>& edges, std::string iterType) {
+        if (iterType == "rbegin") {
+            iter_ = edges.rbegin();
+        } else if (iterType == "rend") {
+            iter_ = edges.rend();
+        } else if (iterType == "crbegin") {
+            iter_ = edges.crbegin();
+        } else if (iterType == "crend") {
+            iter_ = edges.crend();
+        }
+    }
+
+    using iterator_category = std::bidirectional_iterator_tag;
+    using value_type = Edge<N, E>;
+    using reference = Edge<N, E>;
+    using pointer = Edge<N, E>*;
+    using difference_type = int;
+
+    reference operator*() const { return *iter_; }
+
+    const_reverse_iterator& operator++() {
+        ++iter_;
+        return *this;
+    }
+
+    friend bool operator!=(const const_reverse_iterator& lhs, const const_reverse_iterator& rhs) {
+        return lhs.iter_ != rhs.iter_;
+    }
+
+private:
+    typename std::set<Edge<N, E>, CompareEdges<N, E>>::iterator iter_;
+};
+
+
+template <typename N, typename E>
 class Graph {
  public:
   Graph() = default;
@@ -136,6 +173,7 @@ class Graph {
   Graph(Graph&& source) noexcept : nodes_{std::move(source.nodes_)}, edges_{source.edges_} {};
 
   using iterator = const_iterator<N, E>;
+  using reverse_iterator = const_reverse_iterator<N, E>;
 
   iterator begin() {
     // Pass the nodes to the constructor
@@ -145,6 +183,11 @@ class Graph {
   iterator cbegin() { return iterator{edges_, "cbegin"}; }
   iterator end() { return iterator{edges_, "end"}; }
   iterator cend() { return iterator{edges_, "cend"}; }
+
+  reverse_iterator rbegin() { return reverse_iterator{edges_, "rbegin"}; }
+  reverse_iterator crbegin() { return reverse_iterator{edges_, "crbegin"}; }
+  reverse_iterator rend() { return reverse_iterator{edges_, "rend"}; }
+  reverse_iterator crend() { return reverse_iterator{edges_, "crend"}; }
 
   //    iterator end() { return nullptr; }
 
