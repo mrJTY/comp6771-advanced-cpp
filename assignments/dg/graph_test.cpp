@@ -89,6 +89,10 @@ TEST_CASE("Insert edges") {
 
   // Second insert must be false
   REQUIRE(g.InsertEdge("hello", "how", 10) == false);
+
+  // INserrt an edge to intself
+  REQUIRE(g.InsertEdge("hello", "hello", 10) == true);
+  REQUIRE(g.InsertEdge("hello", "hello", 10) == false);
 }
 
 TEST_CASE("Delete ptr") {
@@ -203,6 +207,31 @@ TEST_CASE("Replace") {
   g.Replace("a", "b");
   REQUIRE(g.IsNode("a") == false);
   REQUIRE(g.IsNode("b") == true);
+}
+
+TEST_CASE("Merge replace 1"){
+  gdwg::Graph<std::string, int> g;
+  g.InsertNode("a");
+  g.InsertNode("b");
+  g.InsertNode("c");
+  g.InsertNode("d");
+
+  g.InsertEdge("a", "b", 1);
+  g.InsertEdge("a", "c", 2);
+  g.InsertEdge("a", "d", 3);
+
+  // Before
+  std::vector<std::string> aBefore = g.GetConnected("a");
+  std::vector<std::string> bBefore = g.GetConnected("b");
+  REQUIRE(aBefore.empty() == false);
+
+  // After
+  g.MergeReplace("a", "b");
+  std::vector<std::string> bAfter = g.GetConnected("b");
+
+  // B's neighbours are now a's old neighbours
+  REQUIRE(bAfter.size() == aBefore.size());
+
 }
 
 /**

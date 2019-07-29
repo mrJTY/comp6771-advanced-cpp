@@ -26,8 +26,9 @@ bool gdwg::Graph<N, E>::InsertNode(const N& val) {
       }
     }
 
+    // Give an edge to itself, flag as initializer = true
     E null = static_cast<E>(0);
-    Edge<N, E> e{srcPtr, srcPtr, null};
+    Edge<N, E> e{srcPtr, srcPtr, null, true};
     edges_.emplace(e);
   }
 
@@ -85,7 +86,8 @@ bool gdwg::Graph<N, E>::InsertEdge(const N& src, const N& dst, const E& w) {
   for (auto iter = nodes_.begin(); iter != nodes_.end(); ++iter) {
     if ((*iter)->value_ == src) {
       srcWp = (*iter);
-    } else if ((*iter)->value_ == dst) {
+    }
+    if ((*iter)->value_ == dst) {
       dstWp = (*iter);
     }
   }
@@ -203,7 +205,7 @@ std::vector<E> gdwg::Graph<N, E>::GetWeights(const N& src, const N& dst) {
 
 template <typename N, typename E>
 bool gdwg::Graph<N, E>::Replace(const N& oldData, const N& newData) {
-
+  bool found = false;
   if (!IsNode(oldData)) {
     throw std::runtime_error("Cannot call Graph::Replace on a node that doesn't exist");
   }
@@ -212,11 +214,67 @@ bool gdwg::Graph<N, E>::Replace(const N& oldData, const N& newData) {
     auto edge = *iter;
     N srcVal = (*edge.src_).value_;
     N dstVal = (*edge.dst_).value_;
-    if (srcVal == oldData || dstVal == oldData) {
+    if (srcVal == oldData){
       (*edge.src_).value_ = newData;
-      return true;
+      found = true;
+    }
+
+    if(dstVal == oldData){
+      (*edge.dst_).value_ = newData;
+      found = true;
     }
   }
+  return found;
+}
 
-  return false;
+
+template <typename N, typename E>
+void gdwg::Graph<N, E>::MergeReplace(const N& oldData, const N& newData){
+
+  // Checks
+  if(!IsNode(oldData) || !IsNode(newData)){
+    throw std::runtime_error("Cannot call Graph::MergeReplace on old or new data if they don't exist in the graph");
+  }
+
+  std::vector<std::tuple<N, N, E>> incomingEdges {};
+  std::vector<std::tuple<N, N, E>> outgoingEdges {};
+
+  N newDataCopy = newData;
+
+
+  // From the old node, record its incoming / outgoing edges
+  for (auto iter = this->begin(); iter != this->end(); ++iter) {
+    auto edge = *iter;
+    N srcVal = (*edge.src_).value_;
+    N dstVal = (*edge.dst_).value_;
+    bool isInitializer = edge.initializer_;
+
+    // Outgoing edges are is where the old node was the src
+    if (srcVal == oldData && !isInitializer) {
+        std::tuple<N,N, E> tup = std::make_tuple(newDataCopy, (*edge.dst_).value_, edge.weight_);
+        outgoingEdges.push_back(tup);
+    }
+
+      if (dstVal == oldData && !isInitializer) {
+          std::tuple<N,N, E> tup = std::make_tuple((*edge.src_).value_,newDataCopy, edge.weight_);
+          incomingEdges.push_back(tup);
+      }
+  }
+
+  // Add the incoming / outgoing edges to the new node
+  for(auto iter = incomingEdges.begin(); iter != incomingEdges.end(); ++iter){
+      N src = std::get<0>(*iter);
+      N dst = std::get<1>(*iter);
+      E weight = std::get<2>(*iter);
+      InsertEdge(src, dst, weight);
+  }
+  for(auto iter = outgoingEdges.begin(); iter != outgoingEdges.end(); ++iter){
+        N src = std::get<0>(*iter);
+        N dst = std::get<1>(*iter);
+        E weight = std::get<2>(*iter);
+        InsertEdge(src, dst, weight);
+  }
+
+  DeleteNode(oldData);
+
 }
