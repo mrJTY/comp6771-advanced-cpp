@@ -163,11 +163,11 @@ class Graph {
 
 
   // TODO(JT): const?
-  friend std::ostream& operator<<(std::ostream& os, Graph<N, E>& g) {
+  friend std::ostream& operator<<(std::ostream& os, const Graph<N, E>& g) {
     N currentSrc;
     bool firstPrint = true;
 
-    for (auto iter = g.cbegin(); iter != g.cend(); ++iter) {
+    for (auto iter = g.edges_.cbegin(); iter != g.edges_.cend(); ++iter) {
       Edge<N, E> edge = *iter;
       N src = (*(edge).src_).value_;
       N dst = (*(edge).dst_).value_;
