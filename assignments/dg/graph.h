@@ -38,6 +38,7 @@ struct Edge {
   std::shared_ptr<Node<N>> src_;
   std::shared_ptr<Node<N>> dst_;
   E weight_;
+  bool initializer_ = false;
 };
 
 template <typename N, typename E>
