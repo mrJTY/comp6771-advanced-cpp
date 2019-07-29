@@ -53,12 +53,12 @@ int main() {
         g.InsertEdge("a", "b", 1);
         g.InsertEdge("a", "c", 2);
         g.InsertEdge("a", "d", 3);
-        g.InsertEdge("a", "a", 10);
+//        g.InsertEdge("a", "a", 10);
 
         // Before
         std::vector<std::string> aBefore = g.GetConnected("a");
         std::vector<std::string> bBefore = g.GetConnected("b");
-//        g.MergeReplace("a", "b");
+        g.MergeReplace("a", "b");
         std::vector<std::string> bAfter = g.GetConnected("b");
         auto done = "Done";
         std::cout << done;

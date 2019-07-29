@@ -227,11 +227,7 @@ TEST_CASE("Merge replace 1"){
 
   // After
   g.MergeReplace("a", "b");
-  std::vector<std::string> aAfter = g.GetConnected("a");
   std::vector<std::string> bAfter = g.GetConnected("b");
-
-  // A's neighbours should be empty
-  REQUIRE(aAfter.empty() == true);
 
   // B's neighbours are now a's old neighbours
   REQUIRE(bAfter.size() == aBefore.size());

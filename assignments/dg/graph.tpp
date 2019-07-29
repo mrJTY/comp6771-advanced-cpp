@@ -236,7 +236,7 @@ void gdwg::Graph<N, E>::MergeReplace(const N& oldData, const N& newData){
     throw std::runtime_error("Cannot call Graph::MergeReplace on old or new data if they don't exist in the graph");
   }
 
-//  std::vector<std::tuple<N, E>> incomingEdges {};
+  std::vector<std::tuple<N, N, E>> incomingEdges {};
   std::vector<std::tuple<N, N, E>> outgoingEdges {};
 
   N newDataCopy = newData;
@@ -255,59 +255,26 @@ void gdwg::Graph<N, E>::MergeReplace(const N& oldData, const N& newData){
         outgoingEdges.push_back(tup);
     }
 
-    // INcoming are were the old node was the dst
-//    if (dstVal == oldData && !isInitializer) {
-//        std::tuple<N, E> tup = {(*edge.dst_).value_, edge.weight_};
-//        incomingEdges.push_back(tup);
-//    }
+      if (dstVal == oldData && !isInitializer) {
+          std::tuple<N,N, E> tup = std::make_tuple((*edge.src_).value_,newDataCopy, edge.weight_);
+          incomingEdges.push_back(tup);
+      }
   }
-//
-//  bool foo = true;
-//  std::cout << foo;
 
   // Add the incoming / outgoing edges to the new node
-//  for(auto iter = incomingEdges.begin(); iter != incomingEdges.end(); ++iter){
-//      N oldSrc = std::get<0>(*iter);
-//      E weight = std::get<1>(*iter);
-//      // Add an edge from the old source to the new data
-//      InsertEdge(oldSrc, newData, weight);
-//  }
+  for(auto iter = incomingEdges.begin(); iter != incomingEdges.end(); ++iter){
+      N src = std::get<0>(*iter);
+      N dst = std::get<1>(*iter);
+      E weight = std::get<2>(*iter);
+      InsertEdge(src, dst, weight);
+  }
   for(auto iter = outgoingEdges.begin(); iter != outgoingEdges.end(); ++iter){
         N src = std::get<0>(*iter);
         N dst = std::get<1>(*iter);
         E weight = std::get<2>(*iter);
-        // Add an edge from the old source to the new data
-//        InsertEdge(newSrc, oldDst, weight);
         InsertEdge(src, dst, weight);
   }
 
   DeleteNode(oldData);
-
-
-//  for(auto iter = outgoingEdges.begin(); iter != outgoingEdges.end(); ++iter){
-//      N replacement = (*replacementNode).value_;
-//      N old = (*(*iter).dst_).value_;
-//      this->InsertEdge(replacement, old, (*iter).weight_);
-//  }
-
-
-    // Remove the old node
-//    DeleteNode(oldData);
-
-//  // Search for new data
-//  for (auto iter = this->begin(); iter != this->end(); ++iter) {
-//    auto edge = *iter;
-//    N srcVal = (*edge.src_).value_;
-//    N dstVal = (*edge.dst_).value_;
-//    if (srcVal == newData) {
-//        (*edge.src_).value_ = oldData;
-//    } else if(dstVal == newData){
-//        (*edge.dst_).value_ = oldData;
-//    }
-//  }
-
-  // Swap the two by creating a new object
-//  newPtr.reset(new Node<N>{oldData});
-//  oldPtr.reset(new Node<N>{newData});
 
 }
