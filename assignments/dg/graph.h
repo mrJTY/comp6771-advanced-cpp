@@ -168,9 +168,10 @@ class Graph {
     bool firstPrint = true;
 
     for (auto iter = g.cbegin(); iter != g.cend(); ++iter) {
-      N src = (*(*iter).src_).value_;
-      N dst = (*(*iter).dst_).value_;
-      E weight = (*iter).weight_;
+      Edge<N, E> edge = *iter;
+      N src = (*(edge).src_).value_;
+      N dst = (*(edge).dst_).value_;
+      E weight = (edge).weight_;
 
       // Print out new source
       if (currentSrc != src) {
@@ -186,8 +187,7 @@ class Graph {
         currentSrc = src;
       }
 
-      // TODO(JT): make this weight anything else but 0
-      if (weight != 0) {
+      if (!edge.initializer_) {
         os << "  " << dst << " | " << weight << "\n";
       }
     }
