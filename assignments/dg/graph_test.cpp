@@ -89,6 +89,10 @@ TEST_CASE("Insert edges") {
 
   // Second insert must be false
   REQUIRE(g.InsertEdge("hello", "how", 10) == false);
+
+  // INserrt an edge to intself
+  REQUIRE(g.InsertEdge("hello", "hello", 10) == true);
+  REQUIRE(g.InsertEdge("hello", "hello", 10) == false);
 }
 
 TEST_CASE("Delete ptr") {

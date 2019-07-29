@@ -86,7 +86,8 @@ bool gdwg::Graph<N, E>::InsertEdge(const N& src, const N& dst, const E& w) {
   for (auto iter = nodes_.begin(); iter != nodes_.end(); ++iter) {
     if ((*iter)->value_ == src) {
       srcWp = (*iter);
-    } else if ((*iter)->value_ == dst) {
+    }
+    if ((*iter)->value_ == dst) {
       dstWp = (*iter);
     }
   }
