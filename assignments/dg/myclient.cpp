@@ -58,7 +58,6 @@ int main() {
         std::vector<std::string> aBefore = g.GetConnected("a");
         std::vector<std::string> bBefore = g.GetConnected("b");
         g.MergeReplace("a", "b");
-        std::vector<std::string> aAfter = g.GetConnected("a");
         std::vector<std::string> bAfter = g.GetConnected("b");
         auto done = "Done";
         std::cout << done;
