@@ -235,8 +235,10 @@ void gdwg::Graph<N, E>::MergeReplace(const N& oldData, const N& newData){
     throw std::runtime_error("Cannot call Graph::MergeReplace on old or new data if they don't exist in the graph");
   }
 
-  std::vector<std::tuple<N, E>> incomingEdges {};
-  std::vector<std::tuple<N, E>> outgoingEdges {};
+//  std::vector<std::tuple<N, E>> incomingEdges {};
+  std::vector<std::tuple<N, N, E>> outgoingEdges {};
+
+  N newDataCopy = newData;
 
 
   // From the old node, record its incoming / outgoing edges
@@ -248,35 +250,36 @@ void gdwg::Graph<N, E>::MergeReplace(const N& oldData, const N& newData){
 
     // Outgoing edges are is where the old node was the src
     if (srcVal == oldData && !isInitializer) {
-        std::tuple<N, E> tup = {(*edge.src_).value_, edge.weight_};
+        std::tuple<N,N, E> tup = std::make_tuple(newDataCopy, (*edge.dst_).value_, edge.weight_);
         outgoingEdges.push_back(tup);
     }
 
     // INcoming are were the old node was the dst
-    if (dstVal == oldData && !isInitializer) {
-        std::tuple<N, E> tup = {(*edge.dst_).value_, edge.weight_};
-        incomingEdges.push_back(tup);
-    }
+//    if (dstVal == oldData && !isInitializer) {
+//        std::tuple<N, E> tup = {(*edge.dst_).value_, edge.weight_};
+//        incomingEdges.push_back(tup);
+//    }
   }
 //
 //  bool foo = true;
 //  std::cout << foo;
 
   // Add the incoming / outgoing edges to the new node
-  for(auto iter = incomingEdges.begin(); iter != incomingEdges.end(); ++iter){
-      N oldSrc = std::get<0>(*iter);
-      E weight = std::get<1>(*iter);
-      // Add an edge from the old source to the new data
-      InsertEdge(oldSrc, newData, weight);
-  }
+//  for(auto iter = incomingEdges.begin(); iter != incomingEdges.end(); ++iter){
+//      N oldSrc = std::get<0>(*iter);
+//      E weight = std::get<1>(*iter);
+//      // Add an edge from the old source to the new data
+//      InsertEdge(oldSrc, newData, weight);
+//  }
   for(auto iter = outgoingEdges.begin(); iter != outgoingEdges.end(); ++iter){
-        N oldDst = std::get<0>(*iter);
-        E weight = std::get<1>(*iter);
+        N src = std::get<0>(*iter);
+        N dst = std::get<1>(*iter);
+        E weight = std::get<2>(*iter);
         // Add an edge from the old source to the new data
-        InsertEdge(newData, oldDst, weight);
+//        InsertEdge(newSrc, oldDst, weight);
+        InsertEdge(src, dst, weight);
   }
 
-  InsertEdge(newData, "d", 999);
   DeleteNode(oldData);
 
 
