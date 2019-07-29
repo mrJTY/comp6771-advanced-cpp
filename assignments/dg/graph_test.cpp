@@ -210,6 +210,7 @@ TEST_CASE("Merge replace 1"){
   g.InsertNode("a");
   g.InsertNode("b");
   g.InsertNode("c");
+  g.InsertNode("d");
 
   g.InsertEdge("a", "b", 1);
   g.InsertEdge("a", "c", 2);
