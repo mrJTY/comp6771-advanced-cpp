@@ -163,7 +163,7 @@ class Graph {
 
 
   // TODO(JT): const?
-  friend std::ostream& operator<<(std::ostream& os, const Graph<N, E>& g) {
+  friend std::ostream& operator<<(std::ostream& os, const gdwg::Graph<N, E>& g) {
     N currentSrc;
     bool firstPrint = true;
 
@@ -197,9 +197,9 @@ class Graph {
     return os;
   }
 
-  friend bool operator==(gdwg::Graph<N, E>& lhs, gdwg::Graph<N, E>& rhs) {
-    auto j = rhs.cbegin();
-    for (auto i = lhs.cbegin(); i != lhs.cend(); ++i) {
+  friend bool operator==(const gdwg::Graph<N, E>& lhs, const gdwg::Graph<N, E>& rhs) {
+    auto j = rhs.edges_.cbegin();
+    for (auto i = lhs.edges_.cbegin(); i != lhs.edges_.cend(); ++i) {
       try {
         N srcI = (*(*i).src_).value_;
         N srcJ = (*(*j).src_).value_;
