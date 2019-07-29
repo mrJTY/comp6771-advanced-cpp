@@ -84,19 +84,33 @@ class const_iterator {
     auto edge = *iter_;
     N src = (*edge.src_).value_;
     N dst = (*edge.dst_).value_;
-    E weight = (*edge.weight_);
+    E weight = edge.weight_;
     std::tuple<N, N, E> tup = {src, dst, weight};
     return tup;
   }
+
+  pointer operator->() const { return &(operator*()); }
 
   const_iterator& operator++() {
     ++iter_;
     return *this;
   }
 
+  const_iterator operator++(int) {
+    auto copy{*this};
+    ++(*this);
+    return copy;
+  }
+
   const_iterator& operator--() {
     --iter_;
     return *this;
+  }
+
+  const_iterator operator--(int) {
+    auto copy{*this};
+    --(*this);
+    return copy;
   }
 
   friend bool operator!=(const const_iterator& lhs, const const_iterator& rhs) {
