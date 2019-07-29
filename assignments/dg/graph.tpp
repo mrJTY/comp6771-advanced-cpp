@@ -215,7 +215,9 @@ bool gdwg::Graph<N, E>::Replace(const N& oldData, const N& newData) {
     if (srcVal == oldData){
       (*edge.src_).value_ = newData;
       found = true;
-    } else if(dstVal == oldData){
+    }
+
+    if(dstVal == oldData){
       (*edge.dst_).value_ = newData;
       found = true;
     }
@@ -224,15 +226,41 @@ bool gdwg::Graph<N, E>::Replace(const N& oldData, const N& newData) {
 }
 
 
+template <typename N, typename E>
+void gdwg::Graph<N, E>::MergeReplace(const N& oldData, const N& newData){
 
-template <typename N>
-void MergeReplace(const N& oldData, const N& newData){
+  // Checks
+  if(!IsNode(oldData) || !IsNode(newData)){
+    throw std::runtime_error("Cannot call Graph::MergeReplace on old or new data if they don't exist in the graph");
+  }
+
+  /**
+  std::shared_ptr<gdwg::Node<N>> oldPtr;
+  std::shared_ptr<gdwg::Node<N>> newPtr;
+  // Search for old data
   for (auto iter = this->begin(); iter != this->end(); ++iter) {
     auto edge = *iter;
     N srcVal = (*edge.src_).value_;
     N dstVal = (*edge.dst_).value_;
-    if (srcVal == oldData || dstVal == oldData) {
-      (*edge.src_)
+    if (srcVal == oldData) {
+      oldPtr = (*edge.src_);
+    }
+    if(dstVal == oldData){
+      oldPtr = (*edge.dst_);
     }
   }
+
+  // Search for new data
+  for (auto iter = this->begin(); iter != this->end(); ++iter) {
+    auto edge = *iter;
+    N srcVal = (*edge.src_).value_;
+    N dstVal = (*edge.dst_).value_;
+    if (srcVal == newData) {
+      newPtr = (*edge.src_);
+    }
+    if(dstVal == newData){
+      newPtr = (*edge.dst_);
+    }
+  }
+  **/
 }
