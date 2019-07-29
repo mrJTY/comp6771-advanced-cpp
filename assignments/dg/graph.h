@@ -87,6 +87,11 @@ class const_iterator {
     return *this;
   }
 
+  const_iterator& operator--() {
+    --iter_;
+    return *this;
+  }
+
   friend bool operator!=(const const_iterator& lhs, const const_iterator& rhs) {
     return lhs.iter_ != rhs.iter_;
   }

@@ -210,7 +210,7 @@ bool gdwg::Graph<N, E>::Replace(const N& oldData, const N& newData) {
     throw std::runtime_error("Cannot call Graph::Replace on a node that doesn't exist");
   }
 
-  for (auto iter = this->begin(); iter != this->end(); ++iter) {
+  for (auto iter = this->edges_.begin(); iter != this->edges_.end(); ++iter) {
     auto edge = *iter;
     N srcVal = (*edge.src_).value_;
     N dstVal = (*edge.dst_).value_;
@@ -243,7 +243,7 @@ void gdwg::Graph<N, E>::MergeReplace(const N& oldData, const N& newData){
 
 
   // From the old node, record its incoming / outgoing edges
-  for (auto iter = this->begin(); iter != this->end(); ++iter) {
+  for (auto iter = this->edges_.begin(); iter != this->edges_.end(); ++iter) {
     auto edge = *iter;
     N srcVal = (*edge.src_).value_;
     N dstVal = (*edge.dst_).value_;
