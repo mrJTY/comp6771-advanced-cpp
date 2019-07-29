@@ -75,12 +75,19 @@ class const_iterator {
   }
 
   using iterator_category = std::bidirectional_iterator_tag;
-  using value_type = Edge<N, E>;
-  using reference = Edge<N, E>;
-  using pointer = Edge<N, E>*;
+  using value_type = std::tuple<N, N, E>;
+  using reference = std::tuple<const N&, const N&, const E&>;
+  using pointer = std::tuple<N, N, E>*;
   using difference_type = int;
 
-  reference operator*() const { return *iter_; }
+  reference operator*() const {
+    auto edge = *iter_;
+    N src = (*edge.src_).value_;
+    N dst = (*edge.dst_).value_;
+    E weight = (*edge.weight_);
+    std::tuple<N, N, E> tup = {src, dst, weight};
+    return tup;
+  }
 
   const_iterator& operator++() {
     ++iter_;
@@ -167,7 +174,6 @@ class Graph {
   void MergeReplace(const N& oldData, const N& newData);
 
 
-  // TODO(JT): const?
   friend std::ostream& operator<<(std::ostream& os, const gdwg::Graph<N, E>& g) {
     N currentSrc;
     bool firstPrint = true;
