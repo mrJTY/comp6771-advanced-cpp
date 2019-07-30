@@ -87,7 +87,6 @@ TEST_CASE("Insert nodes") {
   REQUIRE(g.InsertNode(dstVal) == true);
 }
 
-
 /**
  * Inserting edges that doesn't exist before
  * should return true.
@@ -269,7 +268,7 @@ TEST_CASE("Merge replace 1") {
  * Create a connection between a and b
  * then delete it
  **/
-TEST_CASE("Erase"){
+TEST_CASE("Erase") {
   gdwg::Graph<std::string, int> g;
   g.InsertNode("a");
   g.InsertNode("b");
@@ -286,7 +285,7 @@ TEST_CASE("Erase"){
   REQUIRE(g.IsConnected("a", "b") == false);
 }
 
-TEST_CASE("Graph iterator"){
+TEST_CASE("Graph iterator") {
   Graph<std::string, int> g;
   g.InsertNode("a");
   g.InsertNode("b");
@@ -299,5 +298,4 @@ TEST_CASE("Graph iterator"){
   REQUIRE(*i == "b");
   ++i;
   REQUIRE(*i == "c");
-
 }

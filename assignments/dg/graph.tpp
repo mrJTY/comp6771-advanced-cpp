@@ -277,9 +277,9 @@ void gdwg::Graph<N, E>::MergeReplace(const N& oldData, const N& newData) {
   DeleteNode(oldData);
 }
 
-template<typename N, typename E>
-bool gdwg::Graph<N, E>::erase(const N& src, const N& dst, const E& w){
-  if(!IsNode(src) || !IsNode(dst)){
+template <typename N, typename E>
+bool gdwg::Graph<N, E>::erase(const N& src, const N& dst, const E& w) {
+  if (!IsNode(src) || !IsNode(dst)) {
     return false;
   }
 
@@ -298,5 +298,4 @@ bool gdwg::Graph<N, E>::erase(const N& src, const N& dst, const E& w){
   }
 
   return false;
-
 }
