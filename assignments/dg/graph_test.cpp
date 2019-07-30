@@ -286,7 +286,6 @@ TEST_CASE("Erase"){
   REQUIRE(g.IsConnected("a", "b") == false);
 }
 
-/**
 TEST_CASE("Graph iterator"){
   Graph<std::string, int> g;
   g.InsertNode("a");
@@ -302,4 +301,3 @@ TEST_CASE("Graph iterator"){
   REQUIRE(*i == "c");
 
 }
-**/
