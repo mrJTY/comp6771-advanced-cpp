@@ -171,21 +171,21 @@ class Graph {
   iterator cbegin() { return iterator{edges_, "cbegin"}; }
   iterator end() { return iterator{edges_, "end"}; }
   iterator cend() { return iterator{edges_, "cend"}; }
-  iterator find(const N& s, const N& d, const E& w){
+  iterator find(const N& s, const N& d, const E& w) {
     int i = 0;
     bool found = false;
     auto iter = iterator{edges_, "begin"};
-    while(i < edges_.size() && !found){
+    while (i < edges_.size() && !found) {
       auto edge = *iter;
-      if(((*edge.src_).value_ == s) && ((*edge.dst_).value_ == d) && (edge.weight_ == w)){
-          found = true;
-          break;
+      if (((*edge.src_).value_ == s) && ((*edge.dst_).value_ == d) && (edge.weight_ == w)) {
+        found = true;
+        break;
       }
       ++i;
       ++iter;
     }
     return iter;
-  };
+  }
 
   // Methods:
   bool InsertNode(const N& val);
@@ -200,8 +200,6 @@ class Graph {
   bool Replace(const N& oldData, const N& newData);
   void MergeReplace(const N& oldData, const N& newData);
   // TODO(JT): bool erase(const N& src, const N& dst, const E& w);
-
-
 
   friend std::ostream& operator<<(std::ostream& os, const gdwg::Graph<N, E>& g) {
     N currentSrc;

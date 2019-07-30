@@ -8,11 +8,11 @@
 
 */
 
-#include "assignments/dg/graph.h"
 #include "catch.h"
-#include <iostream>
-#include <string>
-#include <utility>
+#include "string"
+#include "utility"
+
+#include "assignments/dg/graph.h"
 
 TEST_CASE("Default constructor") {
   gdwg::Graph<std::string, int> g;
@@ -209,7 +209,7 @@ TEST_CASE("Replace") {
   REQUIRE(g.IsNode("b") == true);
 }
 
-TEST_CASE("Merge replace 1"){
+TEST_CASE("Merge replace 1") {
   gdwg::Graph<std::string, int> g;
   g.InsertNode("a");
   g.InsertNode("b");
@@ -231,7 +231,6 @@ TEST_CASE("Merge replace 1"){
 
   // B's neighbours are now a's old neighbours
   REQUIRE(bAfter.size() == aBefore.size());
-
 }
 
 /**
