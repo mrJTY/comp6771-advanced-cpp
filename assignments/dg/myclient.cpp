@@ -43,25 +43,41 @@ int main() {
 //      std::cout << same2;
 //  }
 
-    {
-        gdwg::Graph<std::string, int> g;
-        g.InsertNode("a");
-        g.InsertNode("b");
-        g.InsertNode("c");
-        g.InsertNode("d");
+//    {
+//        gdwg::Graph<std::string, int> g;
+//        g.InsertNode("a");
+//        g.InsertNode("b");
+//        g.InsertNode("c");
+//        g.InsertNode("d");
+//
+//        g.InsertEdge("a", "b", 1);
+//        g.InsertEdge("a", "c", 2);
+//        g.InsertEdge("a", "d", 3);
+////        g.InsertEdge("a", "a", 10);
+//
+//        // Before
+//        std::vector<std::string> aBefore = g.GetConnected("a");
+//        std::vector<std::string> bBefore = g.GetConnected("b");
+//        g.MergeReplace("a", "b");
+//        std::vector<std::string> bAfter = g.GetConnected("b");
+//        std::cout << g;
+//        auto done = "Done";
+//        std::cout << done;
+//    }
+      gdwg::Graph<std::string, int> g;
+      g.InsertNode("a");
+      g.InsertNode("b");
+      g.InsertNode("c");
+      g.InsertNode("d");
 
-        g.InsertEdge("a", "b", 1);
-        g.InsertEdge("a", "c", 2);
-        g.InsertEdge("a", "d", 3);
-//        g.InsertEdge("a", "a", 10);
+      g.InsertEdge("a", "b", 1);
+      g.InsertEdge("a", "c", 2);
+      g.InsertEdge("a", "d", 3);
+      g.InsertEdge("a", "a", 10);
 
-        // Before
-        std::vector<std::string> aBefore = g.GetConnected("a");
-        std::vector<std::string> bBefore = g.GetConnected("b");
-        g.MergeReplace("a", "b");
-        std::vector<std::string> bAfter = g.GetConnected("b");
-        auto done = "Done";
-        std::cout << done;
-    }
+      auto iter = g.begin();
+
+      ++iter;
+      std::cout << (std::get<0>(*iter)) << "\n";
 
 }

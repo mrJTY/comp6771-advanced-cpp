@@ -210,16 +210,16 @@ bool gdwg::Graph<N, E>::Replace(const N& oldData, const N& newData) {
     throw std::runtime_error("Cannot call Graph::Replace on a node that doesn't exist");
   }
 
-  for (auto iter = this->begin(); iter != this->end(); ++iter) {
+  for (auto iter = this->edges_.begin(); iter != this->edges_.end(); ++iter) {
     auto edge = *iter;
     N srcVal = (*edge.src_).value_;
     N dstVal = (*edge.dst_).value_;
-    if (srcVal == oldData){
+    if (srcVal == oldData) {
       (*edge.src_).value_ = newData;
       found = true;
     }
 
-    if(dstVal == oldData){
+    if (dstVal == oldData) {
       (*edge.dst_).value_ = newData;
       found = true;
     }
@@ -227,23 +227,22 @@ bool gdwg::Graph<N, E>::Replace(const N& oldData, const N& newData) {
   return found;
 }
 
-
 template <typename N, typename E>
-void gdwg::Graph<N, E>::MergeReplace(const N& oldData, const N& newData){
+void gdwg::Graph<N, E>::MergeReplace(const N& oldData, const N& newData) {
 
   // Checks
-  if(!IsNode(oldData) || !IsNode(newData)){
-    throw std::runtime_error("Cannot call Graph::MergeReplace on old or new data if they don't exist in the graph");
+  if (!IsNode(oldData) || !IsNode(newData)) {
+    throw std::runtime_error(
+        "Cannot call Graph::MergeReplace on old or new data if they don't exist in the graph");
   }
 
-  std::vector<std::tuple<N, N, E>> incomingEdges {};
-  std::vector<std::tuple<N, N, E>> outgoingEdges {};
+  std::vector<std::tuple<N, N, E>> incomingEdges{};
+  std::vector<std::tuple<N, N, E>> outgoingEdges{};
 
   N newDataCopy = newData;
 
-
   // From the old node, record its incoming / outgoing edges
-  for (auto iter = this->begin(); iter != this->end(); ++iter) {
+  for (auto iter = this->edges_.begin(); iter != this->edges_.end(); ++iter) {
     auto edge = *iter;
     N srcVal = (*edge.src_).value_;
     N dstVal = (*edge.dst_).value_;
@@ -251,30 +250,52 @@ void gdwg::Graph<N, E>::MergeReplace(const N& oldData, const N& newData){
 
     // Outgoing edges are is where the old node was the src
     if (srcVal == oldData && !isInitializer) {
-        std::tuple<N,N, E> tup = std::make_tuple(newDataCopy, (*edge.dst_).value_, edge.weight_);
-        outgoingEdges.push_back(tup);
+      std::tuple<N, N, E> tup = std::make_tuple(newDataCopy, (*edge.dst_).value_, edge.weight_);
+      outgoingEdges.push_back(tup);
     }
 
-      if (dstVal == oldData && !isInitializer) {
-          std::tuple<N,N, E> tup = std::make_tuple((*edge.src_).value_,newDataCopy, edge.weight_);
-          incomingEdges.push_back(tup);
-      }
+    if (dstVal == oldData && !isInitializer) {
+      std::tuple<N, N, E> tup = std::make_tuple((*edge.src_).value_, newDataCopy, edge.weight_);
+      incomingEdges.push_back(tup);
+    }
   }
 
   // Add the incoming / outgoing edges to the new node
-  for(auto iter = incomingEdges.begin(); iter != incomingEdges.end(); ++iter){
-      N src = std::get<0>(*iter);
-      N dst = std::get<1>(*iter);
-      E weight = std::get<2>(*iter);
-      InsertEdge(src, dst, weight);
+  for (auto iter = incomingEdges.begin(); iter != incomingEdges.end(); ++iter) {
+    N src = std::get<0>(*iter);
+    N dst = std::get<1>(*iter);
+    E weight = std::get<2>(*iter);
+    InsertEdge(src, dst, weight);
   }
-  for(auto iter = outgoingEdges.begin(); iter != outgoingEdges.end(); ++iter){
-        N src = std::get<0>(*iter);
-        N dst = std::get<1>(*iter);
-        E weight = std::get<2>(*iter);
-        InsertEdge(src, dst, weight);
+  for (auto iter = outgoingEdges.begin(); iter != outgoingEdges.end(); ++iter) {
+    N src = std::get<0>(*iter);
+    N dst = std::get<1>(*iter);
+    E weight = std::get<2>(*iter);
+    InsertEdge(src, dst, weight);
   }
 
   DeleteNode(oldData);
+}
 
+template <typename N, typename E>
+bool gdwg::Graph<N, E>::erase(const N& src, const N& dst, const E& w) {
+  if (!IsNode(src) || !IsNode(dst)) {
+    return false;
+  }
+
+  for (auto iter = this->edges_.begin(); iter != this->edges_.end(); ++iter) {
+    auto edge = *iter;
+    N srcVal = (*edge.src_).value_;
+    N dstVal = (*edge.dst_).value_;
+    E weight = edge.weight_;
+    bool isInitializer = edge.initializer_;
+
+    if (!isInitializer && srcVal == src && dstVal == dst && weight == w) {
+      // Remove this edge
+      this->edges_.erase(iter);
+      return true;
+    }
+  }
+
+  return false;
 }

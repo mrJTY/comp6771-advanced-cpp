@@ -75,16 +75,42 @@ class const_iterator {
   }
 
   using iterator_category = std::bidirectional_iterator_tag;
-  using value_type = Edge<N, E>;
-  using reference = Edge<N, E>;
-  using pointer = Edge<N, E>*;
+  using value_type = std::tuple<N, N, E>;
+  using reference = std::tuple<const N, const N, const E>;
+  using pointer = std::tuple<N, N, E>*;
   using difference_type = int;
 
-  reference operator*() const { return *iter_; }
+  reference operator*() const {
+    auto edge = *iter_;
+    N src = (*edge.src_).value_;
+    N dst = (*edge.dst_).value_;
+    E weight = edge.weight_;
+    std::tuple<N, N, E> tup = {src, dst, weight};
+    return tup;
+  }
+
+  pointer operator->() const { return &(operator*()); }
 
   const_iterator& operator++() {
     ++iter_;
     return *this;
+  }
+
+  const_iterator operator++(int) {
+    auto copy{*this};
+    ++(*this);
+    return copy;
+  }
+
+  const_iterator& operator--() {
+    --iter_;
+    return *this;
+  }
+
+  const_iterator operator--(int) {
+    auto copy{*this};
+    --(*this);
+    return copy;
   }
 
   friend bool operator!=(const const_iterator& lhs, const const_iterator& rhs) {
@@ -145,8 +171,21 @@ class Graph {
   iterator cbegin() { return iterator{edges_, "cbegin"}; }
   iterator end() { return iterator{edges_, "end"}; }
   iterator cend() { return iterator{edges_, "cend"}; }
-
-  //    iterator end() { return nullptr; }
+  iterator find(const N& s, const N& d, const E& w) {
+    int i = 0;
+    bool found = false;
+    auto iter = iterator{edges_, "begin"};
+    while (i < edges_.size() && !found) {
+      auto edge = *iter;
+      if (((*edge.src_).value_ == s) && ((*edge.dst_).value_ == d) && (edge.weight_ == w)) {
+        found = true;
+        break;
+      }
+      ++i;
+      ++iter;
+    }
+    return iter;
+  }
 
   // Methods:
   bool InsertNode(const N& val);
@@ -160,17 +199,17 @@ class Graph {
   std::vector<E> GetWeights(const N& src, const N& dst);
   bool Replace(const N& oldData, const N& newData);
   void MergeReplace(const N& oldData, const N& newData);
+  bool erase(const N& src, const N& dst, const E& w);
 
-
-  // TODO(JT): const?
-  friend std::ostream& operator<<(std::ostream& os, Graph<N, E>& g) {
+  friend std::ostream& operator<<(std::ostream& os, const gdwg::Graph<N, E>& g) {
     N currentSrc;
     bool firstPrint = true;
 
-    for (auto iter = g.cbegin(); iter != g.cend(); ++iter) {
-      N src = (*(*iter).src_).value_;
-      N dst = (*(*iter).dst_).value_;
-      E weight = (*iter).weight_;
+    for (auto iter = g.edges_.cbegin(); iter != g.edges_.cend(); ++iter) {
+      Edge<N, E> edge = *iter;
+      N src = (*(edge).src_).value_;
+      N dst = (*(edge).dst_).value_;
+      E weight = (edge).weight_;
 
       // Print out new source
       if (currentSrc != src) {
@@ -186,8 +225,7 @@ class Graph {
         currentSrc = src;
       }
 
-      // TODO(JT): make this weight anything else but 0
-      if (weight != 0) {
+      if (!edge.initializer_) {
         os << "  " << dst << " | " << weight << "\n";
       }
     }
@@ -197,9 +235,9 @@ class Graph {
     return os;
   }
 
-  friend bool operator==(gdwg::Graph<N, E>& lhs, gdwg::Graph<N, E>& rhs) {
-    auto j = rhs.cbegin();
-    for (auto i = lhs.cbegin(); i != lhs.cend(); ++i) {
+  friend bool operator==(const gdwg::Graph<N, E>& lhs, const gdwg::Graph<N, E>& rhs) {
+    auto j = rhs.edges_.cbegin();
+    for (auto i = lhs.edges_.cbegin(); i != lhs.edges_.cend(); ++i) {
       try {
         N srcI = (*(*i).src_).value_;
         N srcJ = (*(*j).src_).value_;

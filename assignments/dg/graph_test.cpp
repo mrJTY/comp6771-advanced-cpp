@@ -8,12 +8,16 @@
 
 */
 
-#include "assignments/dg/graph.h"
 #include "catch.h"
-#include <iostream>
-#include <string>
-#include <utility>
+#include "string"
+#include "utility"
 
+#include "assignments/dg/graph.h"
+
+/**
+ * Tests for constructors
+ *
+ **/
 TEST_CASE("Default constructor") {
   gdwg::Graph<std::string, int> g;
   g.InsertNode("Hello");
@@ -68,6 +72,11 @@ TEST_CASE("Move constructor") {
   REQUIRE(h.IsNode("False") == false);
 }
 
+/**
+ * Inserting nodes that doesn't exist before
+ * should return true.
+ * False otherwise.
+ **/
 TEST_CASE("Insert nodes") {
   std::string srcVal{"src"};
   std::string dstVal{"dst_"};
@@ -78,6 +87,11 @@ TEST_CASE("Insert nodes") {
   REQUIRE(g.InsertNode(dstVal) == true);
 }
 
+/**
+ * Inserting edges that doesn't exist before
+ * should return true.
+ * False otherwise.
+ **/
 TEST_CASE("Insert edges") {
   std::vector<std::string> v{"a"};
   gdwg::Graph<std::string, int> g{v.cbegin(), v.cend()};
@@ -95,6 +109,10 @@ TEST_CASE("Insert edges") {
   REQUIRE(g.InsertEdge("hello", "hello", 10) == false);
 }
 
+/**
+ * Deleting nodes should only be
+ * true if it exists
+ **/
 TEST_CASE("Delete ptr") {
   gdwg::Graph<std::string, int> g;
   REQUIRE(g.DeleteNode("hello") == false);
@@ -103,7 +121,7 @@ TEST_CASE("Delete ptr") {
   REQUIRE(g.DeleteNode("hello") == false);
 }
 
-TEST_CASE("Erase") {
+TEST_CASE("Delete nodes") {
   std::string a{"a"};
   gdwg::Graph<std::string, int> g;
   g.InsertNode(a);
@@ -166,6 +184,11 @@ TEST_CASE("Get weights") {
   REQUIRE(*iter == 101);
 }
 
+/**
+ * Copy construct should mean that
+ * the two graphs are the same.
+ * It is also a test for the == operator
+ **/
 TEST_CASE("Similarity") {
   gdwg::Graph<std::string, int> g;
   g.InsertNode("a");
@@ -198,6 +221,10 @@ TEST_CASE("Disimilarity") {
   bool disimilar = g != h;
   REQUIRE(disimilar == true);
 }
+
+/**
+ * Replace the nodes from a to b
+ **/
 TEST_CASE("Replace") {
   gdwg::Graph<std::string, int> g;
   g.InsertNode("a");
@@ -209,7 +236,11 @@ TEST_CASE("Replace") {
   REQUIRE(g.IsNode("b") == true);
 }
 
-TEST_CASE("Merge replace 1"){
+/**
+ * Test the the replaced nodes have the
+ * incoming/outgoing edges are passed to the new node
+ **/
+TEST_CASE("Merge replace 1") {
   gdwg::Graph<std::string, int> g;
   g.InsertNode("a");
   g.InsertNode("b");
@@ -231,11 +262,30 @@ TEST_CASE("Merge replace 1"){
 
   // B's neighbours are now a's old neighbours
   REQUIRE(bAfter.size() == aBefore.size());
-
 }
 
 /**
-TEST_CASE("Graph iterator"){
+ * Create a connection between a and b
+ * then delete it
+ **/
+TEST_CASE("Erase") {
+  gdwg::Graph<std::string, int> g;
+  g.InsertNode("a");
+  g.InsertNode("b");
+  g.InsertNode("c");
+  g.InsertNode("d");
+
+  g.InsertEdge("a", "b", 1);
+  g.InsertEdge("a", "c", 2);
+  g.InsertEdge("a", "d", 3);
+
+  REQUIRE(g.IsConnected("a", "b") == true);
+  REQUIRE(g.erase("a", "b", 99) == false);
+  REQUIRE(g.erase("a", "b", 1) == true);
+  REQUIRE(g.IsConnected("a", "b") == false);
+}
+
+TEST_CASE("Graph iterator") {
   Graph<std::string, int> g;
   g.InsertNode("a");
   g.InsertNode("b");
@@ -248,6 +298,4 @@ TEST_CASE("Graph iterator"){
   REQUIRE(*i == "b");
   ++i;
   REQUIRE(*i == "c");
-
 }
-**/
