@@ -286,16 +286,21 @@ TEST_CASE("Erase") {
 }
 
 TEST_CASE("Graph iterator") {
-  Graph<std::string, int> g;
-  g.InsertNode("a");
-  g.InsertNode("b");
+  gdwg::Graph<std::string, int> g;
+  g.InsertNode("hello");
+  g.InsertNode("how");
+  g.InsertNode("are");
+  g.InsertNode("you?");
+
+  g.InsertEdge("hello", "how", 5);
+  g.InsertEdge("hello", "are", 8);
+  g.InsertEdge("hello", "are", 2);
+
+  g.InsertEdge("how", "you?", 1);
+  g.InsertEdge("how", "hello", 4);
+
   g.InsertNode("c");
-
-  auto i = g.begin();
-
-  REQUIRE(*i == "a");
-  ++i;
-  REQUIRE(*i == "b");
-  ++i;
-  REQUIRE(*i == "c");
+  for (const auto& [from, to, weight] : g) {
+    std::cout << from << " -> " << to << " (weight " << weight << ")\n";
+  }
 }
