@@ -199,7 +199,7 @@ class Graph {
   std::vector<E> GetWeights(const N& src, const N& dst);
   bool Replace(const N& oldData, const N& newData);
   void MergeReplace(const N& oldData, const N& newData);
-  // TODO(JT): bool erase(const N& src, const N& dst, const E& w);
+  bool erase(const N& src, const N& dst, const E& w);
 
   friend std::ostream& operator<<(std::ostream& os, const gdwg::Graph<N, E>& g) {
     N currentSrc;

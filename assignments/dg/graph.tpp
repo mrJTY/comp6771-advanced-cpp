@@ -276,3 +276,27 @@ void gdwg::Graph<N, E>::MergeReplace(const N& oldData, const N& newData) {
 
   DeleteNode(oldData);
 }
+
+template<typename N, typename E>
+bool gdwg::Graph<N, E>::erase(const N& src, const N& dst, const E& w){
+  if(!IsNode(src) || !IsNode(dst)){
+    return false;
+  }
+
+  for (auto iter = this->edges_.begin(); iter != this->edges_.end(); ++iter) {
+    auto edge = *iter;
+    N srcVal = (*edge.src_).value_;
+    N dstVal = (*edge.dst_).value_;
+    E weight = edge.weight_;
+    bool isInitializer = edge.initializer_;
+
+    if (!isInitializer && srcVal == src && dstVal == dst && weight == w) {
+      // Remove this edge
+      this->edges_.erase(iter);
+      return true;
+    }
+  }
+
+  return false;
+
+}
