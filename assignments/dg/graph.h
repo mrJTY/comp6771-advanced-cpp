@@ -65,6 +65,10 @@ class const_iterator {
   const_iterator(std::set<Edge<N, E>, CompareEdges<N, E>>& edges, std::string iterType) {
     if (iterType == "begin") {
       iter_ = edges.begin();
+      // Ignore edges that were initialized (edges on to itself)
+      while ((*iter_).initializer_ && iter_ != edges.end()) {
+        ++iter_;
+      }
     } else if (iterType == "end") {
       iter_ = edges.end();
     } else if (iterType == "cbegin") {
@@ -93,12 +97,21 @@ class const_iterator {
 
   const_iterator& operator++() {
     ++iter_;
+    auto edge = *iter_;
+    if (edge.initializer_) {
+      ++iter_;
+    }
     return *this;
   }
 
   const_iterator operator++(int) {
     auto copy{*this};
     ++(*this);
+    auto edge = *iter_;
+    // Skip the edge on itself
+    if (edge.initializer_) {
+      ++(*this);
+    }
     return copy;
   }
 
