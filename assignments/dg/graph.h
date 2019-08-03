@@ -93,12 +93,21 @@ class const_iterator {
 
   const_iterator& operator++() {
     ++iter_;
+    auto edge = *iter_;
+    if(edge.initializer_){
+      ++iter_;
+    }
     return *this;
   }
 
   const_iterator operator++(int) {
     auto copy{*this};
     ++(*this);
+    auto edge = *iter_;
+    // Skip the edge on itself
+    if(edge.initializer_){
+       ++(*this);
+    }
     return copy;
   }
 
@@ -270,6 +279,6 @@ class Graph {
 
 }  // namespace gdwg
 
-#include "assignments/dg/graph.tpp"
+#include "assignments/dg/graph.cpp"
 
 #endif  // ASSIGNMENTS_DG_GRAPH_H_
