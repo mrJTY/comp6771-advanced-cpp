@@ -10,7 +10,6 @@
 
 template <typename N, typename E>
 bool gdwg::Graph<N, E>::InsertNode(const N& val) {
-
   bool found = IsNode(val);
   if (!found) {
     std::shared_ptr<Node<N>> ptr = std::make_shared<Node<N>>(val);
@@ -58,7 +57,6 @@ std::vector<N> gdwg::Graph<N, E>::GetNodes() {
 
 template <typename N, typename E>
 bool gdwg::Graph<N, E>::InsertEdge(const N& src, const N& dst, const E& w) {
-
   // If src dst, and weight exists, return false
   {
     bool srcExists = IsNode(src);
@@ -229,7 +227,6 @@ bool gdwg::Graph<N, E>::Replace(const N& oldData, const N& newData) {
 
 template <typename N, typename E>
 void gdwg::Graph<N, E>::MergeReplace(const N& oldData, const N& newData) {
-
   // Checks
   if (!IsNode(oldData) || !IsNode(newData)) {
     throw std::runtime_error(
