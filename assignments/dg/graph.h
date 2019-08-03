@@ -66,7 +66,7 @@ class const_iterator {
     if (iterType == "begin") {
       iter_ = edges.begin();
       // Ignore edges that were initialized (edges on to itself)
-      while((*iter_).initializer_ && iter_ != edges.end()){
+      while ((*iter_).initializer_ && iter_ != edges.end()) {
         ++iter_;
       }
     } else if (iterType == "end") {
@@ -98,7 +98,7 @@ class const_iterator {
   const_iterator& operator++() {
     ++iter_;
     auto edge = *iter_;
-    if(edge.initializer_){
+    if (edge.initializer_) {
       ++iter_;
     }
     return *this;
@@ -109,8 +109,8 @@ class const_iterator {
     ++(*this);
     auto edge = *iter_;
     // Skip the edge on itself
-    if(edge.initializer_){
-       ++(*this);
+    if (edge.initializer_) {
+      ++(*this);
     }
     return copy;
   }
@@ -283,6 +283,6 @@ class Graph {
 
 }  // namespace gdwg
 
-#include "assignments/dg/graph.cpp"
+#include "assignments/dg/graph.tpp"
 
 #endif  // ASSIGNMENTS_DG_GRAPH_H_
