@@ -43,7 +43,7 @@ struct Edge {
 
 template <typename N, typename E>
 struct CompareEdges {
-  bool operator()(const Edge<N, E>& lhs, const Edge<N, E>& rhs) {
+  bool operator()(const Edge<N, E>& lhs, const Edge<N, E>& rhs) const {
     Node<N> lhsSrc = (*lhs.src_);
     Node<N> rhsSrc = (*rhs.src_);
 
