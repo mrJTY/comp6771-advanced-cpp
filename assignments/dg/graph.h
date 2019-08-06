@@ -28,7 +28,7 @@ struct Node {
 
 template <typename N>
 struct CustomCompare {
-  bool operator()(const std::shared_ptr<N>& lhs, const std::shared_ptr<N>& rhs) {
+  bool operator()(const std::shared_ptr<N>& lhs, const std::shared_ptr<N>& rhs) const {
     return (*lhs) < (*rhs);
   }
 };

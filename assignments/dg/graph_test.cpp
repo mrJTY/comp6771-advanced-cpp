@@ -203,6 +203,9 @@ TEST_CASE("Similarity") {
   REQUIRE(same == true);
 }
 
+/**
+ * Test case when they are not the same
+ **/
 TEST_CASE("Disimilarity") {
   gdwg::Graph<std::string, int> g;
   g.InsertNode("a");
@@ -285,6 +288,9 @@ TEST_CASE("Erase") {
   REQUIRE(g.IsConnected("a", "b") == false);
 }
 
+/**
+ * Test iterators
+ **/
 TEST_CASE("Graph iterator") {
   gdwg::Graph<std::string, int> g;
   g.InsertNode("hello");
@@ -303,4 +309,8 @@ TEST_CASE("Graph iterator") {
   for (const auto& [from, to, weight] : g) {
     std::cout << from << " -> " << to << " (weight " << weight << ")\n";
   }
+
+  auto iter = g.begin();
+  iter++;
+  ++iter;
 }

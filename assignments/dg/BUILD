@@ -9,7 +9,7 @@ cc_library(
 
 cc_binary(
     name = "client",
-    srcs = ["client.cpp"],
+    srcs = ["client1.cpp"],
     deps = [
         ":graph",
     ],
